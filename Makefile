@@ -6,7 +6,8 @@ LIBFT	:= ./lib/libft
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
-SRCS	:= $(shell find ./src -iname "*.c")
+SRCS	:= src/test.c
+
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx libft $(NAME)
@@ -15,7 +16,7 @@ libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 libft:
-	@make $(LIBFT)
+	@make -C $(LIBFT)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
