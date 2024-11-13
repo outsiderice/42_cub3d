@@ -26,11 +26,13 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -rf $(OBJS)
+	@make clean -C $(LIBFT)
 	@rm -rf $(LIBMLX)/build
 
 fclean: clean
 	@rm -rf $(NAME)
+	@make fclean -C $(LIBFT)
 
-re: clean all
+re: fclean all
 
 .PHONY: all, clean, fclean, re, libmlx
