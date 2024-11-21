@@ -3,8 +3,11 @@
 #include <unistd.h>
 #include "MLX42/MLX42.h"
 #include "libft.h"
-#define WIDTH 640
-#define HEIGHT 400
+
+# define MAX_WIDTH 3840
+# define MAX_HEIGHT 2160
+#define WIDTH 1920
+#define HEIGHT 1080
 
 #define BPP sizeof(int32_t)
 
@@ -30,28 +33,56 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
+void	render_map_tile(mlx_image_t *minimap, int x, int y, int tile_color)
+{
+	int	tile_x;
+	int	tile_y;
+
+	tile_y = 0;
+	while (tile_y < 5)
+	{
+		tile_x = 0;
+		//printf("adios\n");
+		while (tile_x < 5)
+		{
+			printf("x = %d, y= %d, pixel line on : %d\n", x, y, tile_x);
+			mlx_put_pixel(minimap, x + tile_x, y + tile_y, tile_color);
+			tile_x++;
+		}
+		tile_y++;
+			//exit(0);
+	}
+}
+
 void	render_minimap(mlx_image_t *minimap)
 {
-	int	height;
-	int	width;
-	int	wall_color;
-	int	floor_color;
+	int	y;
+	int	x;
+	int	tile_color;
+	int other_color;
 	
-	height = 0;
-	floor_color = get_rgba(255, 255, 255, 255);
-	wall_color = get_rgba(0, 0, 0, 0);
-	while (height < 5) // < than map height
+	y = 0;
+	while (y < 5) // < than var map_height
 	{
-		width = 0;
-		while (width < 5) // < than map width
+		x = 0;
+		while (x < 5) // < than var map_width
 		{
-			if (worldMap[height][width] == 0)
-				mlx_put_pixel(minimap, width, height, floor_color);
-			else
-				mlx_put_pixel(minimap, width, height, wall_color);
-			width++;
+			if (worldMap[y][x] == 1)
+			{
+				tile_color = get_rgba(250, 0, 0, 255);
+				printf("1\n");
+			render_map_tile(minimap, x* x, y * y, tile_color);
+			}
+			else if (worldMap[y][x] == 0)
+			{
+				other_color = get_rgba(255, 255, 255, 255);
+				printf("0\n");
+			render_map_tile(minimap, x * x, y * y, other_color);
+			}
+			//printf("hola\n");
+			x++;
 		}
-		height++;
+		y++;
 	}
 	return ;
 }
@@ -61,7 +92,7 @@ void	cub3d()
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!mlx)
 		ft_error();
-	mlx_image_t* minimap = mlx_new_image(mlx, 5, 5);
+	mlx_image_t* minimap = mlx_new_image(mlx, 250, 250);
 
 	render_minimap(minimap);
 	
