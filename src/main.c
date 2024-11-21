@@ -30,12 +30,6 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-static void ft_hook(void* param)
-{
-	(void) param;
-	//controls go here
-}
-
 void	render_minimap(mlx_image_t *minimap)
 {
 	int	height;
@@ -77,7 +71,7 @@ void	cub3d()
 
 	// Register a hook and pass mlx as an optional param.
 	// NOTE: Do this before calling mlx_loop!
-	mlx_loop_hook(mlx, ft_hook, mlx);
+//	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 }
