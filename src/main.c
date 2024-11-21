@@ -10,11 +10,11 @@
 
 int	worldMap[5][5] =
 {
-	{11111},
-	{10001},
-	{10001},
-	{10001},
-	{11111}
+	{1,1,1,1,1},
+	{1,0,0,0,1},
+	{1,0,0,0,1},
+	{1,0,0,0,1},
+	{1,1,1,1,1}
 };
 
 // Exit the program as failure.
@@ -46,11 +46,15 @@ void	render_minimap(mlx_image_t *minimap)
 	height = 0;
 	floor_color = get_rgba(255, 255, 255, 255);
 	wall_color = get_rgba(0, 0, 0, 0);
-	while (height < HEIGHT)
+	while (height < 5) // < than map height
 	{
 		width = 0;
-		while (width < WIDTH)
+		while (width < 5) // < than map width
 		{
+			if (worldMap[height][width] == 0)
+				mlx_put_pixel(minimap, width, height, floor_color);
+			else
+				mlx_put_pixel(minimap, width, height, wall_color);
 			width++;
 		}
 		height++;
@@ -63,12 +67,12 @@ void	cub3d()
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!mlx)
 		ft_error();
-	mlx_image_t* minimap = mlx_new_image(mlx, 64, 40);
+	mlx_image_t* minimap = mlx_new_image(mlx, 5, 5);
 
 	render_minimap(minimap);
 	
 	//Draw image at coordinate (0,0)
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+	if (!minimap || (mlx_image_to_window(mlx, minimap, 0, 0) < 0))
 		ft_error();
 
 	// Register a hook and pass mlx as an optional param.
