@@ -6,7 +6,7 @@ LIBFT	:= ./lib/libft
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
-SRCS	:= src/test.c
+SRCS	:= src/main.c
 
 OBJS	:= ${SRCS:.c=.o}
 

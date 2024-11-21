@@ -1,11 +1,19 @@
-// Written by Bruh
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include "MLX42/MLX42.h"
-#define WIDTH 256
-#define HEIGHT 256
+#include "libft.h"
+#define WIDTH 640
+#define HEIGHT 400
+
+#define BPP sizeof(int32_t)
+
+int	worldMap[3][3] =
+{
+	{111},
+	{101},
+	{111}
+};
 
 // Exit the program as failure.
 static void ft_error(void)
@@ -14,27 +22,34 @@ static void ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-// Print the window width and height.
+// 'Encodes' four individual bytes into an int.
+int get_rgba(int r, int g, int b, int a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
+
 static void ft_hook(void* param)
 {
-	const mlx_t* mlx = param;
-
-	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
+	(void) param;
+	//controls go here
 }
 
 int32_t	main(void)
 {
-
-	// MLX allows you to define its core behaviour before startup.
-	mlx_set_setting(MLX_MAXIMIZED, true);
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
+	//parsing stuff
+	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!mlx)
 		ft_error();
 
 	/* Do stuff */
 
 	// Create and display the image.
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
+	mlx_image_t* img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	
+	//sets color to white by setting each channel of each pixel to 255
+	ft_memset(img->pixels, 255, img->width * img->height * BPP);
+	
+	//Draw image at coordinate (0,0)
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();
 
