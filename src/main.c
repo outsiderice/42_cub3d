@@ -15,7 +15,7 @@ int	worldMap[5][5] =
 {
 	{1,1,1,1,1},
 	{1,0,0,0,1},
-	{1,0,0,0,1},
+	{1,0,'N',0,1},
 	{1,0,0,0,1},
 	{1,1,1,1,1}
 };
@@ -33,29 +33,36 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	render_map_tile(mlx_image_t *minimap, int x, int y, int tile_color)
+void	render_map_tile(mlx_image_t *minimap, int x, int y)
 {
 	int	tile_x;
 	int	tile_y;
+	int	tile_color;
 
 	tile_y = 0;
+	if (worldMap[y][x] == 1)
+				tile_color = get_rgba(0, 0, 0, 255);
+	else if (worldMap[y][x] == 0)
+		tile_color = get_rgba(255, 255, 255, 255);
+	else
+		tile_color = get_rgba(250, 0, 0, 255);
 	while (tile_y < 5)
 	{
 		tile_x = 0;
 		while (tile_x < 5)
 		{
-			mlx_put_pixel(minimap, x + tile_x, y + tile_y, tile_color);
+			mlx_put_pixel(minimap, (x * 5) + tile_x, (y * 5) + tile_y, tile_color);
 			tile_x++;
 		}
 		tile_y++;
 	}
+	return ;
 }
 
 void	render_minimap(mlx_image_t *minimap)
 {
 	int	y;
 	int	x;
-	int	tile_color;
 	
 	y = 0;
 	while (y < 5) // < than var map_height
@@ -63,16 +70,8 @@ void	render_minimap(mlx_image_t *minimap)
 		x = 0;
 		while (x < 5) // < than var map_width
 		{
-			if (worldMap[y][x] == 1)
-			{
-				tile_color = get_rgba(0, 0, 0, 255);
-				render_map_tile(minimap, x * 5, y * 5, tile_color);
-			}
-			else if (worldMap[y][x] == 0)
-			{
-				tile_color = get_rgba(255, 255, 255, 255);
-				render_map_tile(minimap, x * 5, y * 5, tile_color);
-			}
+			if (worldMap[y][x] != ' ')
+				render_map_tile(minimap, x, y);
 			x++;
 		}
 		y++;
