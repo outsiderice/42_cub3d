@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:30:20 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/22 12:44:29 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:56:19 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,15 +138,17 @@ int     pre_map_parse(char *line, t_map_info *map_info)
                 i++;
         if (line[i] == 'N' && line[i + 1] == 'O')
                 res = cardinal_direc(line, i, map_info);
-        if (line[i] == 'S' && line[i + 1] == 'O')
+	else if (line[i] == 'S' && line[i + 1] == 'O')
                 res = cardinal_direc(line, i, map_info);
-        if (line[i] == 'W' && line[i + 1] == 'E')
+	else if (line[i] == 'W' && line[i + 1] == 'E')
                 res = cardinal_direc(line, i, map_info);
-        if (line[i] == 'E' && line[i + 1] == 'A')
+	else if (line[i] == 'E' && line[i + 1] == 'A')
                 res = cardinal_direc(line, i, map_info);
-        if (line[i] == 'F')
+	else if (line[i] == 'F')
                 res = color_parse(line, i, map_info);
-        if (line[i] == 'C')
+	else if (line[i] == 'C')
                 res = color_parse(line, i, map_info);
+	else
+		res = -1;
         return (res);
 }

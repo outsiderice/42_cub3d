@@ -6,18 +6,11 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/22 12:51:03 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:49:40 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <unistd.h>
-//#include "libft.h"
-//#include <fcntl.h>
 #include "cub3d.h"
-//#include "MLX42/MLX42.h"
-
 
 int	check_file_ex(char *str)
 {
@@ -52,21 +45,11 @@ int	main(int ac, char **av)
 
 	fd = 0;
 	lines = 0;
-	map_info.north = NULL;
-	map_info.south = NULL;
-	map_info.west = NULL;
-	map_info.east = NULL;
-	map_info.floor[0] = -1;
-	map_info.ceiling[0] = -1;
+	init_map_info(&map_info);
 	if (ac != 2)
-	{
-		printf("Error\nWrong number of arguments\n");
-		return (-1);
-	}
+		return (printf("Error\nWrong number of arguments\n"), -1);
 	if (check_file_ex(av[1]) != 0)
-	{
 		return (-1);
-	}
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		return (printf("Error\nCould not open %s\n", av[1]), -1);
 	line = get_next_line(fd);
@@ -82,7 +65,7 @@ int	main(int ac, char **av)
 				if (pre_map_parse(line, &map_info) == -1)
 				{
 					printf("Error\nWrong Identifier in %s", line);
-					return (-1);
+					return (close(fd), -1);
 				}
 
 			}
@@ -90,12 +73,9 @@ int	main(int ac, char **av)
 		}
 		line = get_next_line(fd);
 	}
-	printf("North: %s\n", map_info.north);
-	printf("South: %s\n", map_info.south);
-	printf("East: %s\n", map_info.east);
-	printf("West: %s\n", map_info.west);
-	printf("Floor RGB: %d, %d, %d\n", map_info.floor[0], map_info.floor[1], map_info.floor[2]);
-	printf("Ceiling RGB: %d, %d, %d\n", map_info.ceiling[0], map_info.ceiling[1], map_info.ceiling[2]);
+	if (lines < 6)
+		return (printf("Not enough lines for pre map info\n"), -1);
+	print_map_info(map_info);
 	close(fd);	
 	return (0);
 }

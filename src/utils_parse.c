@@ -6,11 +6,31 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:19:44 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/22 12:44:39 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:44:44 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	init_map_info(t_map_info *map_info)
+{
+	map_info->north = NULL;
+        map_info->south = NULL;
+        map_info->west = NULL;
+        map_info->east = NULL;
+        map_info->floor[0] = -1;
+        map_info->ceiling[0] = -1;
+}
+
+void	print_map_info(t_map_info map_info)
+{
+	printf("North: %s\n", map_info.north);
+        printf("South: %s\n", map_info.south);
+        printf("East: %s\n", map_info.east);
+        printf("West: %s\n", map_info.west);
+        printf("Floor RGB: %d, %d, %d\n", map_info.floor[0], map_info.floor[1], map_info.floor[2]);
+        printf("Ceiling RGB: %d, %d, %d\n", map_info.ceiling[0], map_info.ceiling[1], map_info.ceiling[2]);
+}
 
 int     ft_isspace(int c)
 {
