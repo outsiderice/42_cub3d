@@ -42,15 +42,12 @@ void	render_map_tile(mlx_image_t *minimap, int x, int y, int tile_color)
 	while (tile_y < 5)
 	{
 		tile_x = 0;
-		//printf("adios\n");
 		while (tile_x < 5)
 		{
-			printf("x = %d, y= %d, pixel line on : %d\n", x, y, tile_x);
 			mlx_put_pixel(minimap, x + tile_x, y + tile_y, tile_color);
 			tile_x++;
 		}
 		tile_y++;
-			//exit(0);
 	}
 }
 
@@ -59,7 +56,6 @@ void	render_minimap(mlx_image_t *minimap)
 	int	y;
 	int	x;
 	int	tile_color;
-	int other_color;
 	
 	y = 0;
 	while (y < 5) // < than var map_height
@@ -69,17 +65,14 @@ void	render_minimap(mlx_image_t *minimap)
 		{
 			if (worldMap[y][x] == 1)
 			{
-				tile_color = get_rgba(250, 0, 0, 255);
-				printf("1\n");
-			render_map_tile(minimap, x* x, y * y, tile_color);
+				tile_color = get_rgba(0, 0, 0, 255);
+				render_map_tile(minimap, x * 5, y * 5, tile_color);
 			}
 			else if (worldMap[y][x] == 0)
 			{
-				other_color = get_rgba(255, 255, 255, 255);
-				printf("0\n");
-			render_map_tile(minimap, x * x, y * y, other_color);
+				tile_color = get_rgba(255, 255, 255, 255);
+				render_map_tile(minimap, x * 5, y * 5, tile_color);
 			}
-			//printf("hola\n");
 			x++;
 		}
 		y++;
