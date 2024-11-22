@@ -2,15 +2,15 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "MLX42/MLX42.h"
-#include "libft.h"
 #include "input.h"
+#include "player.h"
 
 # define MAX_WIDTH 3840
 # define MAX_HEIGHT 2160
-#define WIDTH 1920
-#define HEIGHT 1080
+# define WIDTH 1920
+# define HEIGHT 1080
 
-#define BPP sizeof(int32_t)
+# define BPP sizeof(int32_t)
 
 int	worldMap[5][5] =
 {
@@ -82,6 +82,10 @@ void	render_minimap(mlx_image_t *minimap)
 
 void	cub3d()
 {
+	t_player	*player;
+
+	player->pos[0] = 2; // change later for passed pos
+	player->pos[1] = 2; // change later for passed pos
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!mlx)
 		ft_error();
@@ -107,6 +111,7 @@ int32_t	main(void)
  *		- Texture paths 			-> strings
  *		- Map						-> two dimensional array
  *		- Colors for floor and sky	-> pass rgba to get_rgba and save the returned int for sky and floor
+ *		- Player position
  * */
 
 	cub3d(); //for now void, later it will be passed the parsed info from the .cub file
