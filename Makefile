@@ -4,9 +4,9 @@ CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 LIBMLX	:= ./lib/MLX42
 LIBFT	:= ./lib/libft
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
+HEADERS	:= -I ./inc -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
-SRCS	:= src/main.c
+SRCS	:= src/main.c src/input.c
 
 OBJS	:= ${SRCS:.c=.o}
 

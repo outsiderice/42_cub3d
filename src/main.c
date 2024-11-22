@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "MLX42/MLX42.h"
 #include "libft.h"
+#include "input.h"
 
 # define MAX_WIDTH 3840
 # define MAX_HEIGHT 2160
@@ -94,7 +95,7 @@ void	cub3d()
 
 	// Register a hook and pass mlx as an optional param.
 	// NOTE: Do this before calling mlx_loop!
-//	mlx_loop_hook(mlx, ft_hook, mlx);
+	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 }

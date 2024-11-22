@@ -1,8 +1,11 @@
 #include "MLX42/MLX42.h"
 #include "input.h"
 
-static void ft_hook(void* param)
+void ft_hook(void *param)
 {
-	(void) param;
-	//controls go here
-}
+	mlx_t *mlx;
+	
+	mlx = param;
+	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
+		mlx_close_window(param);
+}	
