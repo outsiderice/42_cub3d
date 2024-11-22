@@ -1,12 +1,12 @@
 #ifndef PLAYER_H
 # define PLAYER_H
 
-//[0] = x
-//[1] = y
 typedef struct s_player
 {
-	int	pos[2];
-	int	dir[2];
+	int	pos_x;
+	int	pos_y;
+	int	dir_x;
+	int	dir_y;
 } t_player;
 
 #endif
