@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:30:20 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/22 14:13:44 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:49:27 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,13 @@ int     cardinal_direc(char *line, int i, t_map_info *map_info)
                 return (printf("Error\nNo info\n"), -1);
         info = ft_substr(line, start, end - start);
         if (fill_cardinal(info, map_info, line[i]) == -1)
-                return (-1);
+                return (free(info), -1);
         i = end;
         while(line[i] != '\0' && ft_isspace(line[i]) == 0)
                 i++;
         if (line[i] == '\0')
                 return (0);
-        return (printf("Error\nCharacters after path to texture\n"), -1);
+        return (printf("Error\nCharacters after path to texture\n"), free(info), -1);
 }
 
 int     pre_map_parse(char *line, t_map_info *map_info)

@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/22 14:21:32 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:51:36 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ int	main(int ac, char **av)
 				if (pre_map_parse(line, &map_info) == -1)
 				{
 					printf("Error\nWrong Identifier in %s", line);
-					return (close(fd), -1);
+					//free_map_info(&map_info);
+					free(line);
+					return (close(fd), exit(-1), -1);
 				}
 
 			}
@@ -74,8 +76,10 @@ int	main(int ac, char **av)
 		line = get_next_line(fd);
 	}
 	if (lines < 6)
-		return (printf("Error\nNot enough lines for pre map info\n"), -1);
+		return (free_map_info(&map_info), free(line), printf("Error\nNot enough lines for pre map info\n"), -1);
 	print_map_info(map_info);
+	//free_map_info(&map_info);
+	free(line);
 	close(fd);	
 	return (0);
 }
