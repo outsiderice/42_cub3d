@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "MLX42/MLX42.h"
+#include "render.h"
 #include "input.h"
-#include "player.h"
 
 # define MAX_WIDTH 3840
 # define MAX_HEIGHT 2160
@@ -80,28 +80,40 @@ void	render_minimap(mlx_image_t *minimap)
 	return ;
 }
 
+void	init_cub(t_cub *cub)
+{
+	t_player	*aux;
+
+	aux = NULL;
+printf("1\n");	
+	aux->pos_x = 2;
+	aux->pos_y = 2;
+	aux->dir_x = 0;
+	aux->dir_y = 0;
+	cub->player = aux;
+	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
+	if (!cub->mlx)
+		ft_error();
+	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
+}
+
 void	cub3d()
 {
-	t_player	*player;
-
-	player->pos[0] = 2; // change later for passed pos
-	player->pos[1] = 2; // change later for passed pos
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
-	if (!mlx)
-		ft_error();
-	mlx_image_t* minimap = mlx_new_image(mlx, 250, 250);
-
-	render_minimap(minimap);
+	t_cub	*cub;
 	
-	//Draw image at coordinate (0,0)
-	if (!minimap || (mlx_image_to_window(mlx, minimap, 0, 0) < 0))
+	cub = malloc(sizeof(t_cub) * 1);
+	if (!cub)
+		exit(EXIT_FAILURE);
+	init_cub(cub);	
+	render_minimap(cub->minimap);
+	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
 		ft_error();
 
 	// Register a hook and pass mlx as an optional param.
 	// NOTE: Do this before calling mlx_loop!
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop_hook(cub->mlx, ft_hook, cub);
+	mlx_loop(cub->mlx);
+	mlx_terminate(cub->mlx);
 }
 
 int32_t	main(void)
