@@ -6,7 +6,7 @@
 /*   By: rpocater <rpocater@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 20:41:59 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/23 15:42:21 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:25:59 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 5
-# endif
+#endif
 
 static char	*function_name(int fd, char *buf, char *backup)
 {

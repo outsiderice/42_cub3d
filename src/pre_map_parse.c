@@ -6,45 +6,45 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:30:20 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/25 13:46:53 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:46:30 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int     fill_color(char *info, t_map_info *map_info, char a)
+int	fill_color(char *info, t_map_info *map_info, char a)
 {
-        int     i;
-        char    **colors;
+        int	i;
+        char			**colors;
 
-        if (a == 'F' && map_info->floor[0] != -1)
-                return (printf("Error\nRepeated IDs\n"), -1);
-        if (a == 'C' && map_info->ceiling[0] != -1)
-                return (printf("Error\nRepeated IDs\n"), -1);
-        i = 0;
-        while(info[i] != '\0')
-        {
-                if (ft_isdigit(info[i]) != 1 && info[i] != ',')
-                        return (printf("Error\nInvalid characters for color\n"), -1);
-                i++;
-        }
-        colors = ft_split(info, ',');
-        i = 0;
-        while (colors[i] != NULL)
-                i++;
-        if (i != 3)
-                return (free_dpchar(colors), printf("Error\nOnly three colors are valid\n"), -1);
-        i = -1;
-        while (++i < 3)
-        {
-                if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
-                        return (printf("Error\nColor %s out of range\n", colors[i]), free_dpchar(colors), -1);
-                if (a == 'F')
-                        map_info->floor[i] = ft_atoi(colors[i]);
-                if (a == 'C')
-                        map_info->ceiling[i] = ft_atoi(colors[i]);
-        }
-        return (free_dpchar(colors), 0);
+	if (a == 'F' && map_info->floor[0] != -1)
+		return (printf("Error\nRepeated IDs\n"), -1);
+	if (a == 'C' && map_info->ceiling[0] != -1)
+		return (printf("Error\nRepeated IDs\n"), -1);
+	i = 0;
+	while(info[i] != '\0')
+	{
+		if (ft_isdigit(info[i]) != 1 && info[i] != ',')
+			return (printf("Error\nInvalid characters for color\n"), -1);
+		i++;
+	}
+	colors = ft_split(info, ',');
+	i = 0;
+	while (colors[i] != NULL)
+		i++;
+	if (i != 3)
+		return (free_dpchar(colors), printf("Error\nOnly three colors are valid\n"), -1);
+	i = -1;
+	while (++i < 3)
+	{
+		if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
+			return (printf("Error\nColor %s out of range\n", colors[i]), free_dpchar(colors), -1);
+		if (a == 'F')
+			map_info->floor[i] = ft_atoi(colors[i]);
+		if (a == 'C')
+			map_info->ceiling[i] = ft_atoi(colors[i]);
+	}
+	return (free_dpchar(colors), 0);
 }
 
 int     color_parse(char *line, int i, t_map_info *map_info)
