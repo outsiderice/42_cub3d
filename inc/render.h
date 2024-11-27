@@ -3,6 +3,9 @@
 
 #include "player.h"
 
+# define WALL 1
+# define FLOOR 0
+
 typedef struct s_cub
 {
 	t_player	*player;

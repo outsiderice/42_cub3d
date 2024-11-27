@@ -4,6 +4,8 @@
 
 void	update_player_pos(t_cub *cub, int x, int y)
 {
+	if (cub->map[cub->player->pos_y - y][cub->player->pos_x + x] != FLOOR)
+		return ;
 	cub->map[cub->player->pos_y][cub->player->pos_x] = 0;
 	cub->player->pos_x += x;
 	cub->player->pos_y -= y;

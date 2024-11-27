@@ -41,9 +41,9 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 	int	tile_color;
 
 	tile_y = 0;
-	if (map[y][x] == 1)
+	if (map[y][x] == WALL)
 				tile_color = get_rgba(0, 0, 0, 255);
-	else if (map[y][x] == 0)
+	else if (map[y][x] == FLOOR)
 		tile_color = get_rgba(255, 255, 255, 255);
 	else
 		tile_color = get_rgba(250, 0, 0, 255);
@@ -66,10 +66,10 @@ void	render_minimap(int **map, mlx_image_t *minimap)
 	int	x;
 	
 	y = 0;
-	while (y < 5) // < than var map_height
+	while (y < 5) //change later for < than var map_height
 	{
 		x = 0;
-		while (x < 5) // < than var map_width
+		while (x < 5) //change later for < than var map_width
 		{
 			if (map[y][x] != ' ')
 				render_map_tile(map, minimap, x, y);
@@ -96,6 +96,7 @@ void	init_cub(t_cub *cub)
 	if (!cub->mlx)
 		ft_error();
 	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
+	
 	//change map assignation later
 	cub->map = malloc(5 * sizeof(int *));
 	for (int i = 0; i < 5; i++)
