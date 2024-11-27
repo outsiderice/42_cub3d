@@ -2,16 +2,17 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "MLX42/MLX42.h"
-#include "libft.h"
+#include "render.h"
+#include "input.h"
 
 # define MAX_WIDTH 3840
 # define MAX_HEIGHT 2160
-#define WIDTH 1920
-#define HEIGHT 1080
+# define WIDTH 1920
+# define HEIGHT 1080
 
-#define BPP sizeof(int32_t)
+# define BPP sizeof(int32_t)
 
-int	worldMap[5][5] =
+int	worldMap[][5] =
 {
 	{1,1,1,1,1},
 	{1,0,0,0,1},
@@ -33,16 +34,16 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	render_map_tile(mlx_image_t *minimap, int x, int y)
+void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 {
 	int	tile_x;
 	int	tile_y;
 	int	tile_color;
 
 	tile_y = 0;
-	if (worldMap[y][x] == 1)
+	if (map[y][x] == WALL)
 				tile_color = get_rgba(0, 0, 0, 255);
-	else if (worldMap[y][x] == 0)
+	else if (map[y][x] == FLOOR)
 		tile_color = get_rgba(255, 255, 255, 255);
 	else
 		tile_color = get_rgba(250, 0, 0, 255);
@@ -59,19 +60,19 @@ void	render_map_tile(mlx_image_t *minimap, int x, int y)
 	return ;
 }
 
-void	render_minimap(mlx_image_t *minimap)
+void	render_minimap(int **map, mlx_image_t *minimap)
 {
 	int	y;
 	int	x;
 	
 	y = 0;
-	while (y < 5) // < than var map_height
+	while (y < 5) //change later for < than var map_height
 	{
 		x = 0;
-		while (x < 5) // < than var map_width
+		while (x < 5) //change later for < than var map_width
 		{
-			if (worldMap[y][x] != ' ')
-				render_map_tile(minimap, x, y);
+			if (map[y][x] != ' ')
+				render_map_tile(map, minimap, x, y);
 			x++;
 		}
 		y++;
@@ -79,24 +80,47 @@ void	render_minimap(mlx_image_t *minimap)
 	return ;
 }
 
+void	init_cub(t_cub *cub)
+{
+	t_player	*aux;
+
+	aux = malloc (sizeof(t_player) * 1);
+	if (!aux)
+		exit(EXIT_FAILURE);
+	aux->pos_x = 2;
+	aux->pos_y = 2;
+	aux->dir_x = 0;
+	aux->dir_y = 0;
+	cub->player = aux;
+	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
+	if (!cub->mlx)
+		ft_error();
+	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
+	
+	//change map assignation later
+	cub->map = malloc(5 * sizeof(int *));
+	for (int i = 0; i < 5; i++)
+	{
+		cub->map[i] = malloc(5 * sizeof(int));
+		for (int j = 0; j < 5; j++)
+			cub->map[i][j] = worldMap[i][j];
+	}
+}
+
 void	cub3d()
 {
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
-	if (!mlx)
-		ft_error();
-	mlx_image_t* minimap = mlx_new_image(mlx, 250, 250);
-
-	render_minimap(minimap);
+	t_cub	*cub;
 	
-	//Draw image at coordinate (0,0)
-	if (!minimap || (mlx_image_to_window(mlx, minimap, 0, 0) < 0))
+	cub = malloc(sizeof(t_cub) * 1);
+	if (!cub)
+		exit(EXIT_FAILURE);
+	init_cub(cub);	
+	render_minimap(cub->map, cub->minimap);
+	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
 		ft_error();
-
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
-//	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop_hook(cub->mlx, ft_hook, cub);
+	mlx_loop(cub->mlx);
+	mlx_terminate(cub->mlx);
 }
 
 int32_t	main(void)
@@ -106,6 +130,7 @@ int32_t	main(void)
  *		- Texture paths 			-> strings
  *		- Map						-> two dimensional array
  *		- Colors for floor and sky	-> pass rgba to get_rgba and save the returned int for sky and floor
+ *		- Player position
  * */
 
 	cub3d(); //for now void, later it will be passed the parsed info from the .cub file
