@@ -1,6 +1,20 @@
 #include "MLX42/MLX42.h"
 #include "input.h"
 #include "render.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+void	close_cub(t_cub *cub)
+{
+	mlx_terminate(cub->mlx);
+	printf("bye\n");
+	free(cub->player);
+	for (int i = 0; i < 5; i++)
+		free(cub->map[i]);
+	free(cub->map);
+	free(cub);
+	exit(EXIT_SUCCESS);
+}
 
 void	update_player_pos(t_cub *cub, int x, int y)
 {
@@ -18,7 +32,7 @@ void ft_hook(void *param)
 	
 	cub = param;
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(cub->mlx);
+		close_cub(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_W))
 		update_player_pos(cub, 0, 1);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_S))
