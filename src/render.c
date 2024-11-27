@@ -12,7 +12,7 @@
 
 # define BPP sizeof(int32_t)
 
-int	worldMap[5][5] =
+int	worldMap[][5] =
 {
 	{1,1,1,1,1},
 	{1,0,0,0,1},
@@ -34,16 +34,16 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	render_map_tile(mlx_image_t *minimap, int x, int y)
+void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 {
 	int	tile_x;
 	int	tile_y;
 	int	tile_color;
 
 	tile_y = 0;
-	if (worldMap[y][x] == 1)
+	if (map[y][x] == 1)
 				tile_color = get_rgba(0, 0, 0, 255);
-	else if (worldMap[y][x] == 0)
+	else if (map[y][x] == 0)
 		tile_color = get_rgba(255, 255, 255, 255);
 	else
 		tile_color = get_rgba(250, 0, 0, 255);
@@ -60,7 +60,7 @@ void	render_map_tile(mlx_image_t *minimap, int x, int y)
 	return ;
 }
 
-void	render_minimap(mlx_image_t *minimap)
+void	render_minimap(int **map, mlx_image_t *minimap)
 {
 	int	y;
 	int	x;
@@ -71,8 +71,8 @@ void	render_minimap(mlx_image_t *minimap)
 		x = 0;
 		while (x < 5) // < than var map_width
 		{
-			if (worldMap[y][x] != ' ')
-				render_map_tile(minimap, x, y);
+			if (map[y][x] != ' ')
+				render_map_tile(map, minimap, x, y);
 			x++;
 		}
 		y++;
@@ -84,8 +84,9 @@ void	init_cub(t_cub *cub)
 {
 	t_player	*aux;
 
-	aux = NULL;
-printf("1\n");	
+	aux = malloc (sizeof(t_player) * 1);
+	if (!aux)
+		exit(EXIT_FAILURE);
 	aux->pos_x = 2;
 	aux->pos_y = 2;
 	aux->dir_x = 0;
@@ -95,6 +96,14 @@ printf("1\n");
 	if (!cub->mlx)
 		ft_error();
 	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
+	//change map assignation later
+	cub->map = malloc(5 * sizeof(int *));
+	for (int i = 0; i < 5; i++)
+	{
+		cub->map[i] = malloc(5 * sizeof(int));
+		for (int j = 0; j < 5; j++)
+			cub->map[i][j] = worldMap[i][j];
+	}
 }
 
 void	cub3d()
@@ -105,12 +114,9 @@ void	cub3d()
 	if (!cub)
 		exit(EXIT_FAILURE);
 	init_cub(cub);	
-	render_minimap(cub->minimap);
+	render_minimap(cub->map, cub->minimap);
 	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
 		ft_error();
-
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
 	mlx_loop_hook(cub->mlx, ft_hook, cub);
 	mlx_loop(cub->mlx);
 	mlx_terminate(cub->mlx);

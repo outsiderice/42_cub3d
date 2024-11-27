@@ -1,6 +1,6 @@
 NAME	:= cub3d
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code #-fsanitize=address -Ofast
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code #-g
 LIBMLX	:= ./lib/MLX42
 LIBFT	:= ./lib/libft
 
