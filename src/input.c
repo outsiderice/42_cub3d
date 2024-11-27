@@ -4,10 +4,13 @@
 
 void	update_player_pos(t_cub *cub, int x, int y)
 {
+	if (cub->player->pos_y - y < 0 || cub->player->pos_y - y > 4 || cub->player->pos_x + x < 0 ||cub->player->pos_x + x > 4)
+		return ;
 	cub->map[cub->player->pos_y][cub->player->pos_x] = 0;
 	cub->player->pos_x += x;
 	cub->player->pos_y -= y;
 	cub->map[cub->player->pos_y][cub->player->pos_x] = 'N';
+	return ;
 }
 
 void ft_hook(void *param)
