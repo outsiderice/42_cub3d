@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:19:44 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/23 15:26:35 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:09:55 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_map_info(t_map_info *map_info)
         map_info->ceiling[1] = -1;
 	map_info->floor[2] = -1;
         map_info->ceiling[2] = -1;
+	map_info->tru = 0;
+	map_info->map = NULL;
 }
 
 void    free_map_info(t_map_info *map_info)
@@ -32,6 +34,7 @@ void    free_map_info(t_map_info *map_info)
         free(map_info->south);
         free(map_info->west);
         free(map_info->east);
+	free_dpchar((char **)map_info->map);
         //map_info->floor[0] = -1;
         //map_info->ceiling[0] = -1;
         //map_info->floor[1] = -1;

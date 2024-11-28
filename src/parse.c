@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/26 12:40:47 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:44:47 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,16 @@ int	main(int ac, char **av)
 	if (fd == -1)
 		return (printf("Error\nCould not open %s\n", av[1]), -1);
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line != NULL && lines < 6)
 	{
-		if (empty_line(line) == 0)
-			printf("empty line goes here\n");
-		else
+		if (empty_line(line) != 0)
 		{
 			printf("line %d: %s", lines, line);
-			if (lines < 6)
+			if (pre_map_parse(line, &map_info) == -1)
 			{
-				if (pre_map_parse(line, &map_info) == -1)
-				{
-					printf("Error\nWrong Identifier in %s", line);
-					free(line);
-					return (close(fd), exit(-1), -1);
-				}
+				printf("Error\nWrong Identifier in %s", line);
+				free(line);
+				return (close(fd), exit(-1), -1);
 			}
 			lines++;
 		}
@@ -78,6 +73,23 @@ int	main(int ac, char **av)
 	if (lines < 6)
 		return (free_map_info(&map_info), free(line), printf("Error\nNot enough lines for pre map info\n"), -1);
 	print_map_info(map_info);
+	while (line != NULL && empty_line(line) == 0)
+	{
+		free(line);
+                line = get_next_line(fd);
+	}
+	if (line == NULL)
+		return (free_map_info(&map_info), free(line), printf("Error\nNo lines for Map\n"), -1);
+	while (line != NULL)
+	{
+		if (map_parse(line, &map_info) == -1)
+		{
+			printf("Error\nWrong Map in %s", line);
+			free(line);
+			free_map_info(&map_info);
+			return (close(fd), exit(-1), -1);
+		}
+	}
 	free_map_info(&map_info);
 	free(line);
 	close(fd);
