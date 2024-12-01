@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:14:02 by rpocater          #+#    #+#             */
-/*   Updated: 2024/11/26 15:08:01 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:45:17 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_isspace(int c);
 void	free_dpchar(char **com);
 void	free_map_info(t_map_info *map_info);
 int		pre_map_parse(char *line, t_map_info *map_info);
-int		map_parse(char *line, t_map_info *map_info);
+int		map_parse(char *line, int *tru);
 void	init_map_info(t_map_info *map_info);
 void	print_map_info(t_map_info map_info);
 
