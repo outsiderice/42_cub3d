@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/01 18:48:08 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:09:09 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ int	main(int ac, char **av)
 	int				fd;
 	char			*line;
 	int				lines;
+	int				tru;
 
 	fd = 0;
 	lines = 0;
+	tru = 0;
 	init_map_info(&map_info);
 	if (ac != 2)
 		return (printf("Error\nWrong number of arguments\n"), -1);
@@ -82,7 +84,7 @@ int	main(int ac, char **av)
 		return (free_map_info(&map_info), free(line), printf("Error\nNo lines for Map\n"), -1);
 	while (line != NULL)
 	{
-		if (map_parse(line, &(map_info.tru)) == -1)
+		if (map_parse(line, &tru) == -1)
 		{
 			printf("Error\nWrong Map in %s", line);
 			free(line);
@@ -92,6 +94,8 @@ int	main(int ac, char **av)
 		free(line);
 		line = get_next_line(fd);
 	}
+	if (tru == 0)
+		return (free_map_info(&map_info), free(line), printf("Error\nNo start position\n"), -1);
 	printf("Good map\n");
 	free_map_info(&map_info);
 	free(line);

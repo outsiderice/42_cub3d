@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:43:48 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/01 18:42:52 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:02:47 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,25 @@ int	valid_char(char c)
 int	map_parse(char *line, int *tru)
 {
 	int	i;
+	int	vc;
 
 	i = 0;
-	if ((*tru) == 0)
-		printf("Map_info tru is 0\n");
+
 	while (line[i] != '\0' && line[i] != '\n')
 	{
-		if (valid_char(line[i]) == -1)
+		//printf("Current char is: %c\n", line[i]);
+		//printf("Map_info tru is %d\n", *tru);
+		vc = valid_char(line[i]);
+		if (vc == -1)
 			return (-1);
-		if (valid_char(line[i]) == 2 && (*tru) == 1)
+		if (vc == 2 && *tru == 1)
 		{
-			printf("Exit valid_char 2\n");
 			return (-1);
 		}
-		if (valid_char(line[i] == 2 && (*tru) == 0))
-			(*tru) = 1;
+		else if (vc == 2 && *tru == 0)
+		{
+			*tru = 1;
+		}
 		i++;
 	}
 	return (0);

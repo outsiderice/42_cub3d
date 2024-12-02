@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:19:44 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/01 18:46:33 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/02 12:26:31 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_map_info(t_map_info *map_info)
         map_info->ceiling[1] = -1;
 	map_info->floor[2] = -1;
         map_info->ceiling[2] = -1;
-	map_info->tru = 0;
 	map_info->map = NULL;
 }
 

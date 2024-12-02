@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:14:02 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/01 18:45:17 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/02 12:26:58 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_map_info
 	int		floor[3];
 	int		ceiling[3];
 	int	**map;
-	int	tru;
 }	t_map_info;
 
 char	*get_next_line(int fd);
