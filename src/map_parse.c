@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:43:48 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/04 14:35:29 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:52:16 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ int	valid_char(char c)
 	return (-1);
 }
 
+int	sp_len(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line != NULL)
+	{
+		while (line[i] != '\0' && line[i] != '\n')
+			i++;
+	}
+	return (i);
+}
+
 int	map_parse(char *line, int *tru, char *prv_line)
 {
 	int	i;
@@ -32,15 +45,15 @@ int	map_parse(char *line, int *tru, char *prv_line)
 	int	pv_len;
 
 	i = 0;
-	pv_len = 0;
-	if (prv_line != NULL)
+	pv_len = sp_len(prv_line);
+	if (prv_line != NULL && (pv_len > sp_len(line)))
 	{
-		while (prv_line[pv_len] != '\0' && prv_line[pv_len] != '\n')
-			pv_len++;
+		if (ft_strchr(prv_line + sp_len(line) - 1, '0') != NULL)
+			return (-1);
 	}
 	while (line[i] != '\0' && line[i] != '\n')
 	{
-		printf("Current char is: %c\n", line[i]);
+		//printf("Current char is: %c\n", line[i]);
 		//printf("Map_info tru is %d\n", *tru);
 		vc = valid_char(line[i]);
 		if (vc == -1)
@@ -49,7 +62,7 @@ int	map_parse(char *line, int *tru, char *prv_line)
 		{
 			if (prv_line == NULL)
                                 return (-1);
-                        if (i == 0 || i > (pv_len - 1))
+                        if (i == 0 || i > (pv_len - 2))
                                 return (-1);
                         if (valid_char(prv_line[i - 1]) == 3)
                                 return (-1);
@@ -74,7 +87,7 @@ int	map_parse(char *line, int *tru, char *prv_line)
 			// identical to doing the 0
 			if (prv_line == NULL)
 				return (-1);
-			if (i == 0 || i > (pv_len - 1))
+			if (i == 0 || i > (pv_len - 2))
 				return (-1);
 			if (valid_char(prv_line[i - 1]) == 3)
 				return (-1);

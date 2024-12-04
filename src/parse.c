@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/04 14:42:15 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:35:02 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ int	main(int ac, char **av)
 		if (ft_strchr(prv_line, '0') != NULL)
 			return (free_map_info(&map_info), free(prv_line), printf("Error\n0s at end of file\n"), -1);
 	}
-	free(prv_line);
 	if (tru == 0)
 		return (free_map_info(&map_info), free(prv_line), printf("Error\nNo start position\n"), -1);
+	free(prv_line);
 	printf("Good map with %d lines\n", lines);
 	free_map_info(&map_info);
 	free(line);
