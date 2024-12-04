@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:43:48 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/02 14:02:47 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:35:29 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,45 @@ int	valid_char(char c)
 	return (-1);
 }
 
-int	map_parse(char *line, int *tru)
+int	map_parse(char *line, int *tru, char *prv_line)
 {
 	int	i;
 	int	vc;
+	int	pv_len;
 
 	i = 0;
-
+	pv_len = 0;
+	if (prv_line != NULL)
+	{
+		while (prv_line[pv_len] != '\0' && prv_line[pv_len] != '\n')
+			pv_len++;
+	}
 	while (line[i] != '\0' && line[i] != '\n')
 	{
-		//printf("Current char is: %c\n", line[i]);
+		printf("Current char is: %c\n", line[i]);
 		//printf("Map_info tru is %d\n", *tru);
 		vc = valid_char(line[i]);
 		if (vc == -1)
 			return (-1);
+		if (vc == 0)
+		{
+			if (prv_line == NULL)
+                                return (-1);
+                        if (i == 0 || i > (pv_len - 1))
+                                return (-1);
+                        if (valid_char(prv_line[i - 1]) == 3)
+                                return (-1);
+                        if (valid_char(prv_line[i]) == 3)
+                                return (-1);
+                        if (valid_char(prv_line[i + 1]) == 3)
+                                return (-1);
+                        if (valid_char(line[i - 1]) == 3)
+                                return (-1);
+			if (valid_char(line[i + 1]) == 3)
+				return (-1);
+			if (line[i + 1] == '\0' || line[i + 1] == '\n')
+                                return (-1);
+		}
 		if (vc == 2 && *tru == 1)
 		{
 			return (-1);
@@ -46,6 +71,38 @@ int	map_parse(char *line, int *tru)
 		else if (vc == 2 && *tru == 0)
 		{
 			*tru = 1;
+			// identical to doing the 0
+			if (prv_line == NULL)
+				return (-1);
+			if (i == 0 || i > (pv_len - 1))
+				return (-1);
+			if (valid_char(prv_line[i - 1]) == 3)
+				return (-1);
+			if (valid_char(prv_line[i]) == 3)
+				return (-1);
+			if (valid_char(prv_line[i + 1]) == 3)
+				return (-1);
+			if (valid_char(line[i - 1]) == 3)
+				return (-1);
+			if (valid_char(line[i + 1]) == 3)
+				return (-1);
+			if (line[i + 1] == '\0' || line[i + 1] == '\n')
+				return (-1);
+		}
+		else if (vc == 3)
+		{
+                        if (i > 0 && i < pv_len && valid_char(prv_line[i - 1]) == 0)
+                                return (-1);
+			if (i > 0 && i < pv_len && valid_char(prv_line[i - 1]) == 2)
+				return (-1);
+                        if (i <= pv_len && (valid_char(prv_line[i]) == 0 || valid_char(prv_line[i]) == 2))
+                                return (-1);
+                        if (i < (pv_len) && (valid_char(prv_line[i + 1]) == 0 || valid_char(prv_line[i + 1]) == 2))
+                                return (-1);
+                        if (i > 0 && valid_char(line[i - 1]) == 0)
+                                return (-1);
+                        if (valid_char(line[i + 1]) == 0)
+                                return (-1);
 		}
 		i++;
 	}

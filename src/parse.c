@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/02 14:09:09 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:42:15 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ int	main(int ac, char **av)
 	char			*line;
 	int				lines;
 	int				tru;
+	char			*prv_line;
+
 
 	fd = 0;
 	lines = 0;
 	tru = 0;
 	init_map_info(&map_info);
+	prv_line = NULL;
 	if (ac != 2)
 		return (printf("Error\nWrong number of arguments\n"), -1);
 	if (check_file_ex(av[1]) != 0)
@@ -82,21 +85,33 @@ int	main(int ac, char **av)
 	}
 	if (line == NULL)
 		return (free_map_info(&map_info), free(line), printf("Error\nNo lines for Map\n"), -1);
+	lines = 0;
 	while (line != NULL)
 	{
-		if (map_parse(line, &tru) == -1)
+		if (map_parse(line, &tru, prv_line) == -1)
 		{
 			printf("Error\nWrong Map in %s", line);
+			if (prv_line != NULL)
+				free(prv_line);
 			free(line);
 			free_map_info(&map_info);
 			return (close(fd), exit(-1), -1);
 		}
-		free(line);
+		lines++;
+		if (prv_line != NULL)
+			free(prv_line);
+		prv_line = line;
 		line = get_next_line(fd);
 	}
+	if (prv_line != NULL)
+	{
+		if (ft_strchr(prv_line, '0') != NULL)
+			return (free_map_info(&map_info), free(prv_line), printf("Error\n0s at end of file\n"), -1);
+	}
+	free(prv_line);
 	if (tru == 0)
-		return (free_map_info(&map_info), free(line), printf("Error\nNo start position\n"), -1);
-	printf("Good map\n");
+		return (free_map_info(&map_info), free(prv_line), printf("Error\nNo start position\n"), -1);
+	printf("Good map with %d lines\n", lines);
 	free_map_info(&map_info);
 	free(line);
 	close(fd);
