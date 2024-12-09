@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/04 18:35:02 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:27:46 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ int	main(int ac, char **av)
 	int				lines;
 	int				tru;
 	char			*prv_line;
+	int				map_len;
 
 
 	fd = 0;
 	lines = 0;
 	tru = 0;
+	map_len = 0;
 	init_map_info(&map_info);
 	prv_line = NULL;
 	if (ac != 2)
@@ -77,7 +79,7 @@ int	main(int ac, char **av)
 	}
 	if (lines < 6)
 		return (free_map_info(&map_info), free(line), printf("Error\nNot enough lines for pre map info\n"), -1);
-	print_map_info(map_info);
+	//print_map_info(map_info);
 	while (line != NULL && empty_line(line) == 0)
 	{
 		free(line);
@@ -98,6 +100,8 @@ int	main(int ac, char **av)
 			return (close(fd), exit(-1), -1);
 		}
 		lines++;
+		if (sp_len(line) > map_len)
+			map_len = sp_len(line);
 		if (prv_line != NULL)
 			free(prv_line);
 		prv_line = line;
@@ -111,8 +115,12 @@ int	main(int ac, char **av)
 	if (tru == 0)
 		return (free_map_info(&map_info), free(prv_line), printf("Error\nNo start position\n"), -1);
 	free(prv_line);
-	printf("Good map with %d lines\n", lines);
+	printf("Good map with %d lines and map length %d\n", lines, map_len);
+	close(fd);
+	map_info.map = fill_map(av[1], map_len, lines);
+	print_map_info(map_info, map_len, lines);
 	free_map_info(&map_info);
+	free_dpint(map_info.map, lines);
 	free(line);
 	close(fd);
 	return (0);
