@@ -16,7 +16,7 @@ int	worldMap[][5] =
 {
 	{1,1,1,1,1},
 	{1,0,0,0,1},
-	{1,0,'N',0,1},
+	{1,0,'W',0,1},
 	{1,0,0,0,1},
 	{1,1,1,1,1}
 };
@@ -80,6 +80,32 @@ void	render_minimap(int **map, mlx_image_t *minimap)
 	return ;
 }
 
+void	set_direction(t_cub *cub)
+{
+	if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'N')
+	{
+		cub->player->dir_x = cub->player->pos_x;
+		cub->player->dir_y = cub->player->pos_y - 1; 
+	}
+	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'S')
+	{
+		cub->player->dir_x = cub->player->pos_x;
+		cub->player->dir_y = cub->player->pos_y + 1; 
+	}
+	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'W')
+	{
+		cub->player->dir_x = cub->player->pos_x - 1;
+		cub->player->dir_y = cub->player->pos_y; 
+	}
+	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'E')
+	{
+		cub->player->dir_x = cub->player->pos_x + 1;
+		cub->player->dir_y = cub->player->pos_y; 
+	}
+	printf("dir_x is = %f and dir_y is = %f\n", cub->player->dir_x, cub->player->dir_y);
+	return ;
+}
+
 void	init_cub(t_cub *cub)
 {
 	t_player	*aux;
@@ -87,11 +113,12 @@ void	init_cub(t_cub *cub)
 	aux = malloc (sizeof(t_player) * 1);
 	if (!aux)
 		exit(EXIT_FAILURE);
-	aux->pos_x = 2;
-	aux->pos_y = 2;
+	aux->pos_x = 2; //change later
+	aux->pos_y = 2; //change later
 	aux->dir_x = 0;
 	aux->dir_y = 0;
 	cub->player = aux;
+	set_direction(cub);
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!cub->mlx)
 		ft_error();
