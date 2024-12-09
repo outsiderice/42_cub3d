@@ -6,26 +6,18 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:21:45 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/09 14:00:02 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:02:52 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	**fill_map(char *av, int map_len, int map_lines)
+char	*skip_map_info(int fd)
 {
-	int	i;
-	int 	x;
-	int	fd;
-	int	**ret;
 	char	*line;
+	int		i;
 
 	i = 0;
-	x = 0;
-	fd = open(av, O_RDONLY);
-	if (fd == -1)
-                return (printf("Error\nCould not open %s\n", av), NULL);
-	ret = NULL;
 	line = get_next_line(fd);
 	while (line != NULL && i < 6)
 	{
@@ -35,18 +27,25 @@ int	**fill_map(char *av, int map_len, int map_lines)
 		line = get_next_line(fd);
 	}
 	while (line != NULL && empty_line(line) == 0)
-        {
-                free(line);
-                line = get_next_line(fd);
-        }
-	i = 0;
-	printf("Entering fill_map\n");
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (line);
+}
+
+int	**init_map(int fd, int map_len, int map_lines, char *line)
+{
+	int		i;
+	int		**ret;
+	int		x;
+
 	ret = (int **)malloc(sizeof(int *) * (map_lines));
 	if (ret == NULL)
 		return (printf("Error\nMalloc fail\n"), NULL);
-	while (i < map_lines)
+	i = -1;
+	while (++i < map_lines)
 	{
-		printf("In line %d\n", i);
 		ret[i] = (int *)malloc(sizeof(int) * (map_len));
 		if (ret[i] == NULL)
 			return (printf("Error\nMalloc fail\n"), ret);
@@ -56,16 +55,30 @@ int	**fill_map(char *av, int map_len, int map_lines)
 			ret[i][x] = valid_char(line[x]);
 			x++;
 		}
-		printf("xd\n");
 		while (x < map_len)
 			ret[i][x++] = 3;
-		printf("After xd\n");
-		//ret[i][map_len] = -1;
 		free(line);
 		line = get_next_line(fd);
-		printf("End of line %d\n", i);
-		i++;
 	}
-	//ret[i] = NULL;
+	return (ret);
+}
+
+int	**fill_map(char *av, int map_len, int map_lines)
+{
+	char	*line;
+	int		**ret;
+	int		i;
+	int		x;
+	int		fd;
+
+	i = 0;
+	x = 0;
+	fd = open(av, O_RDONLY);
+	if (fd == -1)
+		return (printf("Error\nCould not open %s\n", av), NULL);
+	ret = NULL;
+	line = skip_map_info(fd);
+	i = 0;
+	ret = init_map(fd, map_len, map_lines, line);
 	return (ret);
 }

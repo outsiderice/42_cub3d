@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:14:02 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/09 14:23:30 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:51:46 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_map_info
 	char	*west;
 	int		floor[3];
 	int		ceiling[3];
-	int	**map;
+	int		**map;
 }	t_map_info;
 
 char	*get_next_line(int fd);
@@ -38,10 +38,10 @@ int		pre_map_parse(char *line, t_map_info *map_info);
 int		map_parse(char *line, int *tru, char *prv_line);
 int		sp_len(char *line);
 int		empty_line(char *str);
-int     	valid_char(char c);
-void    free_dpint(int **com, int map_lines);
+int		valid_char(char c);
+void	free_dpint(int **com, int map_lines);
 void	init_map_info(t_map_info *map_info);
 void	print_map_info(t_map_info map_info, int map_len, int map_lines);
-int	**fill_map(char *av, int map_len, int map_lines);
+int		**fill_map(char *av, int map_len, int map_lines);
 
 #endif
