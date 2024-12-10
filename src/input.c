@@ -44,5 +44,5 @@ void ft_hook(void *param)
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
 	//render image again
-	render_minimap(cub->map, cub->minimap);
+	render(cub);
 }	

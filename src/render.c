@@ -59,6 +59,12 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 	}
 	return ;
 }
+/*
+void	raycast(int **map, t_player *player)
+{
+	
+	return ;
+}*/
 
 void	render_minimap(int **map, mlx_image_t *minimap)
 {
@@ -79,6 +85,16 @@ void	render_minimap(int **map, mlx_image_t *minimap)
 	}
 	return ;
 }
+
+ void	render(t_cub *cub)
+ {
+	render_minimap(cub->map, cub->minimap);
+	//raycast(map, player);
+	//render3d();
+	//textures??
+	return ;
+ }
+ 
 
 void	set_direction(t_cub *cub)
 {
@@ -102,7 +118,6 @@ void	set_direction(t_cub *cub)
 		cub->player->dir_x = cub->player->pos_x + 1;
 		cub->player->dir_y = cub->player->pos_y; 
 	}
-	printf("dir_x is = %f and dir_y is = %f\n", cub->player->dir_x, cub->player->dir_y);
 	return ;
 }
 
@@ -142,7 +157,7 @@ void	cub3d()
 	if (!cub)
 		exit(EXIT_FAILURE);
 	init_cub(cub);	
-	render_minimap(cub->map, cub->minimap);
+	render(cub);
 	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
 		ft_error();
 	mlx_loop_hook(cub->mlx, ft_hook, cub);

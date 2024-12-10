@@ -15,5 +15,5 @@ typedef struct s_cub
 	mlx_image_t	*scene;
 } t_cub;
 
-void	render_minimap(int **map, mlx_image_t *minimap);
+void	render(t_cub *cub);
 #endif
