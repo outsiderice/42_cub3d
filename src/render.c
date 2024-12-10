@@ -60,25 +60,25 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 	return ;
 }
 /*
-void	raycast(int **map, t_player *player)
+void	raycast(int **map, mlx_image_t *minimap, t_player *player)
 {
-	
+	//throw ray until collision, check collision with grid in x and y both
 	return ;
 }*/
 
-void	render_minimap(int **map, mlx_image_t *minimap)
+void	render_minimap(t_map *map, mlx_image_t *minimap)
 {
 	int	y;
 	int	x;
 	
 	y = 0;
-	while (y < 5) //change later for < than var map_height
+	while (y < map->map_height)
 	{
 		x = 0;
-		while (x < 5) //change later for < than var map_width
+		while (x < map->map_width)
 		{
-			if (map[y][x] != ' ')
-				render_map_tile(map, minimap, x, y);
+			if (map->map[y][x] != ' ')
+				render_map_tile(map->map, minimap, x, y);
 			x++;
 		}
 		y++;
@@ -89,7 +89,7 @@ void	render_minimap(int **map, mlx_image_t *minimap)
  void	render(t_cub *cub)
  {
 	render_minimap(cub->map, cub->minimap);
-	//raycast(map, player);
+	//raycast(cub->map, cub->minimap, cub->player);
 	//render3d();
 	//textures??
 	return ;
@@ -140,13 +140,20 @@ void	init_cub(t_cub *cub)
 	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
 	
 	//change map assignation later
-	cub->map = malloc(5 * sizeof(int *));
+	t_map	*map;
+	map = malloc (sizeof(t_map) * 1);
+	if (!map)
+		exit(EXIT_FAILURE);
+	map->map = malloc(5 * sizeof(int *));
 	for (int i = 0; i < 5; i++)
 	{
-		cub->map[i] = malloc(5 * sizeof(int));
+		map->map[i] = malloc(5 * sizeof(int));
 		for (int j = 0; j < 5; j++)
-			cub->map[i][j] = worldMap[i][j];
+			map->map[i][j] = worldMap[i][j];
 	}
+	map->map_width = 5;
+	map->map_height = 5;
+	cub->map = map;
 }
 
 void	cub3d()
