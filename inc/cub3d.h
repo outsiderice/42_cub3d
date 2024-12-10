@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:14:02 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/10 12:22:28 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:38:45 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	init_map_info(t_map_info *map_info);
 void	print_map_info(t_map_info map_info, int map_len, int map_lines);
 int		**fill_map(char *av, int map_len, int map_lines);
 int    		prev_line_check(char *prv_line, char *line, int *i);
+int     	color_check(char *info, t_map_info *map_info, char a);
 
 #endif

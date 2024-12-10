@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:56:50 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/10 12:21:21 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:40:44 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	prev_line_check(char *prv_line, char *line, int *i)
 {
-	int pv_len;
+	int	pv_len;
 
 	pv_len = sp_len(prv_line);
 	*i = 0;
@@ -24,4 +24,22 @@ int	prev_line_check(char *prv_line, char *line, int *i)
 			return (-1);
 	}
 	return (pv_len);
+}
+
+int	color_check(char *info, t_map_info *map_info, char a)
+{
+	int	i;
+
+	i = 0;
+	if (a == 'F' && map_info->floor[0] != -1)
+		return (printf("Error\nRepeated IDs\n"), -1);
+	if (a == 'C' && map_info->ceiling[0] != -1)
+		return (printf("Error\nRepeated IDs\n"), -1);
+	while (info[i] != '\0')
+	{
+		if (ft_isdigit(info[i]) != 1 && info[i] != ',')
+			return (printf("Error\nInvalid characters for color\n"), -1);
+		i++;
+	}
+	return (0);
 }

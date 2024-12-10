@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/09 14:27:46 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:43:38 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ int	check_file_ex(char *str)
 	int	i;
 
 	i = ft_strlen(str);
-	if (i > 4 && str[i - 4] == '.' && str[i - 3] == 'c' && str[i - 2] == 'u' && str[i - 1] == 'b')
-	{
-		printf("Right file extension on %s\n", str);
-		return (0);
-	}
-	else
-		printf("Error\nWrong file extension on %s\n", str);
-	return (-1);
+	if (i <= 4)
+		return (-1);
+	if (str[i - 4] != '.')
+		return (-1);
+	if (str[i - 3] != 'c')
+		return (-1);
+	if (str[i - 2] != 'u')
+		return (-1);
+	if (str[i - 1] != 'b')
+		return (-1);
+	return (0);
 }
 
 int	empty_line(char *str)
@@ -46,7 +49,6 @@ int	main(int ac, char **av)
 	char			*prv_line;
 	int				map_len;
 
-
 	fd = 0;
 	lines = 0;
 	tru = 0;
@@ -56,7 +58,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (printf("Error\nWrong number of arguments\n"), -1);
 	if (check_file_ex(av[1]) != 0)
-		return (-1);
+		return (printf("Error\nWrong file extension on %s\n", av[1]), -1);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		return (printf("Error\nCould not open %s\n", av[1]), -1);
@@ -79,7 +81,6 @@ int	main(int ac, char **av)
 	}
 	if (lines < 6)
 		return (free_map_info(&map_info), free(line), printf("Error\nNot enough lines for pre map info\n"), -1);
-	//print_map_info(map_info);
 	while (line != NULL && empty_line(line) == 0)
 	{
 		free(line);
