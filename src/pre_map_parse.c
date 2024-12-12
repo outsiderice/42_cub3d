@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:30:20 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/10 13:39:58 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:57:10 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	fill_color(char *info, t_map_info *map_info, char a)
 	while (colors[i] != NULL)
 		i++;
 	if (i != 3)
-		return (free_dpchar(colors), printf("Error\nOnly three colors\n"), -1);
+		return (free_dpchar(colors), -1);
 	i = -1;
 	while (++i < 3)
 	{
 		if (ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
-			return (printf("Error\nOut of range\n"), free_dpchar(colors), -1);
+			return (free_dpchar(colors), -1);
 		if (a == 'F')
 			map_info->floor[i] = ft_atoi(colors[i]);
 		if (a == 'C')
@@ -48,12 +48,12 @@ int	color_parse(char *line, int i, t_map_info *map_info)
 	while (line[start] != '\0' && ft_isspace(line[start]) == 0)
 		start++;
 	if (start == i + 1)
-		return (printf("Error\nNo spaces between ID and info\n"), -1);
+		return (-1);
 	end = start;
 	while (line[end] != '\0' && ft_isspace(line[end]) != 0)
 		end++;
 	if (end == start)
-		return (printf("Error\nNo info\n"), -1);
+		return (-1);
 	info = ft_substr(line, start, end - start);
 	if (fill_color(info, map_info, line[i]) == -1)
 		return (free(info), -1);
@@ -62,7 +62,7 @@ int	color_parse(char *line, int i, t_map_info *map_info)
 		i++;
 	if (line[i] == '\0')
 		return (free(info), 0);
-	return (printf("Error\nCharacters after color ID\n"), free(info), -1);
+	return (free(info), -1);
 }
 
 int	fill_cardinal(char *info, t_map_info *map_info, char a)
@@ -87,7 +87,6 @@ int	fill_cardinal(char *info, t_map_info *map_info, char a)
 		map_info->west = info;
 		return (0);
 	}
-	printf("Error\nRepeated IDs\n");
 	return (-1);
 }
 
@@ -101,12 +100,12 @@ int	cardinal_direc(char *line, int i, t_map_info *map_info)
 	while (line[start] != '\0' && ft_isspace(line[start]) == 0)
 		start++;
 	if (start == i + 2)
-		return (printf("Error\nNo spaces between ID and info\n"), -1);
+		return (-1);
 	end = start;
 	while (line[end] != '\0' && ft_isspace(line[end]) != 0)
 		end++;
 	if (end == start)
-		return (printf("Error\nNo info\n"), -1);
+		return (-1);
 	info = ft_substr(line, start, end - start);
 	if (fill_cardinal(info, map_info, line[i]) == -1)
 		return (free(info), -1);
@@ -115,7 +114,7 @@ int	cardinal_direc(char *line, int i, t_map_info *map_info)
 		i++;
 	if (line[i] == '\0')
 		return (0);
-	return (printf("Error\nCharacters after Card Id\n"), free(info), -1);
+	return (free(info), -1);
 }
 
 int	pre_map_parse(char *line, t_map_info *map_info)
