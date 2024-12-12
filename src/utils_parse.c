@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:19:44 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 12:37:28 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:17:22 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,10 @@ void	print_map_info(t_map_info map_info, int map_len, int map_lines)
 		x = 0;
 		while (x < map_len)
 		{
-			if ((map_info.map[i][x]) == 0)
-				printf("0");
-			if ((map_info.map[i][x]) == 1)
-				printf("1");
-			if ((map_info.map[i][x]) == 2)
-				printf("E");
-			if ((map_info.map[i][x]) == 3)
+			if (ft_isspace(map_info.map[i][x]) == 0)
 				printf("[ ]");
+			else
+				printf("%c", (char)map_info.map[i][x]);
 			x++;
 		}
 		printf("\n");

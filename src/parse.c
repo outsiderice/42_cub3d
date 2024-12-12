@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 12:56:49 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:16:54 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,5 @@ int	parse(int ac, char **av, t_map_info *map_info)
 		return (close(fd), printf("Errror\nWrong Map\n"), -1);
 	close(fd);
 	map_info->map = fill_map(av[1], map_len, lines, map_info);
-	print_map_info(*map_info, map_len, lines);
-	free_map_info(map_info);
-	return (free_dpint(map_info->map, lines), close(fd), 0);
+	return (close(fd), 0);
 }

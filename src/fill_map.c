@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:21:45 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 12:32:50 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:19:06 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	**init_map(int fd, int map_len, int map_lines, char *line)
 		x = 0;
 		while (line[x] != '\0' && line[x] != '\n')
 		{
-			ret[i][x] = valid_char(line[x]);
+			ret[i][x] = (int) line[x];
 			x++;
 		}
 		while (x < map_len)
@@ -74,7 +74,7 @@ int	**fill_map(char *av, int map_len, int map_lines, t_map_info *mp)
 	i = 0;
 	x = 0;
 	if (map_len > 480 || map_lines > 360)
-		return(printf("Error\nMap too big"), NULL);
+		return (printf("Error\nMap too big"), NULL);
 	fd = open(av, O_RDONLY);
 	if (fd == -1)
 		return (printf("Error\nCould not open %s\n", av), NULL);
