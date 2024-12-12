@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:21:45 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 13:19:06 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:13:03 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	**init_map(int fd, int map_len, int map_lines, char *line)
 			x++;
 		}
 		while (x < map_len)
-			ret[i][x++] = 3;
+			ret[i][x++] = ' ';
 		free(line);
 		line = get_next_line(fd);
 	}
