@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:56:50 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/11 14:59:49 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:57:32 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ int	second_parse(int fd, t_map_info *map_info, char *line, int *map_len)
 		lines++;
 		if (sp_len(line) > *map_len)
 			*map_len = sp_len(line);
-		if (prv_line != NULL)
-			free(prv_line);
+		free(prv_line);
 		prv_line = line;
 		line = get_next_line(fd);
 	}
