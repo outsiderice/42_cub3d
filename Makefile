@@ -6,7 +6,7 @@ LIBFT	:= ./lib/libft
 
 HEADERS	:= -I ./inc -I $(LIBMLX)/include -I $(LIBFT)
 LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
-SRCS	:= src/render.c src/input.c
+SRCS	:= src/fill_map.c src/get_next_line.c src/parse.c src/pre_map_parse.c src/map_parse.c src/utils_parse.c src/utils_parse_2.c src/parse_main.c src/render.c src/input.c
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -22,7 +22,7 @@ libft:
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJS)

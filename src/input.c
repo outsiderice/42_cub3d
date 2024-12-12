@@ -10,7 +10,8 @@ void	close_cub(t_cub *cub)
 	printf("bye\n");
 	free(cub->player);
 	for (int i = 0; i < 5; i++)
-		free(cub->map[i]);
+		free(cub->map->map[i]);
+	free(cub->map->map);
 	free(cub->map);
 	free(cub);
 	exit(EXIT_SUCCESS);
@@ -18,12 +19,12 @@ void	close_cub(t_cub *cub)
 
 void	update_player_pos(t_cub *cub, int x, int y)
 {
-	if (cub->map[cub->player->pos_y - y][cub->player->pos_x + x] != FLOOR)
+	if (cub->map->map[cub->player->pos_y - y][cub->player->pos_x + x] != FLOOR)
 		return ;
-	cub->map[cub->player->pos_y][cub->player->pos_x] = 0;
+	cub->map->map[cub->player->pos_y][cub->player->pos_x] = '0';
 	cub->player->pos_x += x;
 	cub->player->pos_y -= y;
-	cub->map[cub->player->pos_y][cub->player->pos_x] = 'N';
+	cub->map->map[cub->player->pos_y][cub->player->pos_x] = 'N';
 }
 
 void ft_hook(void *param)
@@ -44,5 +45,5 @@ void ft_hook(void *param)
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
 	//render image again
-	render_minimap(cub->map, cub->minimap);
+	render(cub);
 }	
