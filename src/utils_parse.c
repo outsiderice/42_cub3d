@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:19:44 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/11 14:59:58 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:37:28 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_map_info(t_map_info *map_info)
 	map_info->ceiling[1] = -1;
 	map_info->floor[2] = -1;
 	map_info->ceiling[2] = -1;
+	map_info->map_len = -1;
+	map_info->map_lines = -1;
 	map_info->map = NULL;
 }
 
@@ -80,6 +82,8 @@ void	print_map_info(t_map_info map_info, int map_len, int map_lines)
 		printf("\n");
 		i++;
 	}
+	printf("Map length: %d\n", map_info.map_len);
+	printf("Map Lines: %d\n", map_info.map_lines);
 }
 
 int	ft_isspace(int c)

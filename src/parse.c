@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/11 14:56:15 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:56:49 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ int	open_file(int ac, char **av)
 	return (fd);
 }
 
-int	main(int ac, char **av)
+int	parse(int ac, char **av, t_map_info *map_info)
 {
-	t_map_info		map_info;
 	int				fd;
 	char			*line;
 	int				lines;
@@ -65,20 +64,20 @@ int	main(int ac, char **av)
 	fd = 0;
 	lines = 0;
 	map_len = 0;
-	init_map_info(&map_info);
+	init_map_info(map_info);
 	line = NULL;
 	fd = open_file(ac, av);
 	if (fd == -1)
 		return (-1);
-	line = first_parse(fd, &map_info, lines);
+	line = first_parse(fd, map_info, lines);
 	if (line == NULL)
-		return (close(fd), exit(-1), printf("Wrong Map\n"), -1);
-	lines = second_parse(fd, &map_info, line, &map_len);
+		return (close(fd), printf("Wrong Info\n"), -1);
+	lines = second_parse(fd, map_info, line, &map_len);
 	if (lines == -1)
-		return (close(fd), exit(-1), printf("Errror\nWrong Map\n"), -1);
+		return (close(fd), printf("Errror\nWrong Map\n"), -1);
 	close(fd);
-	map_info.map = fill_map(av[1], map_len, lines);
-	print_map_info(map_info, map_len, lines);
-	free_map_info(&map_info);
-	return (free_dpint(map_info.map, lines), close(fd), 0);
+	map_info->map = fill_map(av[1], map_len, lines, map_info);
+	print_map_info(*map_info, map_len, lines);
+	free_map_info(map_info);
+	return (free_dpint(map_info->map, lines), close(fd), 0);
 }
