@@ -2,9 +2,10 @@
 # define RENDER_H
 
 #include "player.h"
+#include "cub3d.h"
 
-# define WALL 1
-# define FLOOR 0
+# define WALL '1'
+# define FLOOR '0'
 
 typedef struct s_map
 {
@@ -23,4 +24,5 @@ typedef struct s_cub
 } t_cub;
 
 void	render(t_cub *cub);
+void	cub3d(t_map_info info);
 #endif

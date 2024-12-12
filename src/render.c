@@ -121,15 +121,15 @@ void	set_direction(t_cub *cub)
 	return ;
 }
 
-void	init_cub(t_cub *cub)
+void	init_cub(t_cub *cub, t_map_info info, int *start)
 {
 	t_player	*aux;
 
 	aux = malloc (sizeof(t_player) * 1);
 	if (!aux)
 		exit(EXIT_FAILURE);
-	aux->pos_x = 2; //change later
-	aux->pos_y = 2; //change later
+	aux->pos_x = start[1];
+	aux->pos_y = start[0];
 	aux->dir_x = 0;
 	aux->dir_y = 0;
 	cub->player = aux;
@@ -138,50 +138,57 @@ void	init_cub(t_cub *cub)
 	if (!cub->mlx)
 		ft_error();
 	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
-	
+	printf("old stuff assigned\n");	
 	//change map assignation later
 	t_map	*map;
 	map = malloc (sizeof(t_map) * 1);
 	if (!map)
 		exit(EXIT_FAILURE);
-	map->map = malloc(5 * sizeof(int *));
-	for (int i = 0; i < 5; i++)
-	{
-		map->map[i] = malloc(5 * sizeof(int));
-		for (int j = 0; j < 5; j++)
-			map->map[i][j] = worldMap[i][j];
-	}
-	map->map_width = 5;
-	map->map_height = 5;
+	map->map_width = info.map_len;
+	map->map_height = info.map_lines;
+	map->map = info.map;
 	cub->map = map;
 }
 
-void	cub3d()
+int find_start(t_map_info info, int *x)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < info.map_lines)
+	{
+		j = 0;
+		while (j < info.map_len)
+		{
+			if (valid_char((char)info.map[i][j]) == 2)
+			{
+				*x = j;
+				return(i);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}
+
+void	cub3d(t_map_info info)
 {
 	t_cub	*cub;
-	
+	int		start[2];
+
 	cub = malloc(sizeof(t_cub) * 1);
 	if (!cub)
 		exit(EXIT_FAILURE);
-	init_cub(cub);	
+	start[0] = find_start(info, &start[1]);
+	printf("start[0] is %d start[1] is %d\n", start[0], start[1]);
+	init_cub(cub, info, start);
+	printf("initialized cub\n");	
 	render(cub);
 	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
 		ft_error();
 	mlx_loop_hook(cub->mlx, ft_hook, cub);
 	mlx_loop(cub->mlx);
 	mlx_terminate(cub->mlx);
-}
-
-int32_t	main(void)
-{
-	/*parsing stuff goes here
- * 		If there's no errors the following is saved to a struct to be passed to cub3d:
- *		- Texture paths 			-> strings
- *		- Map						-> two dimensional array
- *		- Colors for floor and sky	-> pass rgba to get_rgba and save the returned int for sky and floor
- *		- Player position
- * */
-
-	cub3d(); //for now void, later it will be passed the parsed info from the .cub file
-	return (EXIT_SUCCESS);
 }
