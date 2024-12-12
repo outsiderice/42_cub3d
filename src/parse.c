@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:28:46 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 13:16:54 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:43:35 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parse(int ac, char **av, t_map_info *map_info)
 		return (-1);
 	line = first_parse(fd, map_info, lines);
 	if (line == NULL)
-		return (close(fd), printf("Wrong Info\n"), -1);
+		return (close(fd), printf("Error\nWrong Info\n"), -1);
 	lines = second_parse(fd, map_info, line, &map_len);
 	if (lines == -1)
 		return (close(fd), printf("Errror\nWrong Map\n"), -1);

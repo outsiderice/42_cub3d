@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:56:50 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 11:57:32 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:47:29 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int	color_check(char *info, t_map_info *map_info, char a)
 
 	i = 0;
 	if (a == 'F' && map_info->floor[0] != -1)
-		return (printf("Error\nRepeated IDs\n"), -1);
+		return (-1);
 	if (a == 'C' && map_info->ceiling[0] != -1)
-		return (printf("Error\nRepeated IDs\n"), -1);
+		return (-1);
 	while (info[i] != '\0')
 	{
 		if (ft_isdigit(info[i]) != 1 && info[i] != ',')
-			return (printf("Error\nInvalid characters for color\n"), -1);
+			return (-1);
 		i++;
 	}
 	return (0);
@@ -61,14 +61,14 @@ char	*first_parse(int fd, t_map_info *map_info, int lines)
 		line = get_next_line(fd);
 	}
 	if (lines < 6)
-		return (free_map_info(map_info), free(line), printf("Error\n"), NULL);
+		return (free_map_info(map_info), free(line), NULL);
 	while (line != NULL && empty_line(line) == 0)
 	{
 		free(line);
 		line = get_next_line(fd);
 	}
 	if (line == NULL)
-		return (free_map_info(map_info), free(line), printf("Error\n"), NULL);
+		return (free_map_info(map_info), free(line), NULL);
 	return (line);
 }
 
