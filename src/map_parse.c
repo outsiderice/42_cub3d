@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:43:48 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/10 12:22:05 by rpocater         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:56:49 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ int	check_space(char *prv_line, int i, int pv_len, char *line)
 {
 	int	tru;
 
+	if (i > 0 && valid_char(line[i - 1]) == 0)
+		return (-1);
+	if (valid_char(line[i + 1]) == 0)
+		return (-1);
+	if (prv_line == NULL)
+		return (0);
 	tru = (valid_char(prv_line[i]) == 0 || valid_char(prv_line[i]) == 2);
 	if (i > 0 && i < pv_len && valid_char(prv_line[i - 1]) == 0)
 		return (-1);
@@ -72,10 +78,6 @@ int	check_space(char *prv_line, int i, int pv_len, char *line)
 		return (-1);
 	tru = !valid_char(prv_line[i + 1]) || valid_char(prv_line[i + 1]) == 2;
 	if (i < (pv_len) && tru)
-		return (-1);
-	if (i > 0 && valid_char(line[i - 1]) == 0)
-		return (-1);
-	if (valid_char(line[i + 1]) == 0)
 		return (-1);
 	return (0);
 }
