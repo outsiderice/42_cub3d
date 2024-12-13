@@ -12,15 +12,6 @@
 
 # define BPP sizeof(int32_t)
 
-int	worldMap[][5] =
-{
-	{1,1,1,1,1},
-	{1,0,0,0,1},
-	{1,0,'W',0,1},
-	{1,0,0,0,1},
-	{1,1,1,1,1}
-};
-
 // Exit the program as failure.
 static void ft_error(void)
 {
@@ -63,6 +54,7 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 void	raycast(int **map, mlx_image_t *minimap, t_player *player)
 {
 	//throw ray until collision, check collision with grid in x and y both
+	if (map->map->[player->pos_y][player->pos_x] == FLOOR)
 	return ;
 }*/
 
