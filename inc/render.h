@@ -6,6 +6,7 @@
 
 # define WALL '1'
 # define FLOOR '0'
+# define CUBE_SIZE 64
 
 typedef struct s_map
 {

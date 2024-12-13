@@ -50,13 +50,58 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 	}
 	return ;
 }
-/*
-void	raycast(int **map, mlx_image_t *minimap, t_player *player)
+
+void	raycast(int **map, mlx_image_t *scene, t_player *player)
 {
-	//throw ray until collision, check collision with grid in x and y both
-	if (map->map->[player->pos_y][player->pos_x] == FLOOR)
+	
+	int		x;
+	int		y;
+	int		pov_x;
+	int		pov_y;
+	int		distance;
+	int		to_border;
+	int		floor_color;
+
+	floor_color = get_rgba(250, 0, 0, 255);
+	pov_x = WIDTH / 2;
+	pov_y = HEIGHT;
+	x = player->pos_x + player->dir_x;
+	y = player->pos_y + player->dir_y;
+	distance = 0;
+	to_border = 32;
+	printf("1\n");
+	printf("x is = %d y is = %d\n", x, y);	
+	while (map[y][x] == FLOOR)
+	{
+		printf("dis%d\n", distance);
+		y += player->dir_y;
+		x += player->dir_x;
+	printf("in loop x is = %d y is = %d\n", x, y);	
+		distance++;
+	}
+	printf("2\n");
+	distance = distance * CUBE_SIZE;
+	distance += 32;
+	x = 0;
+	while (x < distance)
+	{
+		printf("pov_y = %d\n", pov_y);
+		mlx_put_pixel(scene, pov_x, pov_y--, floor_color);
+		x++;
+	}
+	x = 0;
+	printf("3\n");	
+	while (x < CUBE_SIZE * 2)
+	{
+		mlx_put_pixel(scene, pov_x, pov_y--, get_rgba(255, 255, 255, 255));
+		x++;
+	}
+	printf("4\n");	
+	while (pov_y >= 0)
+		mlx_put_pixel(scene, pov_x, pov_y--, get_rgba(0, 0, 0, 255));
+	printf("5\n");	
 	return ;
-}*/
+}
 
 void	render_minimap(t_map *map, mlx_image_t *minimap)
 {
@@ -78,11 +123,10 @@ void	render_minimap(t_map *map, mlx_image_t *minimap)
 	return ;
 }
 
- void	render(t_cub *cub)
- {
+void	render(t_cub *cub)
+{ 
+	raycast(cub->map->map, cub->scene, cub->player);
 	render_minimap(cub->map, cub->minimap);
-	//raycast(cub->map, cub->minimap, cub->player);
-	//render3d();
 	//textures??
 	return ;
  }
@@ -90,25 +134,25 @@ void	render_minimap(t_map *map, mlx_image_t *minimap)
 
 void	set_direction(t_cub *cub)
 {
-	if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'N')
+	if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'N')
 	{
-		cub->player->dir_x = cub->player->pos_x;
-		cub->player->dir_y = cub->player->pos_y - 1; 
+		cub->player->dir_x = 0;
+		cub->player->dir_y = -1; 
 	}
-	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'S')
+	else if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'S')
 	{
-		cub->player->dir_x = cub->player->pos_x;
-		cub->player->dir_y = cub->player->pos_y + 1; 
+		cub->player->dir_x = 0;
+		cub->player->dir_y = 1; 
 	}
-	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'W')
+	else if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'W')
 	{
-		cub->player->dir_x = cub->player->pos_x - 1;
-		cub->player->dir_y = cub->player->pos_y; 
+		cub->player->dir_x = - 1;
+		cub->player->dir_y = 0; 
 	}
-	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'E')
+	else if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'E')
 	{
-		cub->player->dir_x = cub->player->pos_x + 1;
-		cub->player->dir_y = cub->player->pos_y; 
+		cub->player->dir_x = 1;
+		cub->player->dir_y = 0; 
 	}
 	return ;
 }
@@ -125,12 +169,12 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	aux->dir_x = 0;
 	aux->dir_y = 0;
 	cub->player = aux;
-	set_direction(cub);
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!cub->mlx)
 		ft_error();
 	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
-	printf("old stuff assigned\n");	
+	cub->scene = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+	printf("old stuff assigned\n");
 	//change map assignation later
 	t_map	*map;
 	map = malloc (sizeof(t_map) * 1);
@@ -140,6 +184,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	map->map_height = info.map_lines;
 	map->map = info.map;
 	cub->map = map;
+	set_direction(cub);
 }
 
 int find_start(t_map_info info, int *x)
@@ -178,6 +223,8 @@ void	cub3d(t_map_info info)
 	init_cub(cub, info, start);
 	printf("initialized cub\n");	
 	render(cub);
+	if (!cub->scene || (mlx_image_to_window(cub->mlx, cub->scene, 0, 0) < 0))
+		ft_error();
 	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
 		ft_error();
 	mlx_loop_hook(cub->mlx, ft_hook, cub);

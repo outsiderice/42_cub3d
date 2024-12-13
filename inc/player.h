@@ -3,8 +3,8 @@
 
 typedef struct s_player
 {
-	int	pos_x;
-	int	pos_y;
+	int		pos_x;
+	int		pos_y;
 	float	dir_x;
 	float	dir_y;
 } t_player;
