@@ -3,6 +3,7 @@
 
 #include "player.h"
 #include "cub3d.h"
+#include <math.h>
 
 # define WALL '1'
 # define FLOOR '0'

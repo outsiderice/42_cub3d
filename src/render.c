@@ -9,6 +9,7 @@
 # define MAX_HEIGHT 2160
 # define WIDTH 1920
 # define HEIGHT 1080
+# define FOV 60
 
 # define BPP sizeof(int32_t)
 
@@ -50,8 +51,8 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 	}
 	return ;
 }
-
-void	raycast(int **map, mlx_image_t *scene, t_player *player)
+/*
+void	render_column(int **map, mlx_image_t *scene, t_player *player, double ray_x, double ray_y)
 {
 	
 	int		x;
@@ -62,27 +63,26 @@ void	raycast(int **map, mlx_image_t *scene, t_player *player)
 	int		to_border;
 	int		floor_color;
 
+
 	floor_color = get_rgba(250, 0, 0, 255);
-	pov_x = WIDTH / 2;
+	pov_x = 0;
 	pov_y = HEIGHT;
 	x = player->pos_x + player->dir_x;
 	y = player->pos_y + player->dir_y;
 	distance = 0;
 	to_border = 32;
-	printf("1\n");
-	printf("x is = %d y is = %d\n", x, y);	
+	printf("x is = %d y is = %d\n", x, y);
+	//calculate_distance to the wall on the map grid
 	while (map[y][x] == FLOOR)
 	{
-		printf("dis%d\n", distance);
 		y += player->dir_y;
 		x += player->dir_x;
-	printf("in loop x is = %d y is = %d\n", x, y);	
 		distance++;
 	}
-	printf("2\n");
-	distance = distance * CUBE_SIZE;
-	distance += 32;
+	distance = distance * CUBE_SIZE; //scales distance to cube_size;
+	distance += to_border; // adjusts for the position of player in the cube tile.
 	x = 0;
+	//prints floor part in the middle column
 	while (x < distance)
 	{
 		printf("pov_y = %d\n", pov_y);
@@ -90,17 +90,55 @@ void	raycast(int **map, mlx_image_t *scene, t_player *player)
 		x++;
 	}
 	x = 0;
-	printf("3\n");	
+	//prints wall part to middle column
 	while (x < CUBE_SIZE * 2)
 	{
 		mlx_put_pixel(scene, pov_x, pov_y--, get_rgba(255, 255, 255, 255));
 		x++;
 	}
-	printf("4\n");	
+	//prints ceiling part to middle column
 	while (pov_y >= 0)
 		mlx_put_pixel(scene, pov_x, pov_y--, get_rgba(0, 0, 0, 255));
-	printf("5\n");	
 	return ;
+}
+
+void	ray_dir(double dir_x, double dir_y, double angle, double &ray_x, double &ray_y)
+{
+	double	cos_angle;
+	double	sin_angle;
+	
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
+	*ray_x = dir_x + cos_angle;
+	*ray_y = dir_y + sin_angle;
+	return ;
+}*/
+
+void	raycast(int **map, mlx_image_t *scene, t_player *player)
+{
+	int	x;
+	double	camera_x;
+	/*
+	double	ray_x;
+	double	ray_y;
+	double	angle;
+	double	start_angle;
+	double	step_angle;
+*/
+	x = 0;
+	//start_angle = -(FOV / 2.0);
+//	step_angle = FOW / (double)WIDTH;
+//	angle = start_angle;
+	while (x < WIDTH)
+	{
+	/*
+		ray_dir(player->dir_x, player->dir_y, &ray_x, &ray_y);
+		render_column(map, scene, player, ray_x, ray_y);
+		angle += step_angle;
+	*/
+		
+		x++;
+	}
 }
 
 void	render_minimap(t_map *map, mlx_image_t *minimap)
@@ -168,6 +206,8 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	aux->pos_y = start[0];
 	aux->dir_x = 0;
 	aux->dir_y = 0;
+	aux->plane_x = 0;
+	aux->plane_y = 0.66;
 	cub->player = aux;
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!cub->mlx)
