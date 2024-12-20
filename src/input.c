@@ -19,12 +19,12 @@ void	close_cub(t_cub *cub)
 
 void	update_player_pos(t_cub *cub, int x, int y)
 {
-	if (cub->map->m[cub->player->pos_y - y][cub->player->pos_x + x] != FLOOR)
+	if (cub->map->m[(int)cub->player->pos_y - y][(int)cub->player->pos_x + x] != FLOOR)
 		return ;
-	cub->map->m[cub->player->pos_y][cub->player->pos_x] = '0';
+	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = '0';
 	cub->player->pos_x += x;
 	cub->player->pos_y -= y;
-	cub->map->m[cub->player->pos_y][cub->player->pos_x] = 'N';
+	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
 }
 
 void ft_hook(void *param)

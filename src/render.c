@@ -71,7 +71,7 @@ void	render_minimap(t_map *map, mlx_image_t *img)
 	}
 	return ;
 }
-
+/*
 void	raycast(int **map, mlx_image_t *img, t_player *player)
 {
 	int	x;
@@ -86,43 +86,50 @@ void	raycast(int **map, mlx_image_t *img, t_player *player)
 		ray_y = player->dir_y + player->plane_y * camera_x;
 		x++;
 	}
-}
+}*/
 
-
+//render loop;
 void	render(t_cub *cub)
 { 
-	raycast(cub->map->map, cub->img, cub->player);
+	//ray direction
+	//ray cast
+//	raycast(cub->map->map, cub->img, cub->player);
 	render_minimap(cub->map, cub->img);
 	//textures??
 	return ;
  }
  
-
+// sets player starting direction
 void	set_direction(t_cub *cub)
 {
-	if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'N')
+	int	x;
+	int	y;
+
+	x = (int)cub->player->pos_x;
+	y = (int)cub->player->pos_y;
+	if (cub->map->m[y][x] == 'N')
 	{
 		cub->player->dir_x = 0;
 		cub->player->dir_y = -1; 
 	}
-	else if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'S')
+	else if (cub->map->m[y][x] == 'S')
 	{
 		cub->player->dir_x = 0;
 		cub->player->dir_y = 1; 
 	}
-	else if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'W')
+	else if (cub->map->m[y][x] == 'W')
 	{
 		cub->player->dir_x = - 1;
 		cub->player->dir_y = 0; 
 	}
-	else if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'E')
+	else if (cub->map->m[y][x] == 'E')
 	{
 		cub->player->dir_x = 1;
 		cub->player->dir_y = 0; 
 	}
-	return ;
 }
 
+//initializes cub struct
 void	init_cub(t_cub *cub, t_map_info info, int *start)
 {
 	t_player	*aux;
@@ -154,6 +161,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	set_direction(cub);
 }
 
+// finds player starting position x and y
 int find_start(t_map_info info, int *x)
 {
 	int	i;
@@ -177,7 +185,7 @@ int find_start(t_map_info info, int *x)
 	return (-1);
 }
 
-//cub init and image loop
+// image loop
 void	cub3d(t_map_info info)
 {
 	t_cub	*cub;
@@ -192,8 +200,9 @@ void	cub3d(t_map_info info)
 	printf("initialized cub\n");	
 	render(cub);
 	if (!cub->img || (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0))
-		ft_error();
+		ft_error(); //modify later
 	mlx_loop_hook(cub->mlx, ft_hook, cub);
 	mlx_loop(cub->mlx);
-	mlx_terminate(cub->mlx);
+	close_cub(cub);
+	return ;
 }
