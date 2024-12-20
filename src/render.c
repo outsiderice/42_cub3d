@@ -63,8 +63,8 @@ void	render_minimap(t_map *map, mlx_image_t *img)
 		x = 0;
 		while (x < map->map_width)
 		{
-			if (map->map[y][x] != ' ')
-				render_map_tile(map->map, img, x, y);
+			if (map->m[y][x] != ' ')
+				render_map_tile(map->m, img, x, y);
 			x++;
 		}
 		y++;
@@ -100,22 +100,22 @@ void	render(t_cub *cub)
 
 void	set_direction(t_cub *cub)
 {
-	if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'N')
+	if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'N')
 	{
 		cub->player->dir_x = 0;
 		cub->player->dir_y = -1; 
 	}
-	else if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'S')
+	else if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'S')
 	{
 		cub->player->dir_x = 0;
 		cub->player->dir_y = 1; 
 	}
-	else if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'W')
+	else if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'W')
 	{
 		cub->player->dir_x = - 1;
 		cub->player->dir_y = 0; 
 	}
-	else if (cub->map->map[cub->player->pos_y][cub->player->pos_x] == 'E')
+	else if (cub->map->m[cub->player->pos_y][cub->player->pos_x] == 'E')
 	{
 		cub->player->dir_x = 1;
 		cub->player->dir_y = 0; 
@@ -149,7 +149,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 		exit(EXIT_FAILURE);
 	map->map_width = info.map_len;
 	map->map_height = info.map_lines;
-	map->map = info.map;
+	map->m = info.map;
 	cub->map = map;
 	set_direction(cub);
 }
@@ -177,6 +177,7 @@ int find_start(t_map_info info, int *x)
 	return (-1);
 }
 
+//cub init and image loop
 void	cub3d(t_map_info info)
 {
 	t_cub	*cub;
@@ -184,7 +185,7 @@ void	cub3d(t_map_info info)
 
 	cub = malloc(sizeof(t_cub) * 1);
 	if (!cub)
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // and free shit
 	start[0] = find_start(info, &start[1]);
 	printf("start[0] is %d start[1] is %d\n", start[0], start[1]);
 	init_cub(cub, info, start);

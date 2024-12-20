@@ -10,8 +10,8 @@ void	close_cub(t_cub *cub)
 	printf("bye\n");
 	free(cub->player);
 	for (int i = 0; i < 5; i++)
-		free(cub->map->map[i]);
-	free(cub->map->map);
+		free(cub->map->m[i]);
+	free(cub->map->m);
 	free(cub->map);
 	free(cub);
 	exit(EXIT_SUCCESS);
@@ -19,12 +19,12 @@ void	close_cub(t_cub *cub)
 
 void	update_player_pos(t_cub *cub, int x, int y)
 {
-	if (cub->map->map[cub->player->pos_y - y][cub->player->pos_x + x] != FLOOR)
+	if (cub->map->m[cub->player->pos_y - y][cub->player->pos_x + x] != FLOOR)
 		return ;
-	cub->map->map[cub->player->pos_y][cub->player->pos_x] = '0';
+	cub->map->m[cub->player->pos_y][cub->player->pos_x] = '0';
 	cub->player->pos_x += x;
 	cub->player->pos_y -= y;
-	cub->map->map[cub->player->pos_y][cub->player->pos_x] = 'N';
+	cub->map->m[cub->player->pos_y][cub->player->pos_x] = 'N';
 }
 
 void ft_hook(void *param)
