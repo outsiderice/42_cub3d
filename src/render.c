@@ -5,10 +5,6 @@
 #include "render.h"
 #include "input.h"
 
-# define MAX_WIDTH 3840
-# define MAX_HEIGHT 2160
-# define WIDTH 1920
-# define HEIGHT 1080
 # define FOV 60
 
 # define BPP sizeof(int32_t)
@@ -71,29 +67,11 @@ void	render_minimap(t_map *map, mlx_image_t *img)
 	}
 	return ;
 }
-/*
-void	raycast(int **map, mlx_image_t *img, t_player *player)
-{
-	int	x;
-	double	camera_x;
-	double	ray_x;
-	double	ray_y;
-	x = 0;
-	while (x < WIDTH)
-	{
-		camera_x = 2 * x / ((double)WIDTH) - 1;
-		ray_x = player->dir_x + player->plane_x * camera_x;
-		ray_y = player->dir_y + player->plane_y * camera_x;
-		x++;
-	}
-}*/
 
 //render loop;
 void	render(t_cub *cub)
 { 
-	//ray direction
-	//ray cast
-//	raycast(cub->map->map, cub->img, cub->player);
+	raycast(cub->map, cub->img, cub->player);
 	render_minimap(cub->map, cub->img);
 	//textures??
 	return ;
@@ -105,8 +83,8 @@ void	set_direction(t_cub *cub)
 	int	x;
 	int	y;
 
-	x = (int)cub->player->pos_x;
-	y = (int)cub->player->pos_y;
+	x = cub->map->pos_x;
+	y = cub->map->pos_y;
 	if (cub->map->m[y][x] == 'N')
 	{
 		cub->player->dir_x = 0;
@@ -157,6 +135,8 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	map->map_width = info.map_len;
 	map->map_height = info.map_lines;
 	map->m = info.map;
+	map->pos_x = start[1];
+	map->pos_y = start[0];
 	cub->map = map;
 	set_direction(cub);
 }

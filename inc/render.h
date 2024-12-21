@@ -9,10 +9,14 @@
 # define FLOOR '0'
 # define CUBE_SIZE 64
 # define MINI_SCALE 5
+# define WIDTH 1920
+# define HEIGHT 1080
 
 typedef struct s_map
 {
 	int			**m;
+	int			pos_x;
+	int			pos_y;
 	int			map_width;
 	int			map_height;
 } t_map;

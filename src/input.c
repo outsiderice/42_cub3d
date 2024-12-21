@@ -44,6 +44,5 @@ void ft_hook(void *param)
 		update_player_pos(cub, 1, 0);
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
-	//render image again
 	render(cub);
 }	
