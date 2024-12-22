@@ -90,6 +90,7 @@ void	raycast(t_cub *cub, mlx_image_t *img)
 		calc_delta(raydir_x, raydir_y, r);
 		calc_sidedist_and_step(raydir_x, raydir_y, r, cub);
 		dda(r, cub->map);
+		render_ray(r);
 		x++;
 	}
 }
