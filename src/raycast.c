@@ -4,7 +4,11 @@
 //advances ray until it hits a wall
 void	dda(t_raycast r, t_map *map)
 {
-	while (r.hit == 0)
+	int	hit;
+
+	hit = 0;
+	r.side = 0;
+	while (hit == 0)
 	{
 		if (r.sidedist_x < r.sidedist_y)
 		{
@@ -19,8 +23,12 @@ void	dda(t_raycast r, t_map *map)
 			r.side = 1;
 		}
 		if (map->m[map->pos_y][map->pos_x] == '1')
-			r.hit == 0;
+			hit == 1;
 	}
+	if (r.side == 0)
+		r.perp_wall_dist = r.sidedist_x - r.delta_x;
+	else
+		r.perp_wall_dist = r.sidedist_y - r.delta_y;
 }
 
 void	calc_sidedist_and_step(double raydir_x, double raydir_y, t_raycast r, t_cub *cub)
@@ -47,8 +55,8 @@ void	calc_sidedist_and_step(double raydir_x, double raydir_y, t_raycast r, t_cub
 	}
 }
 
-//distance from one x or y side to the next x or y side
-void	calculate_delta(double raydir_x, double raydir_y, t_raycast r)
+//Calculate distance from one x or y side to the next x or y side
+void	calc_delta(double raydir_x, double raydir_y, t_raycast r)
 {
 	double	delta_x;
 	double	delta_y;
@@ -79,7 +87,7 @@ void	raycast(t_cub *cub, mlx_image_t *img)
 		camera_x = 2 * x / (double)WIDTH - 1;
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
-		calculate_delta(raydir_x, raydir_y, r);
+		calc_delta(raydir_x, raydir_y, r);
 		calc_sidedist_and_step(raydir_x, raydir_y, r, cub);
 		dda(r, cub->map);
 		x++;
