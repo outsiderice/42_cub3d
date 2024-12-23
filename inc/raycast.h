@@ -11,6 +11,8 @@ typedef struct s_raycast
     ind     side;
     int     step_x;
     int     step_y;
+    int     wall_start;
+    int     wall_end;
 } t_raycast;
 
 #endif

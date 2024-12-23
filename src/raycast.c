@@ -1,6 +1,20 @@
 #include "render.h"
 #include "raycast.h"
 
+void	calc_wall_height(t_raycast r)
+{
+	int	wall_h;
+
+	wall_h = HEIGHT / (int)r.perp_wall_dist;
+	r.wall_start = -wall_h / 2 + HEIGHT / 2;
+	if (r.wall_start < 0)
+		r.wall_start = 0;
+	r.wall_end = wall_h / 2 + HEIGHT / 2;
+	if (r.wall_end >= HEIGHT)
+		r.wall_end = HEIGHT - 1;
+	return ;
+}
+
 //advances ray until it hits a wall
 void	dda(t_raycast r, t_map *map)
 {
@@ -90,6 +104,7 @@ void	raycast(t_cub *cub, mlx_image_t *img)
 		calc_delta(raydir_x, raydir_y, r);
 		calc_sidedist_and_step(raydir_x, raydir_y, r, cub);
 		dda(r, cub->map);
+		calc_wall_height(r);
 		render_ray(r);
 		x++;
 	}
