@@ -73,7 +73,6 @@ void	render(t_cub *cub)
 { 
 	raycast(cub->map, cub->img, cub->player);
 	render_minimap(cub->map, cub->img);
-	//textures??
 	return ;
  }
  

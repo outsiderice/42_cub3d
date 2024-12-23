@@ -1,5 +1,28 @@
 #include "render.h"
 #include "raycast.h"
+#include "MLX42/MLX42.h"
+
+void	render_ray(int x, t_raycast r, t_cub *cub)
+{
+	int	y;
+
+	y = 0;
+	while (y < r.wall_start)
+	{
+		mlx_put_pixel(cub->img, x, y, get_rgba(0, 0, 0, 255));
+		y++;
+	}
+	while (y <= r.wall_end)
+	{
+		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
+		y++;
+	}
+	while (y < HEIGHT)
+	{
+		mlx_put_pixel(cub->img, x, y, get_rgba(250, 0, 0, 255));
+		y++;
+	}
+}
 
 void	calc_wall_height(t_raycast r)
 {
@@ -105,7 +128,7 @@ void	raycast(t_cub *cub, mlx_image_t *img)
 		calc_sidedist_and_step(raydir_x, raydir_y, r, cub);
 		dda(r, cub->map);
 		calc_wall_height(r);
-		render_ray(r);
+		render_ray(x, r, cub);
 		x++;
 	}
 }

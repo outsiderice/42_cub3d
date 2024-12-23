@@ -8,7 +8,7 @@ typedef struct s_raycast
     double  perp_wall_dist;
     double  sidedist_x;
     double  sidedist_y;
-    ind     side;
+    int     side;
     int     step_x;
     int     step_y;
     int     wall_start;
