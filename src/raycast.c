@@ -1,6 +1,7 @@
 #include "render.h"
 #include "raycast.h"
 #include "MLX42/MLX42.h"
+#include <stdio.h>
 
 void	render_ray(int x, t_raycast r, t_cub *cub)
 {
@@ -109,6 +110,7 @@ void	calc_delta(double raydir_x, double raydir_y, t_raycast *r)
 
 void	raycast(t_cub *cub)
 {
+	printf("start of raycast\n");
 	int	x;
 	double	camera_x;
 	double	raydir_x;
@@ -122,7 +124,9 @@ void	raycast(t_cub *cub)
 		camera_x = 2 * x / (double)WIDTH - 1;
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
+		printf("is it that?\n");
 		calc_delta(raydir_x, raydir_y, &r);
+printf("if you can see this it isnt\n");
 		calc_sidedist_and_step(raydir_x, raydir_y, &r, cub);
 		dda(&r, cub->map);
 		calc_wall_height(&r);
