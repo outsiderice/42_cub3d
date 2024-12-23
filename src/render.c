@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "MLX42/MLX42.h"
 #include "render.h"
+#include "raycast.h"
 #include "input.h"
 
 # define FOV 60
@@ -71,7 +72,7 @@ void	render_minimap(t_map *map, mlx_image_t *img)
 //render loop;
 void	render(t_cub *cub)
 { 
-	raycast(cub->map, cub->img, cub->player);
+	raycast(cub);
 	render_minimap(cub->map, cub->img);
 	return ;
  }

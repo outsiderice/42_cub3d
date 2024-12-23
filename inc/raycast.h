@@ -15,4 +15,5 @@ typedef struct s_raycast
     int     wall_end;
 } t_raycast;
 
+void	raycast(t_cub *cub);
 #endif
