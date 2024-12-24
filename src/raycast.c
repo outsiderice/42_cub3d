@@ -120,7 +120,8 @@ void	raycast(t_cub *cub)
 	t_raycast	r;
 	
 	x = 0;
-	//update map pos with player pos before raycasting here?
+	cub->map->pos_x = round(cub->player->pos_x);
+	cub->map->pos_y = round(cub->player->pos_y);
 	while (x < WIDTH)
 	{
 		camera_x = 2 * x / (double)WIDTH - 1;
