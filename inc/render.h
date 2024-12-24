@@ -17,8 +17,8 @@ typedef struct s_map
 	int			**m;
 	int			pos_x;
 	int			pos_y;
-	int			map_width;
-	int			map_height;
+	int			width;
+	int			height;
 } t_map;
 
 typedef struct s_cub

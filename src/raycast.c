@@ -60,7 +60,9 @@ void	dda(t_raycast *r, t_map *map)
 			map->pos_y += r->step_y;
 			r->side = 1;
 		}
-		if (map->m[map->pos_y][map->pos_x] == '1')
+		if (map->pos_y >= map->height || map->pos_y < 0 || map->pos_x < 0 || map->pos_x >= map->width)
+			hit = 1;
+		else if (map->m[map->pos_y][map->pos_x] != '0')
 			hit = 1;
 	}
 	if (r->side == 0)
@@ -124,13 +126,16 @@ void	raycast(t_cub *cub)
 		camera_x = 2 * x / (double)WIDTH - 1;
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
-		printf("is it that?\n");
 		calc_delta(raydir_x, raydir_y, &r);
-printf("if you can see this it isnt\n");
+		printf("after assigning delta\n");
 		calc_sidedist_and_step(raydir_x, raydir_y, &r, cub);
+		printf("after setting sidedist and step\n");
 		dda(&r, cub->map);
+		printf("after dda\n");
 		calc_wall_height(&r);
+		printf("after wall height\n");
 		render_ray(x, r, cub);
+		printf("after print, x = %d\n", x);
 		x++;
 	}
 }

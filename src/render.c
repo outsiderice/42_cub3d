@@ -55,10 +55,10 @@ void	render_minimap(t_map *map, mlx_image_t *img)
 	int	x;
 	
 	y = 0;
-	while (y < map->map_height)
+	while (y < map->height)
 	{
 		x = 0;
-		while (x < map->map_width)
+		while (x < map->width)
 		{
 			if (map->m[y][x] != ' ')
 				render_map_tile(map->m, img, x, y);
@@ -132,8 +132,8 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	map = malloc (sizeof(t_map) * 1);
 	if (!map)
 		exit(EXIT_FAILURE);
-	map->map_width = info.map_len;
-	map->map_height = info.map_lines;
+	map->width = info.map_len;
+	map->height = info.map_lines;
 	map->m = info.map;
 	map->pos_x = start[1];
 	map->pos_y = start[0];
