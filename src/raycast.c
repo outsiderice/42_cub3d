@@ -8,6 +8,8 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 	int	y;
 
 	y = 0;
+	printf("wall start is %d\n", r.wall_start);
+	printf("wall end is %d\n", r.wall_end);
 	while (y < r.wall_start)
 	{
 		mlx_put_pixel(cub->img, x, y, get_rgba(0, 0, 0, 255));
@@ -28,17 +30,17 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 //	printf("y is %d\n", y);
 }
 
-void	calc_wall_height(t_raycast *r)
+void	calc_wall_height(t_raycast *r, t_cub *cub)
 {
 	int	wall_h;
 
-	wall_h = HEIGHT / r->perp_wall_dist;
-	r->wall_start = (-wall_h / 2) + (HEIGHT / 2);
+	wall_h = cub->mlx->height / r->perp_wall_dist;
+	r->wall_start = (-wall_h / 2) + (cub->mlx->height / 2);
 	if (r->wall_start < 0)
 		r->wall_start = 0;
-	r->wall_end = (wall_h / 2) + (HEIGHT / 2);
-	if (r->wall_end >= HEIGHT)
-		r->wall_end = HEIGHT - 1;
+	r->wall_end = (wall_h / 2) + (cub->mlx->height / 2);
+	if (r->wall_end >= cub->mlx->height || r->wall_end < 0)
+		r->wall_end = cub->mlx->height - 1;
 	return ;
 }
 
@@ -122,11 +124,11 @@ void	raycast(t_cub *cub)
 	t_raycast	r;
 	
 	x = 0;
-	while (x < WIDTH)
+	while (x < cub->mlx->width)
 	{
 		cub->map->pos_x = round(cub->player->pos_x);
 		cub->map->pos_y = round(cub->player->pos_y);
-		camera_x = 2 * x / (double)WIDTH - 1;
+		camera_x = 2 * x / (double)cub->mlx->width - 1;
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
 		calc_delta(raydir_x, raydir_y, &r);
@@ -135,7 +137,7 @@ void	raycast(t_cub *cub)
 		printf("after setting sidedist and step\n");
 		dda(&r, cub->map);
 		printf("after dda\n");
-		calc_wall_height(&r);
+		calc_wall_height(&r, cub);
 		printf("after wall height\n");
 		render_ray(x, r, cub);
 		printf("after print, x = %d\n", x);
