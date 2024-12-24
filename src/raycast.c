@@ -13,27 +13,30 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 		mlx_put_pixel(cub->img, x, y, get_rgba(0, 0, 0, 255));
 		y++;
 	}
+//	printf("y is %d\n", y);
 	while (y <= r.wall_end)
 	{
 		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
 		y++;
 	}
+//	printf("y is %d\n", y);
 	while (y < HEIGHT)
 	{
 		mlx_put_pixel(cub->img, x, y, get_rgba(250, 0, 0, 255));
 		y++;
 	}
+//	printf("y is %d\n", y);
 }
 
 void	calc_wall_height(t_raycast *r)
 {
 	int	wall_h;
 
-	wall_h = HEIGHT / (int)r->perp_wall_dist;
-	r->wall_start = -wall_h / 2 + HEIGHT / 2;
+	wall_h = HEIGHT / r->perp_wall_dist;
+	r->wall_start = (-wall_h / 2) + (HEIGHT / 2);
 	if (r->wall_start < 0)
 		r->wall_start = 0;
-	r->wall_end = wall_h / 2 + HEIGHT / 2;
+	r->wall_end = (wall_h / 2) + (HEIGHT / 2);
 	if (r->wall_end >= HEIGHT)
 		r->wall_end = HEIGHT - 1;
 	return ;
@@ -45,7 +48,6 @@ void	dda(t_raycast *r, t_map *map)
 	int	hit;
 
 	hit = 0;
-	r->side = 0;
 	while (hit == 0)
 	{
 		if (r->sidedist_x < r->sidedist_y)
@@ -60,9 +62,9 @@ void	dda(t_raycast *r, t_map *map)
 			map->pos_y += r->step_y;
 			r->side = 1;
 		}
-		if (map->pos_y >= map->height || map->pos_y < 0 || map->pos_x < 0 || map->pos_x >= map->width)
-			hit = 1;
-		else if (map->m[map->pos_y][map->pos_x] != '0')
+	//	if (map->pos_y >= map->height || map->pos_y < 0 || map->pos_x < 0 || map->pos_x >= map->width)
+	//		hit = 1;
+		if (map->m[map->pos_y][map->pos_x] == '1')
 			hit = 1;
 	}
 	if (r->side == 0)
@@ -120,10 +122,10 @@ void	raycast(t_cub *cub)
 	t_raycast	r;
 	
 	x = 0;
-	cub->map->pos_x = round(cub->player->pos_x);
-	cub->map->pos_y = round(cub->player->pos_y);
 	while (x < WIDTH)
 	{
+		cub->map->pos_x = round(cub->player->pos_x);
+		cub->map->pos_y = round(cub->player->pos_y);
 		camera_x = 2 * x / (double)WIDTH - 1;
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
