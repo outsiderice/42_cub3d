@@ -12,13 +12,20 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 	printf("wall end is %d\n", r.wall_end);
 	while (y < r.wall_start)
 	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(0, 0, 0, 255));
+		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
 		y++;
 	}
 //	printf("y is %d\n", y);
 	while (y <= r.wall_end)
 	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
+		if (r.wall_type == 'N')
+			mlx_put_pixel(cub->img, x, y, get_rgba(84, 60, 255, 255));
+		else if (r.wall_type == 'S')
+			mlx_put_pixel(cub->img, x, y, get_rgba(255, 164, 0, 255));
+		else if (r.wall_type == 'E')
+			mlx_put_pixel(cub->img, x, y, get_rgba(250, 251, 0, 255));
+		else if (r.wall_type == 'W')
+			mlx_put_pixel(cub->img, x, y, get_rgba(36, 255, 0, 255));
 		y++;
 	}
 //	printf("y is %d\n", y);
@@ -42,6 +49,24 @@ void	calc_wall_height(t_raycast *r, t_cub *cub)
 	if (r->wall_end >= cub->mlx->height || r->wall_end < 0)
 		r->wall_end = cub->mlx->height - 1;
 	return ;
+}
+
+void	set_wall_side(t_raycast *r, t_player *player)
+{
+	if (r->side == 0)
+	{
+		if (player->dir_y < 0)
+			r->wall_type = 'S';
+		else
+			r->wall_type = 'N';
+	}
+	else
+	{
+		if (player->dir_x < 0)
+			r->wall_type = 'W';
+		else
+			r->wall_type = 'E';
+	}
 }
 
 //advances ray until it hits a wall
@@ -137,6 +162,7 @@ void	raycast(t_cub *cub)
 		printf("after setting sidedist and step\n");
 		dda(&r, cub->map);
 		printf("after dda\n");
+		set_wall_side(&r, cub->player);
 		calc_wall_height(&r, cub);
 		printf("after wall height\n");
 		render_ray(x, r, cub);

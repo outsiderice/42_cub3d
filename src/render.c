@@ -88,12 +88,12 @@ void	set_direction(t_cub *cub)
 	if (cub->map->m[y][x] == 'N')
 	{
 		cub->player->dir_x = 0;
-		cub->player->dir_y = -1; 
+		cub->player->dir_y = 1; 
 	}
 	else if (cub->map->m[y][x] == 'S')
 	{
 		cub->player->dir_x = 0;
-		cub->player->dir_y = 1; 
+		cub->player->dir_y = -1; 
 	}
 	else if (cub->map->m[y][x] == 'W')
 	{
