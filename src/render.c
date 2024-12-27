@@ -3,23 +3,12 @@
 #include <unistd.h>
 #include "MLX42/MLX42.h"
 #include "render.h"
+#include "raycast.h"
 #include "input.h"
 
-# define MAX_WIDTH 3840
-# define MAX_HEIGHT 2160
-# define WIDTH 1920
-# define HEIGHT 1080
+# define FOV 60
 
 # define BPP sizeof(int32_t)
-
-int	worldMap[][5] =
-{
-	{1,1,1,1,1},
-	{1,0,0,0,1},
-	{1,0,'W',0,1},
-	{1,0,0,0,1},
-	{1,1,1,1,1}
-};
 
 // Exit the program as failure.
 static void ft_error(void)
@@ -34,7 +23,7 @@ int get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
+void	render_map_tile(int **map, mlx_image_t *img, int x, int y)
 {
 	int	tile_x;
 	int	tile_y;
@@ -47,38 +36,32 @@ void	render_map_tile(int **map, mlx_image_t *minimap, int x, int y)
 		tile_color = get_rgba(255, 255, 255, 255);
 	else
 		tile_color = get_rgba(250, 0, 0, 255);
-	while (tile_y < 5)
+	while (tile_y < MINI_SCALE)
 	{
 		tile_x = 0;
-		while (tile_x < 5)
+		while (tile_x < MINI_SCALE)
 		{
-			mlx_put_pixel(minimap, (x * 5) + tile_x, (y * 5) + tile_y, tile_color);
+			mlx_put_pixel(img, (x * MINI_SCALE) + tile_x, (y * MINI_SCALE) + tile_y, tile_color);
 			tile_x++;
 		}
 		tile_y++;
 	}
 	return ;
 }
-/*
-void	raycast(int **map, mlx_image_t *minimap, t_player *player)
-{
-	//throw ray until collision, check collision with grid in x and y both
-	return ;
-}*/
 
-void	render_minimap(t_map *map, mlx_image_t *minimap)
+void	render_minimap(t_map *map, mlx_image_t *img)
 {
 	int	y;
 	int	x;
 	
 	y = 0;
-	while (y < map->map_height)
+	while (y < map->height)
 	{
 		x = 0;
-		while (x < map->map_width)
+		while (x < map->width)
 		{
-			if (map->map[y][x] != ' ')
-				render_map_tile(map->map, minimap, x, y);
+			if (map->m[y][x] != ' ')
+				render_map_tile(map->m, img, x, y);
 			x++;
 		}
 		y++;
@@ -86,41 +69,45 @@ void	render_minimap(t_map *map, mlx_image_t *minimap)
 	return ;
 }
 
- void	render(t_cub *cub)
- {
-	render_minimap(cub->map, cub->minimap);
-	//raycast(cub->map, cub->minimap, cub->player);
-	//render3d();
-	//textures??
+//render loop;
+void	render(t_cub *cub)
+{ 
+	raycast(cub);
+	render_minimap(cub->map, cub->img);
 	return ;
  }
  
-
+// sets player starting direction
 void	set_direction(t_cub *cub)
 {
-	if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'N')
+	int	x;
+	int	y;
+
+	x = cub->map->pos_x;
+	y = cub->map->pos_y;
+	if (cub->map->m[y][x] == 'N')
 	{
-		cub->player->dir_x = cub->player->pos_x;
-		cub->player->dir_y = cub->player->pos_y - 1; 
+		cub->player->dir_x = 0;
+		cub->player->dir_y = -1; 
 	}
-	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'S')
+	else if (cub->map->m[y][x] == 'S')
 	{
-		cub->player->dir_x = cub->player->pos_x;
-		cub->player->dir_y = cub->player->pos_y + 1; 
+		cub->player->dir_x = 0;
+		cub->player->dir_y = 1; 
 	}
-	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'W')
+	else if (cub->map->m[y][x] == 'W')
 	{
-		cub->player->dir_x = cub->player->pos_x - 1;
-		cub->player->dir_y = cub->player->pos_y; 
+		cub->player->dir_x = - 1;
+		cub->player->dir_y = 0; 
 	}
-	else if (worldMap[cub->player->pos_y][cub->player->pos_x] == 'E')
+	else if (cub->map->m[y][x] == 'E')
 	{
-		cub->player->dir_x = cub->player->pos_x + 1;
-		cub->player->dir_y = cub->player->pos_y; 
+		cub->player->dir_x = 1;
+		cub->player->dir_y = 0; 
 	}
-	return ;
 }
 
+//initializes cub struct
 void	init_cub(t_cub *cub, t_map_info info, int *start)
 {
 	t_player	*aux;
@@ -132,24 +119,29 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	aux->pos_y = start[0];
 	aux->dir_x = 0;
 	aux->dir_y = 0;
+	aux->plane_x = 0;
+	aux->plane_y = 0.66;
 	cub->player = aux;
-	set_direction(cub);
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!cub->mlx)
 		ft_error();
-	cub->minimap = mlx_new_image(cub->mlx, 250, 250);
-	printf("old stuff assigned\n");	
+	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+	printf("old stuff assigned\n");
 	//change map assignation later
 	t_map	*map;
 	map = malloc (sizeof(t_map) * 1);
 	if (!map)
 		exit(EXIT_FAILURE);
-	map->map_width = info.map_len;
-	map->map_height = info.map_lines;
-	map->map = info.map;
+	map->width = info.map_len;
+	map->height = info.map_lines;
+	map->m = info.map;
+	map->pos_x = start[1];
+	map->pos_y = start[0];
 	cub->map = map;
+	set_direction(cub);
 }
 
+// finds player starting position x and y
 int find_start(t_map_info info, int *x)
 {
 	int	i;
@@ -173,6 +165,7 @@ int find_start(t_map_info info, int *x)
 	return (-1);
 }
 
+// image loop
 void	cub3d(t_map_info info)
 {
 	t_cub	*cub;
@@ -180,15 +173,16 @@ void	cub3d(t_map_info info)
 
 	cub = malloc(sizeof(t_cub) * 1);
 	if (!cub)
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // and free shit
 	start[0] = find_start(info, &start[1]);
 	printf("start[0] is %d start[1] is %d\n", start[0], start[1]);
 	init_cub(cub, info, start);
 	printf("initialized cub\n");	
 	render(cub);
-	if (!cub->minimap || (mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) < 0))
-		ft_error();
+	if (!cub->img || (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0))
+		ft_error(); //modify later
 	mlx_loop_hook(cub->mlx, ft_hook, cub);
 	mlx_loop(cub->mlx);
-	mlx_terminate(cub->mlx);
+	close_cub(cub);
+	return ;
 }

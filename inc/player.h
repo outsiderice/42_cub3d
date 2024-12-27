@@ -3,10 +3,12 @@
 
 typedef struct s_player
 {
-	int	pos_x;
-	int	pos_y;
-	float	dir_x;
-	float	dir_y;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 } t_player;
 
 #endif
