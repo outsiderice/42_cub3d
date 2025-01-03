@@ -51,21 +51,21 @@ void	calc_wall_height(t_raycast *r, t_cub *cub)
 	return ;
 }
 
-void	set_wall_side(t_raycast *r, t_player *player)
+void	set_wall_side(t_raycast *r)
 {
 	if (r->side == 0)
 	{
-		if (player->dir_y < 0)
-			r->wall_type = 'S';
+		if (r->step_x >= 0)
+			r->wall_type = 'E';
 		else
-			r->wall_type = 'N';
+			r->wall_type = 'W';
 	}
 	else
 	{
-		if (player->dir_x < 0)
-			r->wall_type = 'W';
+		if (r->step_y >= 0)
+			r->wall_type = 'S';
 		else
-			r->wall_type = 'E';
+			r->wall_type = 'N';
 	}
 }
 
@@ -114,12 +114,12 @@ void	calc_sidedist_and_step(double raydir_x, double raydir_y, t_raycast *r, t_cu
 	}
 	if (raydir_y < 0)
 	{
-		r->step_y = -1;
+		r->step_y = 1;
 		r->sidedist_y = (cub->player->pos_y - cub->map->pos_y) * r->delta_y;
 	}
 	else
 	{
-		r->step_y = 1;
+		r->step_y = -1;
 		r->sidedist_y = (cub->map->pos_y + 1.0 - cub->player->pos_y) * r->delta_y;
 	}
 }
@@ -157,16 +157,11 @@ void	raycast(t_cub *cub)
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
 		calc_delta(raydir_x, raydir_y, &r);
-		printf("after assigning delta\n");
 		calc_sidedist_and_step(raydir_x, raydir_y, &r, cub);
-		printf("after setting sidedist and step\n");
 		dda(&r, cub->map);
-		printf("after dda\n");
-		set_wall_side(&r, cub->player);
+		set_wall_side(&r);
 		calc_wall_height(&r, cub);
-		printf("after wall height\n");
 		render_ray(x, r, cub);
-		printf("after print, x = %d\n", x);
 		x++;
 	}
 }
