@@ -13,6 +13,7 @@ typedef struct s_raycast
     int     step_y;
     int     wall_start;
     int     wall_end;
+	int		wall_type;
 } t_raycast;
 
 void	raycast(t_cub *cub);

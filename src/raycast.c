@@ -8,17 +8,22 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 	int	y;
 
 	y = 0;
-	printf("wall start is %d\n", r.wall_start);
-	printf("wall end is %d\n", r.wall_end);
 	while (y < r.wall_start)
 	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(0, 0, 0, 255));
+		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
 		y++;
 	}
 //	printf("y is %d\n", y);
 	while (y <= r.wall_end)
 	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
+		if (r.wall_type == 'N')
+			mlx_put_pixel(cub->img, x, y, get_rgba(84, 60, 255, 255));
+		else if (r.wall_type == 'S')
+			mlx_put_pixel(cub->img, x, y, get_rgba(255, 164, 0, 255));
+		else if (r.wall_type == 'E')
+			mlx_put_pixel(cub->img, x, y, get_rgba(250, 251, 0, 255));
+		else if (r.wall_type == 'W')
+			mlx_put_pixel(cub->img, x, y, get_rgba(36, 255, 0, 255));
 		y++;
 	}
 //	printf("y is %d\n", y);
@@ -42,6 +47,24 @@ void	calc_wall_height(t_raycast *r, t_cub *cub)
 	if (r->wall_end >= cub->mlx->height || r->wall_end < 0)
 		r->wall_end = cub->mlx->height - 1;
 	return ;
+}
+
+void	set_wall_side(t_raycast *r)
+{
+	if (r->side == 0)
+	{
+		if (r->step_x >= 0)
+			r->wall_type = 'E';
+		else
+			r->wall_type = 'W';
+	}
+	else
+	{
+		if (r->step_y >= 0)
+			r->wall_type = 'S';
+		else
+			r->wall_type = 'N';
+	}
 }
 
 //advances ray until it hits a wall
@@ -116,7 +139,6 @@ void	calc_delta(double raydir_x, double raydir_y, t_raycast *r)
 
 void	raycast(t_cub *cub)
 {
-	printf("start of raycast\n");
 	int	x;
 	double	camera_x;
 	double	raydir_x;
@@ -132,15 +154,11 @@ void	raycast(t_cub *cub)
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
 		calc_delta(raydir_x, raydir_y, &r);
-		printf("after assigning delta\n");
 		calc_sidedist_and_step(raydir_x, raydir_y, &r, cub);
-		printf("after setting sidedist and step\n");
 		dda(&r, cub->map);
-		printf("after dda\n");
+		set_wall_side(&r);
 		calc_wall_height(&r, cub);
-		printf("after wall height\n");
 		render_ray(x, r, cub);
-		printf("after print, x = %d\n", x);
 		x++;
 	}
 }

@@ -76,6 +76,35 @@ void	render(t_cub *cub)
 	render_minimap(cub->map, cub->img);
 	return ;
  }
+
+void	set_plane(t_cub *cub)
+{
+	int	x;
+	int	y;
+
+	x = cub->map->pos_x;
+	y = cub->map->pos_y;
+	if (cub->map->m[y][x] == 'N')
+	{
+		cub->player->plane_x = -0.66;
+		cub->player->plane_y = 0; 
+	}
+	else if (cub->map->m[y][x] == 'S')
+	{
+		cub->player->plane_x = 0.66;
+		cub->player->plane_y = 0; 
+	}
+	else if (cub->map->m[y][x] == 'W')
+	{
+		cub->player->plane_x = 0;
+		cub->player->plane_y = -0.66; 
+	}
+	else if (cub->map->m[y][x] == 'E')
+	{
+		cub->player->plane_x = 0;
+		cub->player->plane_y = 0.66; 
+	}
+}
  
 // sets player starting direction
 void	set_direction(t_cub *cub)
@@ -97,7 +126,7 @@ void	set_direction(t_cub *cub)
 	}
 	else if (cub->map->m[y][x] == 'W')
 	{
-		cub->player->dir_x = - 1;
+		cub->player->dir_x = -1;
 		cub->player->dir_y = 0; 
 	}
 	else if (cub->map->m[y][x] == 'E')
@@ -119,8 +148,6 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	aux->pos_y = start[0];
 	aux->dir_x = 0;
 	aux->dir_y = 0;
-	aux->plane_x = 0;
-	aux->plane_y = 0.66;
 	cub->player = aux;
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!cub->mlx)
@@ -139,6 +166,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	map->pos_y = start[0];
 	cub->map = map;
 	set_direction(cub);
+	set_plane(cub);
 }
 
 // finds player starting position x and y
