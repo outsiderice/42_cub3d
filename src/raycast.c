@@ -8,8 +8,6 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 	int	y;
 
 	y = 0;
-	printf("wall start is %d\n", r.wall_start);
-	printf("wall end is %d\n", r.wall_end);
 	while (y < r.wall_start)
 	{
 		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
@@ -114,12 +112,12 @@ void	calc_sidedist_and_step(double raydir_x, double raydir_y, t_raycast *r, t_cu
 	}
 	if (raydir_y < 0)
 	{
-		r->step_y = 1;
+		r->step_y = -1;
 		r->sidedist_y = (cub->player->pos_y - cub->map->pos_y) * r->delta_y;
 	}
 	else
 	{
-		r->step_y = -1;
+		r->step_y = 1;
 		r->sidedist_y = (cub->map->pos_y + 1.0 - cub->player->pos_y) * r->delta_y;
 	}
 }
@@ -141,7 +139,6 @@ void	calc_delta(double raydir_x, double raydir_y, t_raycast *r)
 
 void	raycast(t_cub *cub)
 {
-	printf("start of raycast\n");
 	int	x;
 	double	camera_x;
 	double	raydir_x;
