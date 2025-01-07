@@ -32,11 +32,12 @@ void	update_player_pos(t_cub *cub)
 	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
 }
 
+/*
 void	update_player_dir(t_player *player)
 {
-
+	//rotate player dir and plane by ?
 }
-
+*/
 void ft_hook(void *param)
 {
 	t_cub *cub;
@@ -52,9 +53,9 @@ void ft_hook(void *param)
 		update_player_pos(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
 		update_player_pos(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
-		update_player_dir(cub->player);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
-		update_player_dir(cub->player);
+	//if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
+	//	update_player_dir(cub->player);
+	//if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
+	//	update_player_dir(cub->player);
 	render(cub);
 }	
