@@ -22,14 +22,19 @@ void	update_player_pos(t_cub *cub)
 	int	x;
 	int	y;
 
-	x = (int)cub->player->dir_x;
-	y = (int)cub->player->dir_y;
+	x = round(cub->player->dir_x);
+	y = round(cub->player->dir_y);
 	if (cub->map->m[(int)cub->player->pos_y - y][(int)cub->player->pos_x + x] != FLOOR)
 		return ;
 	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = '0';
 	cub->player->pos_x += x;
 	cub->player->pos_y -= y;
 	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
+}
+
+void	update_player_dir(t_player *player)
+{
+
 }
 
 void ft_hook(void *param)
@@ -47,7 +52,9 @@ void ft_hook(void *param)
 		update_player_pos(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
 		update_player_pos(cub);
-	//if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
-	//if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
+		update_player_dir(cub->player);
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
+		update_player_dir(cub->player);
 	render(cub);
 }	
