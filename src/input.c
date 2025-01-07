@@ -17,8 +17,13 @@ void	close_cub(t_cub *cub)
 	exit(EXIT_SUCCESS);
 }
 
-void	update_player_pos(t_cub *cub, int x, int y)
+void	update_player_pos(t_cub *cub)
 {
+	int	x;
+	int	y;
+
+	x = (int)cub->player->dir_x;
+	y = (int)cub->player->dir_y;
 	if (cub->map->m[(int)cub->player->pos_y - y][(int)cub->player->pos_x + x] != FLOOR)
 		return ;
 	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = '0';
@@ -35,13 +40,13 @@ void ft_hook(void *param)
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
 		close_cub(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_W))
-		update_player_pos(cub, 0, 1);
+		update_player_pos(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_S))
-		update_player_pos(cub, 0, -1);
+		update_player_pos(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_A))
-		update_player_pos(cub, -1, 0);
+		update_player_pos(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
-		update_player_pos(cub, 1, 0);
+		update_player_pos(cub);
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
 	//if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
 	render(cub);
