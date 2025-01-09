@@ -27,18 +27,32 @@ void	update_player_pos(t_cub *cub, int x, int y)
 	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
 }
 
-#define ROT_ANGLE 1
+#define ROT_ANGLE 0.1
 
-void	rotate_vector(double x, double y, double *new_x, double *new_y)
+void	rotate_left(double x, double y, double *new_x, double *new_y)
 {
-	*new_x = cos(x) * ROT_ANGLE - sin(y) * ROT_ANGLE;
-	*new_y = cos(y) * ROT_ANGLE + sin(x) * ROT_ANGLE;
+	*new_x = x * cos(ROT_ANGLE) - y * sin(ROT_ANGLE);
+	*new_y = x * sin(ROT_ANGLE) + y * cos(ROT_ANGLE);
 }
 
-void	update_player_dir(t_player *player)
+void	rotate_right(double x, double y, double *new_x, double *new_y)
 {
-	rotate_vector(player->dir_x, player->dir_y, &player->dir_x, &player->dir_y);
-	rotate_vector(player->plane_x, player->plane_y, &player->plane_x, &player->plane_y);
+	*new_x = x * cos(-ROT_ANGLE) - y * sin(-ROT_ANGLE);
+	*new_y = x * sin(-ROT_ANGLE) + y * cos(-ROT_ANGLE);
+}
+
+void	update_player_dir(t_player *player, int turn)
+{
+	if (turn == 'R')
+	{
+		rotate_left(player->dir_x, player->dir_y, &player->dir_x, &player->dir_y);
+		rotate_left(player->plane_x, player->plane_y, &player->plane_x, &player->plane_y);
+	}
+	else
+	{
+		rotate_right(player->dir_x, player->dir_y, &player->dir_x, &player->dir_y);
+		rotate_right(player->plane_x, player->plane_y, &player->plane_x, &player->plane_y);
+	}
 }
 
 void ft_hook(void *param)
@@ -57,8 +71,8 @@ void ft_hook(void *param)
 	if (mlx_is_key_down(c->mlx, MLX_KEY_D))
 		update_player_pos(c,round(c->player->dir_y), -round(c->player->dir_x));
 	if (mlx_is_key_down(c->mlx, MLX_KEY_LEFT))
-		update_player_dir(c->player);
+		update_player_dir(c->player, 'L');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_RIGHT))
-		update_player_dir(c->player);
+		update_player_dir(c->player, 'R');
 	render(c);
 }	
