@@ -30,9 +30,9 @@ void	rotate_right(double x, double y, double *new_x, double *new_y)
 	*new_y = x * sin(-ROT_ANGLE) + y * cos(-ROT_ANGLE);
 }
 
-void	update_player_dir(t_player *player, int turn)
+void	update_player_dir(t_player *player, int key)
 {
-	if (turn == 'R')
+	if (key == 'R')
 	{
 		rotate_left(player->dir_x, player->dir_y, &player->dir_x, &player->dir_y);
 		rotate_left(player->plane_x, player->plane_y, &player->plane_x, &player->plane_y);
@@ -44,14 +44,26 @@ void	update_player_dir(t_player *player, int turn)
 	}
 }
 
-void	update_player_pos(t_cub *cub, int x, int y)
+void	update_player_pos(t_cub *cub, int key)
 {
-	if (cub->map->m[(int)cub->player->pos_y - y][(int)cub->player->pos_x + x] != FLOOR)
-		return ;
-	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = '0';
-	cub->player->pos_x += x;
-	cub->player->pos_y -= y;
-	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
+	int	map_x;
+	int	map_y;
+
+	map_x = round(cub->player->pos_x);
+	map_y = round(cub->player->pos_y);
+	if (key == 'W')
+		move_up(cub);
+	else if (key == 'S')
+		move_down(cub);
+	else if (key == 'A')
+		move_left(cub);
+	else
+		move_right(cub);
+	if (round(cub->player->pos_y) != map_x && round(cub->player->pos_y) != map_y)
+	{
+		cub->map->m[map_y][map_x] = '0';
+		cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'P';
+	}
 }
 
 void ft_hook(void *param)
@@ -62,13 +74,13 @@ void ft_hook(void *param)
 	if (mlx_is_key_down(c->mlx, MLX_KEY_ESCAPE))
 		close_cub(c);
 	if (mlx_is_key_down(c->mlx, MLX_KEY_W))
-		update_player_pos(c, round(c->player->dir_x), round(c->player->dir_y));
+		update_player_pos(c, 'W');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_S))
-		update_player_pos(c, -round(c->player->dir_x), -round(c->player->dir_y));
+		update_player_pos(c, 'S');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_A))
-		update_player_pos(c,round(c->player->dir_y), round(c->player->dir_x));
+		update_player_pos(c, 'A');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_D))
-		update_player_pos(c,round(c->player->dir_y), -round(c->player->dir_x));
+		update_player_pos(c, 'D');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_LEFT))
 		update_player_dir(c->player, 'L');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_RIGHT))
