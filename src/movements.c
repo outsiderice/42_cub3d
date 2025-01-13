@@ -4,16 +4,20 @@
 
 void	move_player(t_cub *c, double dir_x, double dir_y)
 {
-	double	mv_speed;
-	int		pos_x;
-	int		pos_y;
+	double	mv_spd;
+	int		x;
+	int		y;
 	
-	pos_x = (int)c->player->pos_x;
-	pos_y = (int)c->player->pos_y;
-	mv_speed = c->mlx->delta_time * SPEED;
-	if (c->map->m[pos_y - (int)(dir_y * mv_speed)][pos_x + (int)(dir_x * mv_speed)] != '1')
+	x = (int)c->player->pos_x;
+	y = (int)c->player->pos_y;
+	mv_spd = c->mlx->delta_time * SPEED;
+	if (y - (int)(dir_y * mv_spd) < 0 || y - (int)dir_y * mv_spd > c->map->height)
+		return ;
+	if (x + (int)(dir_x * mv_spd) < 0 || x + (int)(dir_x * mv_spd) > c->map->width)
+		return ;
+	if (c->map->m[y - (int)(dir_y * mv_spd)][x + (int)(dir_x * mv_spd)] != WALL)
 	{
-		c->player->pos_x += dir_x * mv_speed;
-		c->player->pos_y -= dir_y * mv_speed;
+		c->player->pos_x += dir_x * mv_spd;
+		c->player->pos_y -= dir_y * mv_spd;
 	}
 }
