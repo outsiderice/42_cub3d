@@ -51,13 +51,13 @@ void	update_player_pos(t_cub *cub, int key)
 	map_x = round(cub->player->pos_x);
 	map_y = round(cub->player->pos_y);
 	if (key == 'W')
-		move_up(cub);
+		move_player(cub, cub->player->dir_x, cub->player->dir_y);
 	else if (key == 'S')
-		move_down(cub);
+		move_player(cub, -cub->player->dir_x, -cub->player->dir_y);
 	else if (key == 'A')
-		move_left(cub);
+		move_player(cub, cub->player->dir_y, cub->player->dir_x);
 	else
-		move_right(cub);
+		move_player(cub, cub->player->dir_y, -cub->player->dir_x);
 /*
 	if (round(cub->player->pos_y) != map_x && round(cub->player->pos_y) != map_y)
 	{

@@ -5,9 +5,6 @@
 
 # define SPEED 5.0
 
-void	move_up(t_cub *c);
-void	move_down(t_cub *c);
-void	move_left(t_cub *c);
-void	move_right(t_cub *c);
+void	move_player(t_cub *c, double dir_x, double dir_y);
 
 #endif
