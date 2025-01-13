@@ -8,16 +8,14 @@ void	move_up(t_cub *c)
 	int		pos_x;
 	int		pos_y;
 	
-	printf("up\n");
-	pos_x = (int)c->player->pos_x;
-	pos_y = (int)c->player->pos_y;
+	pos_x = round(c->player->pos_x);
+	pos_y = round(c->player->pos_y);
 	mv_speed = c->mlx->delta_time * SPEED;
-	if (c->map->m[pos_y][pos_x + (int)(c->player->dir_x * mv_speed)] == '0')
+	if (c->map->m[pos_y][pos_x + (int)(c->player->dir_x * mv_speed)] != '1')
 	{
-		printf("up I said\n");
 		c->player->pos_x += c->player->dir_x * mv_speed;
 	}
-	if (c->map->m[pos_y - (int)(c->player->dir_y * mv_speed)][pos_x] != '0')
+	if (c->map->m[pos_y - (int)(c->player->dir_y * mv_speed)][pos_x] != '1')
 		c->player->pos_y -= c->player->dir_y * mv_speed;
 }
 
@@ -30,9 +28,9 @@ void	move_down(t_cub *c)
 	pos_x = (int)c->player->pos_x;
 	pos_y = (int)c->player->pos_y;
 	mv_speed = c->mlx->delta_time * SPEED;
-	if (c->map->m[pos_y][pos_x - (int)(c->player->dir_x * mv_speed)] != '0')
+	if (c->map->m[pos_y][pos_x - (int)(c->player->dir_x * mv_speed)] != '1')
 		c->player->pos_x -= c->player->dir_x * mv_speed;
-	if (c->map->m[pos_y + (int)(c->player->dir_y * mv_speed)][pos_x] != '0')
+	if (c->map->m[pos_y + (int)(c->player->dir_y * mv_speed)][pos_x] != '1')
 		c->player->pos_y += c->player->dir_y * mv_speed;
 }
 
@@ -45,9 +43,9 @@ void	move_left(t_cub *c)
 	pos_x = (int)c->player->pos_x;
 	pos_y = (int)c->player->pos_y;
 	mv_speed = c->mlx->delta_time * SPEED;
-	if (c->map->m[pos_y][pos_x + (int)(c->player->dir_y * mv_speed)] != '0')
+	if (c->map->m[pos_y][pos_x + (int)(c->player->dir_y * mv_speed)] != '1')
 		c->player->pos_x += c->player->dir_y * mv_speed;
-	if (c->map->m[pos_y - (int)(c->player->dir_x * mv_speed)][pos_x] != '0')
+	if (c->map->m[pos_y - (int)(c->player->dir_x * mv_speed)][pos_x] != '1')
 		c->player->pos_y -= c->player->dir_x * mv_speed;
 }
 
@@ -60,8 +58,8 @@ void	move_right(t_cub *c)
 	pos_x = (int)c->player->pos_x;
 	pos_y = (int)c->player->pos_y;
 	mv_speed = c->mlx->delta_time * SPEED;
-	if (c->map->m[pos_y][pos_x - (int)(c->player->dir_y * mv_speed)] != '0')
+	if (c->map->m[pos_y][pos_x - (int)(c->player->dir_y * mv_speed)] != '1')
 		c->player->pos_x += c->player->dir_y * mv_speed;
-	if (c->map->m[pos_y + (int)(c->player->dir_x * mv_speed)][pos_x] != '0')
+	if (c->map->m[pos_y + (int)(c->player->dir_x * mv_speed)][pos_x] != '1')
 		c->player->pos_y += c->player->dir_x * mv_speed;
 }

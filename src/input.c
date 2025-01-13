@@ -58,11 +58,13 @@ void	update_player_pos(t_cub *cub, int key)
 		move_left(cub);
 	else
 		move_right(cub);
+/*
 	if (round(cub->player->pos_y) != map_x && round(cub->player->pos_y) != map_y)
 	{
 		cub->map->m[map_y][map_x] = '0';
 		cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'P';
 	}
+*/
 }
 
 void ft_hook(void *param)
