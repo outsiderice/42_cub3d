@@ -1,6 +1,5 @@
 #include "MLX42/MLX42.h"
 #include "input.h"
-#include "render.h"
 #include "movements.h"
 #include <stdlib.h>
 #include <stdio.h>
