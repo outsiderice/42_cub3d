@@ -1,6 +1,7 @@
 #include "MLX42/MLX42.h"
 #include "input.h"
 #include "render.h"
+#include "movements.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -16,18 +17,6 @@ void	close_cub(t_cub *cub)
 	free(cub);
 	exit(EXIT_SUCCESS);
 }
-
-void	update_player_pos(t_cub *cub, int x, int y)
-{
-	if (cub->map->m[(int)cub->player->pos_y - y][(int)cub->player->pos_x + x] != FLOOR)
-		return ;
-	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = '0';
-	cub->player->pos_x += x;
-	cub->player->pos_y -= y;
-	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
-}
-
-#define ROT_ANGLE 0.1
 
 void	rotate_left(double x, double y, double *new_x, double *new_y)
 {
@@ -53,6 +42,16 @@ void	update_player_dir(t_player *player, int turn)
 		rotate_right(player->dir_x, player->dir_y, &player->dir_x, &player->dir_y);
 		rotate_right(player->plane_x, player->plane_y, &player->plane_x, &player->plane_y);
 	}
+}
+
+void	update_player_pos(t_cub *cub, int x, int y)
+{
+	if (cub->map->m[(int)cub->player->pos_y - y][(int)cub->player->pos_x + x] != FLOOR)
+		return ;
+	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = '0';
+	cub->player->pos_x += x;
+	cub->player->pos_y -= y;
+	cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'N';
 }
 
 void ft_hook(void *param)

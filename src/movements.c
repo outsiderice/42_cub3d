@@ -1,4 +1,5 @@
 #include "movements.h"
+#include "render.h"
 
 void	move_up(t_cub *c)
 {

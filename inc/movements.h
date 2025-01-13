@@ -1,8 +1,6 @@
 #ifndef MOVEMENTS_H
 # define MOVEMENTS_H
 
-#include "render.h"
-
 # define SPEED 5.0
 
 void	move_up(t_cub *c):
