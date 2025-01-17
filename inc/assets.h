@@ -13,7 +13,6 @@ typedef struct s_ass
 	mlx_image_t	*s;
 	mlx_image_t	*e;
 	mlx_image_t	*w;
-};	t_ass
-
+}	t_ass;
 
 #endif
