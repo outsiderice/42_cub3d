@@ -1,21 +1,18 @@
 #include "assets.h"
 
 //load png
-//png to image
-//profit
+//texture to image?? told might be leak otherwise, come back later if needed.
 
-void	set_assets(t_map_info info)
+t_ass	set_assets(t_map_info info)
 {
-	t_ass			a;
-	mlx_texture_t	*east;
-	mlx_texture_t	*west;
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
+	t_ass			ass;
 
-	east = mlx_load_png(info.east);
-	west = mlx_load_png(info.west);
-	north = mlx_load_png(info.north);
-	south = mlx_load_png(info.south);
-	a.c_color = get_rgba(info.ceiling[0], info.ceiling[1], info.ceiling[2]);
-	a.f_color = get_rgba(info.floor[0], info.floor[1], info.floor[2]);
+	ass.e = mlx_load_png(info.east);
+	ass.w = mlx_load_png(info.west);
+	ass.n = mlx_load_png(info.north);
+	ass.s = mlx_load_png(info.south);
+	ass.c_color = get_rgba(info.ceiling[0], info.ceiling[1], info.ceiling[2]);
+	ass.f_color = get_rgba(info.floor[0], info.floor[1], info.floor[2]);
+
+	return (ass);
 }
