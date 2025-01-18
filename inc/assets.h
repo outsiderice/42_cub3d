@@ -3,6 +3,7 @@
 
 #include "render.h"
 #include "cub3d.h"
+#include "raycast.h"
 #include "MLX42/MLX42.h"
 
 typedef struct s_ass
