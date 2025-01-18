@@ -24,7 +24,7 @@ t_ass	set_assets(t_map_info info)
 	ass.w = mlx_load_png(info.west);
 	ass.n = mlx_load_png(info.north);
 	ass.s = mlx_load_png(info.south);
-	ass.c_color = get_rgba(info.ceiling[0], info.ceiling[1], info.ceiling[2]);
-	ass.f_color = get_rgba(info.floor[0], info.floor[1], info.floor[2]);
+	ass.c_color = get_rgba(info.ceiling[0], info.ceiling[1], info.ceiling[2], 255);
+	ass.f_color = get_rgba(info.floor[0], info.floor[1], info.floor[2], 255);
 	return (ass);
 }
