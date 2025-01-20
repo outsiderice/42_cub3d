@@ -12,6 +12,7 @@ void	wall_coordinate(t_raycast r, t_player *p, double ray_x, double ray_y)
 		wall_x = p->pos_y + r.perp_wall_dist * ray_y;
 	else
 		wall_x = p->pos_x + r.perp_wall_dist * ray_x;
+	wall_x -= floor(wall_x);
 }
 
 //loads png and sets textures and colors to asset struct
