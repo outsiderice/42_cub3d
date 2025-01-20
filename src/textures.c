@@ -28,6 +28,7 @@ int	texture_coordinate(t_raycast r, double ray_x, double ray_y, t_ass a, double 
 		tex_x = width - tex_x - 1;
 	if (r.side == 1 && ray_y < 0)
 		tex_x = width - tex_x - 1;
+	return (tex_x);
 }
 
 //calculate where exactly the ray hits the wall
