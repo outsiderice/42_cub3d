@@ -1,14 +1,20 @@
 #include "assets.h"
 
 /* TO do
-	-add ray dirs to t_raycast
-	-
+	[] texture step and fill texture buffer
+	[] render_texture
+	[] clear texture buffer
+	[] add ray dirs to t_raycast
+	[] add wall_h to t_raycast
 */
 
 void	render_texture(t_cub *c)
 {
 
 }
+
+void	texture_buffer()
+{}
 
 int	texture_coordinate(t_raycast r, double ray_x, double ray_y, t_ass a, double wall_x)
 {
