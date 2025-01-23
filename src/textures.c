@@ -8,27 +8,32 @@
 	[] add wall_h to t_raycast
 */
 
-void	render_texture(t_cub *c)
+void	render_texture()
 {
+	
 
 }
 
-void	texture_buffer()
-{}
+void	texture_buffer(t_raycast r, t_ass a, int t_width, int t_height)
+{
+	double	step;
+	double	tex_pos;
+	int		buffer;
+	int		y;
 
-int	texture_coordinate(t_raycast r, double ray_x, double ray_y, t_ass a, double wall_x)
+	y = r.wall_start;
+	step = 1.0 * t_height / r.wall_h;
+	tex_pos = (r.wall_start - HEIGHT / 2 + r.wall_h / 2) * step;
+	while (y < r.wall_end)
+	{
+
+	}
+}
+
+int	texture_coordinate(t_raycast r, int width, double wall_x, double ray_x, double ray_y, t_ass a)
 {
 	int	tex_x;
-	int	width;
 
-	if (r.wall_type == 'E')
-		width = a.e->width;
-	else if (r.wall_type == 'N')
-		width = a.n->width;
-	else if (r.wall_type == 'W')
-		width = a.w->width;
-	else
-		width = a.s->width;
 	tex_x = (int)(wall_x * width);
 	if (r.side == 0 && ray_x > 0)
 		tex_x = width - tex_x - 1;
@@ -49,6 +54,19 @@ double	wall_coordinate(t_raycast r, t_player *p, double ray_x, double ray_y)
 	wall_x -= floor(wall_x);
 	return (wall_x);
 }
+
+/* add to render ray
+	int	width;
+
+	if (r.wall_type == 'E')
+		width = a.e->width;
+	else if (r.wall_type == 'N')
+		width = a.n->width;
+	else if (r.wall_type == 'W')
+		width = a.w->width;
+	else
+		width = a.s->width;
+		*/
 
 //loads png and sets textures and colors to asset struct
 //texture to image?? told might be leak otherwise, come back later if needed.
