@@ -139,8 +139,8 @@ void	calc_delta(t_raycast *r)
 
 void	raycast(t_cub *cub)
 {
-	int	x;
-	double	camera_x;
+	int			x;
+	double		camera_x;
 	t_raycast	r;
 	
 	x = 0;
@@ -155,7 +155,7 @@ void	raycast(t_cub *cub)
 		calc_sidedist_and_step(&r, cub);
 		dda(&r, cub->map);
 		set_wall_side(&r);
-		calc_wall_height(&r, cub);
+		r.wall_h = (&r, cub);
 		render_ray(x, r, cub);
 		x++;
 	}

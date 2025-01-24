@@ -5,7 +5,7 @@
 	[] render_texture
 	[] clear texture buffer
 	[x] add ray dirs to t_raycast
-	[] add wall_h to t_raycast
+	[x] add wall_h to t_raycast
 */
 
 void	render_texture()
