@@ -69,9 +69,9 @@ void	update_player_pos(t_cub *cub, int key)
 	map_x = round(cub->player->pos_x);
 	map_y = round(cub->player->pos_y);
 	if (key == 'W')
-		move_player(cub, cub->player->dir_x, cub->player->dir_y);
+		move_player(cub, cub->player->dir_x, -cub->player->dir_y);
 	else if (key == 'S')
-		move_player(cub, -cub->player->dir_x, -cub->player->dir_y);
+		move_player(cub, -cub->player->dir_x, cub->player->dir_y);
 	else if (key == 'A')
 		move_player(cub, cub->player->dir_y, cub->player->dir_x);
 	else
