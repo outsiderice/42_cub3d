@@ -3,7 +3,7 @@
 
 /* TO DO
 	[] texture step and fill texture buffer
-	[] render_texture
+	[x] render_texture
 	[] clear texture buffer
 	[x] add ray dirs to t_raycast
 	[x] add wall_h to t_raycast
