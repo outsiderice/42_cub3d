@@ -1,10 +1,10 @@
 #include "assets.h"
 
-/* TO do
+/* TO DO
 	[] texture step and fill texture buffer
 	[] render_texture
 	[] clear texture buffer
-	[] add ray dirs to t_raycast
+	[x] add ray dirs to t_raycast
 	[] add wall_h to t_raycast
 */
 
@@ -30,14 +30,14 @@ void	texture_buffer(t_raycast r, t_ass a, int t_width, int t_height)
 	}
 }
 
-int	texture_coordinate(t_raycast r, int width, double wall_x, double ray_x, double ray_y, t_ass a)
+int	texture_coordinate(t_raycast r, int width, double wall_x, t_ass a)
 {
 	int	tex_x;
 
 	tex_x = (int)(wall_x * width);
-	if (r.side == 0 && ray_x > 0)
+	if (r.side == 0 && r.raydir_x > 0)
 		tex_x = width - tex_x - 1;
-	if (r.side == 1 && ray_y < 0)
+	if (r.side == 1 && r.raydir_y < 0)
 		tex_x = width - tex_x - 1;
 	return (tex_x);
 }
