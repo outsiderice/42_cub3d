@@ -49,24 +49,6 @@ int	calc_wall_height(t_raycast *r, t_cub *cub)
 	return (wall_h);
 }
 
-void	set_wall_side(t_raycast *r)
-{
-	if (r->side == 0)
-	{
-		if (r->step_x >= 0)
-			r->wall_type = 'E';
-		else
-			r->wall_type = 'W';
-	}
-	else
-	{
-		if (r->step_y >= 0)
-			r->wall_type = 'S';
-		else
-			r->wall_type = 'N';
-	}
-}
-
 //advances ray until it hits a wall
 void	dda(t_raycast *r, t_map *map)
 {
@@ -154,8 +136,8 @@ void	raycast(t_cub *cub)
 		calc_delta(&r);
 		calc_sidedist_and_step(&r, cub);
 		dda(&r, cub->map);
-		set_wall_side(&r);
 		r.wall_h = (&r, cub);
+		init_texture();
 		render_ray(x, r, cub);
 		x++;
 	}

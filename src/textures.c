@@ -1,4 +1,5 @@
 #include "assets.h"
+#include "texture.h"
 
 /* TO DO
 	[] texture step and fill texture buffer
@@ -18,15 +19,20 @@ void	texture_buffer(t_raycast r, t_ass a, int t_width, int t_height)
 {
 	double	step;
 	double	tex_pos;
-	int		buffer;
+	int		buffer[t_height];
 	int		y;
+	int		tex_y;
+	int		color;
 
 	y = r.wall_start;
 	step = 1.0 * t_height / r.wall_h;
 	tex_pos = (r.wall_start - HEIGHT / 2 + r.wall_h / 2) * step;
-	while (y < r.wall_end)
+	while (y < r.wall_end) //fill buffer
 	{
-
+		tex_y = (int)tex_pos & (t_height - 1);
+		tex_pos += step;
+		color = (txt[t_height * tex_y + t.tx_x]);
+		buffer[y] = color;
 	}
 }
 
@@ -55,18 +61,28 @@ double	wall_coordinate(t_raycast r, t_player *p, double ray_x, double ray_y)
 	return (wall_x);
 }
 
-/* add to render ray
-	int	width;
-
-	if (r.wall_type == 'E')
-		width = a.e->width;
-	else if (r.wall_type == 'N')
-		width = a.n->width;
-	else if (r.wall_type == 'W')
-		width = a.w->width;
+void	set_wall_side(t_raycast *r, t_ass a, t_tx t)
+{
+	if (r->side == 0)
+	{
+		if (r->step_x >= 0)
+			t.info = a.e;
+		else
+			t.info = a.w;
+	}
 	else
-		width = a.s->width;
-		*/
+	{
+		if (r->step_y >= 0)
+			t.info = a.s;
+		else
+			t.info = a.n;
+	}
+}
+
+void	init_texture()
+{
+	
+}
 
 //loads png and sets textures and colors to asset struct
 //texture to image?? told might be leak otherwise, come back later if needed.
