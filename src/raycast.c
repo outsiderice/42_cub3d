@@ -10,26 +10,19 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 	y = 0;
 	while (y < r.wall_start)
 	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
+		render_color();
 		y++;
 	}
 //	printf("y is %d\n", y);
 	while (y <= r.wall_end)
 	{
-		if (r.wall_type == 'N')
-			mlx_put_pixel(cub->img, x, y, get_rgba(84, 60, 255, 255));
-		else if (r.wall_type == 'S')
-			mlx_put_pixel(cub->img, x, y, get_rgba(255, 164, 0, 255));
-		else if (r.wall_type == 'E')
-			mlx_put_pixel(cub->img, x, y, get_rgba(250, 251, 0, 255));
-		else if (r.wall_type == 'W')
-			mlx_put_pixel(cub->img, x, y, get_rgba(36, 255, 0, 255));
+		render_texture();
 		y++;
 	}
 //	printf("y is %d\n", y);
 	while (y < HEIGHT)
 	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(250, 0, 0, 255));
+		render_color();
 		y++;
 	}
 //	printf("y is %d\n", y);
