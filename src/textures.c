@@ -9,10 +9,9 @@
 	[x] add wall_h to t_raycast
 */
 
-void	render_texture()
+int	render_texture()
 {
-	
-
+	return (y);
 }
 
 void	texture_buffer(t_raycast r, t_ass a, int t_width, int t_height)
