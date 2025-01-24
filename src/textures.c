@@ -9,8 +9,13 @@
 	[x] add wall_h to t_raycast
 */
 
-int	render_texture()
+int	render_texture(int x, int y, int *buffer, t_cub *cub)
 {
+	while(buffer[y])
+	{
+		mlx_put_pixel(cub->img, x, y, buffer[y]);
+		y++;
+	}
 	return (y);
 }
 

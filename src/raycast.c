@@ -11,7 +11,7 @@ void	render_ray(int x, t_raycast r, t_cub *cub, t_tx tx)
 	y = 0;
 	while (y < r.wall_start)
 	{
-		mlx_put_pixel(cub->img, x, y, cub->a.f_color);
+		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
 		y++;
 	}
 //	printf("y is %d\n", y);
@@ -19,7 +19,7 @@ void	render_ray(int x, t_raycast r, t_cub *cub, t_tx tx)
 //	printf("y is %d\n", y);
 	while (y < HEIGHT)
 	{
-		mlx_put_pixel(cub->img, x, y, cub->a.c_color);
+		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
 		y++;
 	}
 //	printf("y is %d\n", y);
