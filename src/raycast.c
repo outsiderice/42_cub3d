@@ -148,8 +148,8 @@ void	raycast(t_cub *cub)
 	x = 0;
 	while (x < cub->mlx->width)
 	{
-		cub->map->pos_x = round(cub->player->pos_x);
-		cub->map->pos_y = round(cub->player->pos_y);
+		cub->map->pos_x = (int)cub->player->pos_x;
+		cub->map->pos_y = (int)cub->player->pos_y;
 		camera_x = 2 * x / (double)cub->mlx->width - 1;
 		raydir_x = cub->player->dir_x + cub->player->plane_x * camera_x;
 		raydir_y = cub->player->dir_y + cub->player->plane_y * camera_x;
