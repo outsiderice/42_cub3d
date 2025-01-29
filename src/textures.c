@@ -3,13 +3,13 @@
 int	render_texture(int x, int y, t_raycast r, t_cub *cub)
 {
 	t_tx	t;
-	int		tex_y;
-	int		color;
+	int			tex_y;
+	uint32_t	color;
 
 	t = init_texture(r, cub);
 	while(y < r.wall_end)
 	{
-		tex_y = (int)t.tex_pos & (t.info->height - 1);
+		tex_y = (int)t.tex_pos % t.info->height;
 		t.tex_pos += t.step;
 		color = ((uint32_t *)t.info->pixels)[tex_y * t.info->width + (int)t.tx_x];
 		mlx_put_pixel(cub->img, x, y, color);
@@ -17,26 +17,6 @@ int	render_texture(int x, int y, t_raycast r, t_cub *cub)
 	}
 	return (y);
 }
-
-/*
-void	texture_buffer(t_raycast r, t_tx *t, t_cub *c)
-{
-	int		y;
-	int		tex_y;
-	int		color;
-
-	y = r.wall_start;
-	t->step = 1.0 * t->info->height / r.wall_h;
-	t->tex_pos = (r.wall_start - c->mlx->height / 2 + r.wall_h / 2) * step;
-	while (y < r.wall_end)
-	{
-		tex_y = (int)tex_pos & (t->info->height - 1);
-		t->tex_pos += step;
-		color = ((uint32_t *)t->info->pixels)[tex_y * t->info->width + (int)t->tx_x];
-		t->buffer[y] = color;
-		y++;
-	}
-}*/
 
 int	texture_coordinate(t_raycast r, t_tx t, double wall_x)
 {
