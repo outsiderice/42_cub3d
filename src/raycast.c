@@ -152,12 +152,7 @@ void	raycast(t_cub *cub)
 		calc_sidedist_and_step(&r, cub);
 		dda(&r, cub->map);
 		r.wall_h = calc_wall_height(&r, cub);
-	printf("1\n");
-	printf("2\n");
 		render_ray(x, r, cub);
-	printf("3\n");
 		x++;
 	}
-	
-	printf("rendered one view\n");
 }
