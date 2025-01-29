@@ -3,43 +3,47 @@
 #include <stdio.h>
 
 int	check_collisions(t_cub *c, double new_x, double new_y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)new_x;
+	map_y = (int)new_y;
+	if (map_x < 0 || map_x >= c->map->width || map_y < 0 || map_y >= c->map->height)
+		return (1);
+	if (c->map->m[map_y][map_x] == WALL)
+		return (1);
+	return (0);
+}
 
 void	move_player(t_cub *c, double dir_x, double dir_y)
 {
 	double	mv_spd;
-	int		x;
-	int		y;
+	double	new_x;
+	double	new_y;
 	
-	x = (int)c->player->pos_x;
-	y = (int)c->player->pos_y;
 	mv_spd = c->mlx->delta_time * SPEED;
-	if (y - (int)(dir_y * mv_spd) < 0 || y - (int)dir_y * mv_spd > c->map->height)
-		return ;
-	if (x + (int)(dir_x * mv_spd) < 0 || x + (int)(dir_x * mv_spd) > c->map->width)
-		return ;
-	if (c->map->m[y - (int)(dir_y * mv_spd)][x + (int)(dir_x * mv_spd)] != WALL)
+	new_x = c->player->pos_x + dir_x * mv_spd;
+	new_y = c->player->pos_y - dir_y * mv_spd;
+	if (!check_collisions(c, new_x, new_y))
 	{
-		c->player->pos_x += dir_x * mv_spd;
-		c->player->pos_y -= dir_y * mv_spd;
+		c->player->pos_x = new_x;
+		c->player->pos_y = new_y;
 	}
 }
 
 void	strafe(t_cub *c, double dir_x, double dir_y)
 {
 	double	mv_spd;
-	int		x;
-	int		y;
+	double	new_x;
+	double	new_y;
 	
-	x = (int)c->player->pos_x;
-	y = (int)c->player->pos_y;
 	mv_spd = c->mlx->delta_time * SPEED;
-	if (y - (int)(dir_y * mv_spd) < 0 || y - (int)dir_y * mv_spd > c->map->height)
-		return ;
-	if (x + (int)(dir_x * mv_spd) < 0 || x + (int)(dir_x * mv_spd) > c->map->width)
-		return ;
-	if (c->map->m[y - (int)(dir_y * mv_spd)][x + (int)(dir_x * mv_spd)] != WALL)
+	new_x = c->player->pos_x + dir_x * mv_spd;
+	new_y = c->player->pos_y + dir_y * mv_spd;
+	if (!check_collisions(c, new_x, new_y))
 	{
-		c->player->pos_x += dir_x * mv_spd;
-		c->player->pos_y += dir_y * mv_spd;
+		c->player->pos_x = new_x;
+		c->player->pos_y = new_y;
 	}
 }
