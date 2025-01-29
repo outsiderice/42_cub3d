@@ -10,13 +10,13 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 	y = 0;
 	while (y < r.wall_start)
 	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
+		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
 		y++;
 	}
 	y = render_texture(x, y, r, cub);
 	while (y < HEIGHT)
 	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
+		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
 		y++;
 	}
 //	printf("y is %d\n", y);
