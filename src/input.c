@@ -73,9 +73,9 @@ void	update_player_pos(t_cub *cub, int key)
 	else if (key == 'S')
 		move_player(cub, -cub->player->dir_x, cub->player->dir_y);
 	else if (key == 'A')
-		move_player(cub, cub->player->dir_y, cub->player->dir_x);
-	else
-		move_player(cub, cub->player->dir_y, -cub->player->dir_x);
+		strafe(cub, cub->player->dir_y, -cub->player->dir_x);
+	else if (key == 'D')
+		strafe(cub, -cub->player->dir_y, cub->player->dir_x);
 /*
 	if (round(cub->player->pos_y) != map_x && round(cub->player->pos_y) != map_y)
 	{

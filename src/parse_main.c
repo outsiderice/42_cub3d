@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "render.h"
+#include "game.h"
 
 int	main(int ac, char **av)
 {

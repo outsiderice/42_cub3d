@@ -1,10 +1,14 @@
 #ifndef RAYCAST_H
 # define RAYCAST_H
 
+# include "game.h"
+
 typedef struct s_raycast
 {
     double  delta_x;
     double  delta_y;
+    double  raydir_x;
+    double  raydir_y;
     double  perp_wall_dist;
     double  sidedist_x;
     double  sidedist_y;
@@ -13,7 +17,7 @@ typedef struct s_raycast
     int     step_y;
     int     wall_start;
     int     wall_end;
-	int		wall_type;
+    int     wall_h;
 } t_raycast;
 
 void	raycast(t_cub *cub);

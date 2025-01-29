@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-#include "render.h"
+#include "game.h"
 
 # define ROT_ANGLE 3.0
 
