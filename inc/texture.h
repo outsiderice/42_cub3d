@@ -5,11 +5,11 @@
 
 typedef struct s_tx
 {
-    double			step;
-	double			tx_pos;
 	double			tx_x;
 	int				*buffer;
 	mlx_texture_t	*info;
 } t_tx;
+
+t_tx	init_texture(t_raycast r, t_cub *cub);
 
 #endif

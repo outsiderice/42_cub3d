@@ -128,7 +128,7 @@ void	raycast(t_cub *cub)
 		calc_sidedist_and_step(&r, cub);
 		dda(&r, cub->map);
 		r.wall_h = (&r, cub);
-		init_texture();
+		t = init_texture();
 		render_ray(x, r, cub, t);
 		x++;
 	}
