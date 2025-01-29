@@ -7,10 +7,18 @@ t_ass	set_assets(t_map_info info)
 	t_ass			ass;
 
 	ass.e = mlx_load_png(info.east);
+	if (ass.e->height != 64 || ass.e->width != 64)
+		return (printf("East incorrect size\n"), ass);
 	ass.w = mlx_load_png(info.west);
+	if (ass.w->height != 64 || ass.w->width != 64)
+                return (printf("West incorrect size\n"), ass);
 	ass.n = mlx_load_png(info.north);
+	if (ass.n->height != 64 || ass.n->width != 64)
+                return (printf("North incorrect size\n"), ass);
 	ass.s = mlx_load_png(info.south);
+	if (ass.s->height != 64 || ass.s->width != 64)
+                return (printf("South incorrect size\n"), ass);
 	ass.c_color = get_rgba(info.ceiling[0], info.ceiling[1], info.ceiling[2], 255);
 	ass.f_color = get_rgba(info.floor[0], info.floor[1], info.floor[2], 255);
-	return (ass);
+	return (printf("All correct sizes\n"),ass);
 }
