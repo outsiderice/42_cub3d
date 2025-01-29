@@ -1,6 +1,8 @@
 #ifndef RAYCAST_H
 # define RAYCAST_H
 
+# include "render.h"
+
 typedef struct s_raycast
 {
     double  delta_x;

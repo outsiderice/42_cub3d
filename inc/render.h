@@ -1,9 +1,10 @@
 #ifndef RENDER_H
 # define RENDER_H
 
-#include "player.h"
-#include "cub3d.h"
 #include <math.h>
+
+# include "player.h"
+# include "cub3d.h"
 # include "assets.h"
 
 # define WALL '1'

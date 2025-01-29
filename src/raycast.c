@@ -1,4 +1,3 @@
-#include "render.h"
 #include "raycast.h"
 #include "MLX42/MLX42.h"
 #include <stdio.h>
