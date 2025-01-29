@@ -5,13 +5,17 @@ int	render_texture(int x, int y, t_raycast r, t_cub *cub)
 	t_tx	t;
 	int			tex_y;
 	uint32_t	color;
+	uint8_t		*pixels;
+	int			index;
 
 	t = init_texture(r, cub);
+	pixels = t.info->pixels;
 	while(y < r.wall_end)
 	{
 		tex_y = (int)t.tex_pos % t.info->height;
 		t.tex_pos += t.step;
-		color = ((uint32_t *)t.info->pixels)[tex_y * t.info->width + (int)t.tx_x];
+		index = (tex_y * t.info->width + (int)t.tx_x) * 4;
+		color = get_rgba(pixels[index], pixels[index + 1], pixels[index + 2], pixels[index + 3]);
 		mlx_put_pixel(cub->img, x, y, color);
 		y++;
 	}

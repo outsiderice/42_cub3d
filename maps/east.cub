@@ -1,5 +1,5 @@
-F 233,233,233 
-C 204,200,1
+F 100,100,200 
+C 100,200,100
    EA 	textures/colorstone.png	
   WE 	textures/mossy.png
   NO textures/purplestone.png
