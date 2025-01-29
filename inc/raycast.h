@@ -1,7 +1,7 @@
 #ifndef RAYCAST_H
 # define RAYCAST_H
 
-# include "render.h"
+# include "game.h"
 
 typedef struct s_raycast
 {

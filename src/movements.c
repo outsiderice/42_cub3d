@@ -1,5 +1,5 @@
 #include "movements.h"
-#include "render.h"
+#include "game.h"
 #include <stdio.h>
 
 void	move_player(t_cub *c, double dir_x, double dir_y)

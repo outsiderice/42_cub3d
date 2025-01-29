@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "MLX42/MLX42.h"
-#include "render.h"
+#include "game.h"
 #include "raycast.h"
 #include "input.h"
 

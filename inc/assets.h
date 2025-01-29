@@ -1,7 +1,7 @@
 #ifndef ASSETS_H
 # define ASSETS_H
 
-#include "render.h"
+#include "game.h"
 #include "cub3d.h"
 #include "raycast.h"
 #include "MLX42/MLX42.h"

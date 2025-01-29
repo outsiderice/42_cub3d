@@ -1,7 +1,7 @@
 #ifndef MOVEMENTS_H
 # define MOVEMENTS_H
 
-#include "render.h"
+#include "game.h"
 
 # define SPEED 5.0
 

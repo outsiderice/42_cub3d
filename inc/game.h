@@ -1,5 +1,5 @@
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef GAME_H
+# define GAME_H
 
 #include <math.h>
 
