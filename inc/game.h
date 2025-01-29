@@ -5,7 +5,6 @@
 
 # include "player.h"
 # include "cub3d.h"
-# include "assets.h"
 
 # define WALL '1'
 # define FLOOR '0'
@@ -23,6 +22,16 @@ typedef struct s_map
 	int			height;
 } t_map;
 
+typedef struct s_ass
+{
+	int				c_color;
+	int				f_color;
+	mlx_texture_t	*n;
+	mlx_texture_t	*s;
+	mlx_texture_t	*e;
+	mlx_texture_t	*w;
+}	t_ass;
+
 typedef struct s_cub
 {
 	t_player	*player;
@@ -35,4 +44,5 @@ typedef struct s_cub
 void	render(t_cub *cub);
 void	cub3d(t_map_info info);
 int		get_rgba(int r, int g, int b, int a);
+t_ass	set_assets(t_map_info info);
 #endif
