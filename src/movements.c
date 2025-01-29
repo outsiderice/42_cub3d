@@ -2,6 +2,8 @@
 #include "game.h"
 #include <stdio.h>
 
+int	check_collisions(t_cub *c, double new_x, double new_y)
+
 void	move_player(t_cub *c, double dir_x, double dir_y)
 {
 	double	mv_spd;
