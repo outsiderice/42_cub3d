@@ -4,6 +4,7 @@
 #include "player.h"
 #include "cub3d.h"
 #include <math.h>
+# include "assets.h"
 
 # define WALL '1'
 # define FLOOR '0'
@@ -25,6 +26,7 @@ typedef struct s_cub
 {
 	t_player	*player;
 	t_map		*map;
+	t_ass		ass;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 } t_cub;

@@ -153,7 +153,6 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	if (!cub->mlx)
 		ft_error();
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	printf("old stuff assigned\n");
 	//change map assignation later
 	t_map	*map;
 	map = malloc (sizeof(t_map) * 1);
@@ -165,6 +164,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	map->pos_x = start[1];
 	map->pos_y = start[0];
 	cub->map = map;
+	cub->ass = set_assets(info);
 	set_direction(cub);
 	set_plane(cub);
 }

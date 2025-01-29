@@ -29,7 +29,7 @@ typedef struct s_map_info
 	int		ceiling[3];
 	int		**map;
 	int		map_len;
-	int 		map_lines;
+	int 	map_lines;
 }	t_map_info;
 
 char	*get_next_line(int fd);

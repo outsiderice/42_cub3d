@@ -16,4 +16,6 @@ typedef struct s_ass
 	mlx_texture_t	*w;
 }	t_ass;
 
+t_ass	set_assets(t_map_info info);
+
 #endif

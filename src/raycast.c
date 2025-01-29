@@ -114,6 +114,7 @@ void	raycast(t_cub *cub)
 	int			x;
 	double		camera_x;
 	t_raycast	r;
+	t_tx		t;
 	
 	x = 0;
 	while (x < cub->mlx->width)
@@ -128,7 +129,7 @@ void	raycast(t_cub *cub)
 		dda(&r, cub->map);
 		r.wall_h = (&r, cub);
 		init_texture();
-		render_ray(x, r, cub);
+		render_ray(x, r, cub, t);
 		x++;
 	}
 }
