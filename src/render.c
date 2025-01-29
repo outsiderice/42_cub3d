@@ -165,6 +165,8 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	map->pos_y = start[0];
 	cub->map = map;
 	cub->ass = set_assets(info);
+	if (check_assets(cub->ass) != 0)
+		exit(EXIT_FAILURE);
 	set_direction(cub);
 	set_plane(cub);
 }

@@ -44,5 +44,6 @@ typedef struct s_cub
 void	render(t_cub *cub);
 void	cub3d(t_map_info info);
 int		get_rgba(int r, int g, int b, int a);
+int		check_assets(t_ass ass);
 t_ass	set_assets(t_map_info info);
 #endif
