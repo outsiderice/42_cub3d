@@ -1,4 +1,3 @@
-#include "assets.h"
 #include "texture.h"
 
 int	render_texture(int x, int y, int *buffer, t_cub *cub)

@@ -14,7 +14,7 @@ void	render_ray(int x, t_raycast r, t_cub *cub, t_tx tx)
 		y++;
 	}
 //	printf("y is %d\n", y);
-	y = render_texture(y, tx);
+	y = render_texture(x, y, tx.buffer, cub);
 //	printf("y is %d\n", y);
 	while (y < HEIGHT)
 	{
@@ -126,8 +126,8 @@ void	raycast(t_cub *cub)
 		calc_delta(&r);
 		calc_sidedist_and_step(&r, cub);
 		dda(&r, cub->map);
-		r.wall_h = (&r, cub);
-		t = init_texture();
+		r.wall_h = calc_wall_height(&r, cub);
+		t = init_texture(r, cub);
 		render_ray(x, r, cub, t);
 		x++;
 	}
