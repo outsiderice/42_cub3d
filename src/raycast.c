@@ -2,8 +2,30 @@
 #include "MLX42/MLX42.h"
 #include <stdio.h>
 # include "texture.h"
-
+/*
 void	render_ray(int x, t_raycast r, t_cub *cub, t_tx tx)
+{
+	int	y;
+	(void)tx;
+
+	y = 0;
+	while (y < r.wall_start)
+	{
+		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
+		y++;
+	}
+//	printf("y is %d\n", y);
+//	y = render_texture(x, y, tx.buffer, cub);
+//	printf("y is %d\n", y);
+	while (y < HEIGHT)
+	{
+		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
+		y++;
+	}
+//	printf("y is %d\n", y);
+}*/
+
+void	render_ray(int x, t_raycast r, t_cub *cub)
 {
 	int	y;
 
@@ -14,8 +36,14 @@ void	render_ray(int x, t_raycast r, t_cub *cub, t_tx tx)
 		y++;
 	}
 //	printf("y is %d\n", y);
-	y = render_texture(x, y, tx.buffer, cub);
+//	y = render_texture(x, y, tx.buffer, cub);
 //	printf("y is %d\n", y);
+	while (y <= r.wall_end)
+	{
+		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
+		y++;
+	}
+
 	while (y < HEIGHT)
 	{
 		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
@@ -23,7 +51,6 @@ void	render_ray(int x, t_raycast r, t_cub *cub, t_tx tx)
 	}
 //	printf("y is %d\n", y);
 }
-
 int	calc_wall_height(t_raycast *r, t_cub *cub)
 {
 	int	wall_h;
@@ -113,7 +140,7 @@ void	raycast(t_cub *cub)
 	int			x;
 	double		camera_x;
 	t_raycast	r;
-	t_tx		t;
+	//t_tx		t;
 	
 	x = 0;
 	while (x < cub->mlx->width)
@@ -127,8 +154,14 @@ void	raycast(t_cub *cub)
 		calc_sidedist_and_step(&r, cub);
 		dda(&r, cub->map);
 		r.wall_h = calc_wall_height(&r, cub);
-		t = init_texture(r, cub);
-		render_ray(x, r, cub, t);
+	printf("1\n");
+		//t = init_texture(r, cub);
+	printf("2\n");
+		//render_ray(x, r, cub, t);
+		render_ray(x, r, cub);
+	printf("3\n");
 		x++;
 	}
+	
+	printf("rendered one view\n");
 }

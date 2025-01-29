@@ -2,7 +2,7 @@
 
 int	render_texture(int x, int y, int *buffer, t_cub *cub)
 {
-	while(buffer[y])
+	while(y < cub->mlx->height)
 	{
 		mlx_put_pixel(cub->img, x, y, buffer[y]);
 		y++;
@@ -25,7 +25,7 @@ void	texture_buffer(t_raycast r, t_tx *t, t_cub *c)
 	{
 		tex_y = (int)tex_pos & (t->info->height - 1);
 		tex_pos += step;
-		color = ((uint32_t *)t->info->pixels)[t->info->height * tex_y + (int)t->tx_x];
+		color = ((uint32_t *)t->info->pixels)[t->info->width * tex_y + (int)t->tx_x];
 		t->buffer[y] = color;
 		y++;
 	}
