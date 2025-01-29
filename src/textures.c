@@ -1,39 +1,42 @@
 #include "texture.h"
 
-int	render_texture(int x, int y, int *buffer, t_cub *cub)
+int	render_texture(int x, int y, t_raycast r, t_cub *cub)
 {
-	int	tx_y;
+	t_tx	t;
+	int		tex_y;
+	int		color;
 
-	tx_y = 0;
-	while(y < cub->mlx->height)
+	t = init_texture(r, cub);
+	while(y < r.wall_end)
 	{
-		mlx_put_pixel(cub->img, x, y, buffer[tx_y]);
-		tx_y++;
+		tex_y = (int)t.tex_pos & (t.info->height - 1);
+		t.tex_pos += t.step;
+		color = ((uint32_t *)t.info->pixels)[tex_y * t.info->width + (int)t.tx_x];
+		mlx_put_pixel(cub->img, x, y, color);
 		y++;
 	}
 	return (y);
 }
 
+/*
 void	texture_buffer(t_raycast r, t_tx *t, t_cub *c)
 {
-	double	step;
-	double	tex_pos;
 	int		y;
 	int		tex_y;
 	int		color;
 
 	y = r.wall_start;
-	step = 1.0 * t->info->height / r.wall_h;
-	tex_pos = (r.wall_start - c->mlx->height / 2 + r.wall_h / 2) * step;
+	t->step = 1.0 * t->info->height / r.wall_h;
+	t->tex_pos = (r.wall_start - c->mlx->height / 2 + r.wall_h / 2) * step;
 	while (y < r.wall_end)
 	{
 		tex_y = (int)tex_pos & (t->info->height - 1);
-		tex_pos += step;
-		color = ((uint32_t *)t->info->pixels)[t->info->width * tex_y + (int)t->tx_x];
+		t->tex_pos += step;
+		color = ((uint32_t *)t->info->pixels)[tex_y * t->info->width + (int)t->tx_x];
 		t->buffer[y] = color;
 		y++;
 	}
-}
+}*/
 
 int	texture_coordinate(t_raycast r, t_tx t, double wall_x)
 {
@@ -86,7 +89,9 @@ t_tx	init_texture(t_raycast r, t_cub *cub)
 	set_wall_side(r, cub->ass, &t);
 	wall_x = wall_coordinate(r, cub->player);
 	t.tx_x = texture_coordinate(r, t, wall_x);
-	texture_buffer(r, &t, cub);
+	t.step = 1.0 * t.info->height / r.wall_h;
+	t.tex_pos = (r.wall_start - cub->mlx->height / 2 + r.wall_h / 2) * t.step;
+	//texture_buffer(r, &t, cub);
 	return (t);
 }
 

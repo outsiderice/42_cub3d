@@ -6,16 +6,14 @@
 void	render_ray(int x, t_raycast r, t_cub *cub)
 {
 	int		y;
-	t_tx	t;
 
 	y = 0;
-	t = init_texture(r, cub);
 	while (y < r.wall_start)
 	{
 		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
 		y++;
 	}
-	y = render_texture(x, y, t.buffer, cub);
+	y = render_texture(x, y, r, cub);
 	while (y < HEIGHT)
 	{
 		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
