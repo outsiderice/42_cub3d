@@ -2,9 +2,13 @@
 
 int	render_texture(int x, int y, int *buffer, t_cub *cub)
 {
+	int	tx_y;
+
+	tx_y = 0;
 	while(y < cub->mlx->height)
 	{
-		mlx_put_pixel(cub->img, x, y, buffer[y]);
+		mlx_put_pixel(cub->img, x, y, buffer[tx_y]);
+		tx_y++;
 		y++;
 	}
 	return (y);
