@@ -25,7 +25,7 @@ void	texture_buffer(t_raycast r, t_tx *t, t_cub *c)
 	{
 		tex_y = (int)tex_pos & (t->info->height - 1);
 		tex_pos += step;
-		color = ((uint32_t *)t->info->pixels)[t->info->height * tex_y + t->tx_x];
+		color = ((uint32_t *)t->info->pixels)[t->info->height * tex_y + (int)t->tx_x];
 		t->buffer[y] = color;
 		y++;
 	}
