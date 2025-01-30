@@ -6,10 +6,6 @@
 #include "raycast.h"
 #include "input.h"
 
-# define FOV 60
-
-# define BPP sizeof(int32_t)
-
 // 'Encodes' four individual bytes into an int. Aka sets color to one int
 int get_rgba(int r, int g, int b, int a)
 {

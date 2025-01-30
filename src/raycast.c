@@ -1,7 +1,7 @@
 #include "raycast.h"
 #include "MLX42/MLX42.h"
 #include <stdio.h>
-# include "texture.h"
+#include "texture.h"
 
 void	render_ray(int x, t_raycast r, t_cub *cub)
 {
@@ -64,27 +64,27 @@ void	dda(t_raycast *r, t_map *map)
 		r->perp_wall_dist = r->sidedist_y - r->delta_y;
 }
 
-void	calc_sidedist_and_step(t_raycast *r, t_cub *cub)
+void	calc_sidedist_and_step(t_raycast *r, t_cub *c)
 {
 	if (r->raydir_x < 0)
 	{
 		r->step_x = -1;
-		r->sidedist_x = (cub->player->pos_x - cub->map->pos_x) * r->delta_x;
+		r->sidedist_x = (c->player->pos_x - c->map->pos_x) * r->delta_x;
 	}
 	else
 	{
 		r->step_x = 1;
-		r->sidedist_x = (cub->map->pos_x + 1.0 - cub->player->pos_x) * r->delta_x;
+		r->sidedist_x = (c->map->pos_x + 1.0 - c->player->pos_x) * r->delta_x;
 	}
 	if (r->raydir_y < 0)
 	{
 		r->step_y = -1;
-		r->sidedist_y = (cub->player->pos_y - cub->map->pos_y) * r->delta_y;
+		r->sidedist_y = (c->player->pos_y - c->map->pos_y) * r->delta_y;
 	}
 	else
 	{
 		r->step_y = 1;
-		r->sidedist_y = (cub->map->pos_y + 1.0 - cub->player->pos_y) * r->delta_y;
+		r->sidedist_y = (c->map->pos_y + 1.0 - c->player->pos_y) * r->delta_y;
 	}
 }
 
@@ -99,9 +99,8 @@ void	calc_delta(t_raycast *r)
 		r->delta_y = 1e30;
 	else
 		r->delta_y = fabs(1 / r->raydir_y);
-	return;
+	return ;
 }
-
 
 void	raycast(t_cub *cub)
 {
