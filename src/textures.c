@@ -6,11 +6,11 @@
 /*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:20:31 by amagnell          #+#    #+#             */
-/*   Updated: 2025/01/30 11:20:32 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:37:40 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "texture.h"
+#include "raycast.h"
 
 int	render_texture(int x, int y, t_raycast r, t_cub *cub)
 {

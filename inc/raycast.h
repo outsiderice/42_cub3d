@@ -20,5 +20,17 @@ typedef struct s_raycast
     int     wall_h;
 } t_raycast;
 
+typedef struct s_tx
+{
+	double			step;
+	double			tex_pos;
+	double			tx_x;
+	mlx_texture_t	*info;
+} t_tx;
+
+t_tx	init_texture(t_raycast r, t_cub *cub);
+int		render_texture(int x, int y, t_raycast r, t_cub *cub);
+
+void	render_ray(int x, t_raycast r, t_cub *cub);
 void	raycast(t_cub *cub);
 #endif
