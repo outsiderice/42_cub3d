@@ -15,22 +15,21 @@ int	get_rgba(int r, int g, int b, int a)
 void	close_cub(t_cub *cub, int err)
 {
 	int	i;
-	int	height;
 
 	i = 0;
-	height = cub->map->height;
 	mlx_terminate(cub->mlx);
-	printf("bye\n");
 	free(cub->player);
-//	for (int i = 0; i < 5; i++)
-//		free(cub->map->m[i]);
-	while (i < height)
+	while (i < cub->map->height)
 	{
 		free(cub->map->m[i]);
 		i++;
 	}
 	free(cub->map->m);
 	free(cub->map);
+	mlx_delete_texture(cub->ass.n);
+	mlx_delete_texture(cub->ass.e);
+	mlx_delete_texture(cub->ass.w);
+	mlx_delete_texture(cub->ass.s);
 	free(cub);
 	if (!err)
 		exit(EXIT_SUCCESS);
