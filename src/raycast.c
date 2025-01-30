@@ -1,54 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 11:20:16 by amagnell          #+#    #+#             */
+/*   Updated: 2025/01/30 11:46:45 by amagnell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "raycast.h"
 #include "MLX42/MLX42.h"
-#include <stdio.h>
-# include "texture.h"
-
-void	render_ray(int x, t_raycast r, t_cub *cub)
-{
-	int		y;
-
-	y = 0;
-	while (y < r.wall_start)
-	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
-		y++;
-	}
-	y = render_texture(x, y, r, cub);
-	while (y < HEIGHT)
-	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
-		y++;
-	}
-//	printf("y is %d\n", y);
-}
-
-/*
-void	render_ray(int x, t_raycast r, t_cub *cub)
-{
-	int	y;
-
-	y = 0;
-	while (y < r.wall_start)
-	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
-		y++;
-	}
-//	printf("y is %d\n", y);
-//	y = render_texture(x, y, tx.buffer, cub);
-//	printf("y is %d\n", y);
-	while (y <= r.wall_end)
-	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
-		y++;
-	}
-
-	while (y < HEIGHT)
-	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
-		y++;
-	}
-//	printf("y is %d\n", y);
-}*/
 
 int	calc_wall_height(t_raycast *r, t_cub *cub)
 {
@@ -84,8 +47,6 @@ void	dda(t_raycast *r, t_map *map)
 			map->pos_y += r->step_y;
 			r->side = 1;
 		}
-	//	if (map->pos_y >= map->height || map->pos_y < 0 || map->pos_x < 0 || map->pos_x >= map->width)
-	//		hit = 1;
 		if (map->m[map->pos_y][map->pos_x] == '1')
 			hit = 1;
 	}
@@ -95,27 +56,27 @@ void	dda(t_raycast *r, t_map *map)
 		r->perp_wall_dist = r->sidedist_y - r->delta_y;
 }
 
-void	calc_sidedist_and_step(t_raycast *r, t_cub *cub)
+void	calc_sidedist_and_step(t_raycast *r, t_cub *c)
 {
 	if (r->raydir_x < 0)
 	{
 		r->step_x = -1;
-		r->sidedist_x = (cub->player->pos_x - cub->map->pos_x) * r->delta_x;
+		r->sidedist_x = (c->player->pos_x - c->map->pos_x) * r->delta_x;
 	}
 	else
 	{
 		r->step_x = 1;
-		r->sidedist_x = (cub->map->pos_x + 1.0 - cub->player->pos_x) * r->delta_x;
+		r->sidedist_x = (c->map->pos_x + 1.0 - c->player->pos_x) * r->delta_x;
 	}
 	if (r->raydir_y < 0)
 	{
 		r->step_y = -1;
-		r->sidedist_y = (cub->player->pos_y - cub->map->pos_y) * r->delta_y;
+		r->sidedist_y = (c->player->pos_y - c->map->pos_y) * r->delta_y;
 	}
 	else
 	{
 		r->step_y = 1;
-		r->sidedist_y = (cub->map->pos_y + 1.0 - cub->player->pos_y) * r->delta_y;
+		r->sidedist_y = (c->map->pos_y + 1.0 - c->player->pos_y) * r->delta_y;
 	}
 }
 
@@ -130,16 +91,15 @@ void	calc_delta(t_raycast *r)
 		r->delta_y = 1e30;
 	else
 		r->delta_y = fabs(1 / r->raydir_y);
-	return;
+	return ;
 }
-
 
 void	raycast(t_cub *cub)
 {
 	int			x;
 	double		camera_x;
 	t_raycast	r;
-	
+
 	x = 0;
 	while (x < cub->mlx->width)
 	{

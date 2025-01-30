@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movements.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 11:20:01 by amagnell          #+#    #+#             */
+/*   Updated: 2025/01/30 11:20:03 by amagnell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "movements.h"
 #include "game.h"
 #include <stdio.h>
@@ -21,7 +33,7 @@ void	move_player(t_cub *c, double dir_x, double dir_y)
 	double	mv_spd;
 	double	new_x;
 	double	new_y;
-	
+
 	mv_spd = c->mlx->delta_time * SPEED;
 	new_x = c->player->pos_x + dir_x * mv_spd;
 	new_y = c->player->pos_y - dir_y * mv_spd;
@@ -37,7 +49,7 @@ void	strafe(t_cub *c, double dir_x, double dir_y)
 	double	mv_spd;
 	double	new_x;
 	double	new_y;
-	
+
 	mv_spd = c->mlx->delta_time * SPEED;
 	new_x = c->player->pos_x + dir_x * mv_spd;
 	new_y = c->player->pos_y + dir_y * mv_spd;

@@ -1,21 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 11:19:41 by amagnell          #+#    #+#             */
+/*   Updated: 2025/01/30 11:19:49 by amagnell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "MLX42/MLX42.h"
 #include "input.h"
 #include "movements.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-void	close_cub(t_cub *cub)
-{
-	mlx_terminate(cub->mlx);
-	printf("bye\n");
-	free(cub->player);
-	for (int i = 0; i < 5; i++)
-		free(cub->map->m[i]);
-	free(cub->map->m);
-	free(cub->map);
-	free(cub);
-	exit(EXIT_SUCCESS);
-}
 
 void	rotate_right(t_cub *c, double x, double y)
 {
@@ -57,8 +56,6 @@ void	update_player_dir(t_cub *c, int key)
 	{
 		rotate_left(c, c->player->dir_x, c->player->dir_y);
 	}
-	printf("After Rotation: dir_x=%f, dir_y=%f, plane_x=%f, plane_y=%f\n",
-           c->player->dir_x, c->player->dir_y, c->player->plane_x, c->player->plane_y);
 }
 
 void	update_player_pos(t_cub *cub, int key)
@@ -76,22 +73,15 @@ void	update_player_pos(t_cub *cub, int key)
 		strafe(cub, cub->player->dir_y, -cub->player->dir_x);
 	else if (key == 'D')
 		strafe(cub, -cub->player->dir_y, cub->player->dir_x);
-/*
-	if (round(cub->player->pos_y) != map_x && round(cub->player->pos_y) != map_y)
-	{
-		cub->map->m[map_y][map_x] = '0';
-		cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'P';
-	}
-*/
 }
 
-void ft_hook(void *param)
+void	ft_hook(void *param)
 {
-	t_cub *c;
-	
+	t_cub	*c;
+
 	c = param;
 	if (mlx_is_key_down(c->mlx, MLX_KEY_ESCAPE))
-		close_cub(c);
+		close_cub(c, 0);
 	if (mlx_is_key_down(c->mlx, MLX_KEY_LEFT))
 		update_player_dir(c, 'L');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_RIGHT))
@@ -104,5 +94,5 @@ void ft_hook(void *param)
 		update_player_pos(c, 'A');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_D))
 		update_player_pos(c, 'D');
-	render(c);
-}	
+	raycast(c);
+}

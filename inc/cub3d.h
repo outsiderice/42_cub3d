@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:14:02 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 12:40:39 by rpocater         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:45:37 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_map_info
 	int		ceiling[3];
 	int		**map;
 	int		map_len;
-	int 	map_lines;
+	int		map_lines;
 }	t_map_info;
 
 char	*get_next_line(int fd);
@@ -43,11 +43,10 @@ int		empty_line(char *str);
 int		valid_char(char c);
 void	free_dpint(int **com, int map_lines);
 void	init_map_info(t_map_info *map_info);
-void	print_map_info(t_map_info map_info, int map_len, int map_lines);
 int		**fill_map(char *av, int map_len, int map_lines, t_map_info *map_info);
-int    		prev_line_check(char *prv_line, char *line, int *i);
-int     	color_check(char *info, t_map_info *map_info, char a);
-int     	parse(int ac, char **av, t_map_info *map_info);
+int		prev_line_check(char *prv_line, char *line, int *i);
+int		color_check(char *info, t_map_info *map_info, char a);
+int		parse(int ac, char **av, t_map_info *map_info);
 char	*first_parse(int fd, t_map_info *map_info, int lines);
 int		second_parse(int fd, t_map_info *map_info, char *line, int *map_len);
 
