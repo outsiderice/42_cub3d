@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:51:57 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 14:29:27 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:08:05 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int ac, char **av)
 	ret = parse(ac, av, &map_info);
 	if (ret == -1)
 		return (exit(-1), -1);
-	print_map_info(map_info, map_info.map_len, map_info.map_lines);
 	cub3d(map_info);
 	free_map_info(&map_info);
 	free_dpint(map_info.map, map_info.map_lines);
