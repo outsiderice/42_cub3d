@@ -6,7 +6,7 @@
 /*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:20:43 by amagnell          #+#    #+#             */
-/*   Updated: 2025/01/30 11:20:47 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:48:18 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	close_cub(t_cub *cub, int err)
 	free(cub->map->m);
 	free(cub->map);
 	if (err != 2)
-	{	
+	{
 		mlx_delete_texture(cub->ass.n);
 		mlx_delete_texture(cub->ass.e);
 		mlx_delete_texture(cub->ass.w);
@@ -82,7 +82,7 @@ void	cub3d(t_map_info info)
 
 	cub = malloc(sizeof(t_cub) * 1);
 	if (!cub)
-		exit(EXIT_FAILURE); // and free shit
+		exit(EXIT_FAILURE);
 	start[0] = find_start(info, &start[1]);
 	init_cub(cub, info, start);
 	raycast(cub);

@@ -6,7 +6,7 @@
 /*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:20:16 by amagnell          #+#    #+#             */
-/*   Updated: 2025/01/30 11:34:49 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:46:45 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	raycast(t_cub *cub)
 	int			x;
 	double		camera_x;
 	t_raycast	r;
-	
+
 	x = 0;
 	while (x < cub->mlx->width)
 	{
