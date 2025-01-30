@@ -46,5 +46,6 @@ void	cub3d(t_map_info info);
 int		get_rgba(int r, int g, int b, int a);
 t_ass	set_assets(t_map_info info);
 void	init_cub(t_cub *cub, t_map_info info, int *start);
+void	close_cub(t_cub *cub, int err);
 
 #endif

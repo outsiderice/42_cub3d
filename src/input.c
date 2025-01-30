@@ -4,21 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	close_cub(t_cub *cub, int err)
-{
-	mlx_terminate(cub->mlx);
-	printf("bye\n");
-	free(cub->player);
-	for (int i = 0; i < 5; i++)
-		free(cub->map->m[i]);
-	free(cub->map->m);
-	free(cub->map);
-	free(cub);
-	if (!err)
-		exit(EXIT_SUCCESS);
-	exit(EXIT_FAILURE);
-}
-
 void	rotate_right(t_cub *c, double x, double y)
 {
 	double	rot_spd;
@@ -93,7 +78,7 @@ void ft_hook(void *param)
 	
 	c = param;
 	if (mlx_is_key_down(c->mlx, MLX_KEY_ESCAPE))
-		close_cub(c);
+		close_cub(c, 0);
 	if (mlx_is_key_down(c->mlx, MLX_KEY_LEFT))
 		update_player_dir(c, 'L');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_RIGHT))
@@ -106,5 +91,5 @@ void ft_hook(void *param)
 		update_player_pos(c, 'A');
 	if (mlx_is_key_down(c->mlx, MLX_KEY_D))
 		update_player_pos(c, 'D');
-	render(c);
+	raycast(c);
 }	
