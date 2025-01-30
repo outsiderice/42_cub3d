@@ -19,36 +19,7 @@ void	render_ray(int x, t_raycast r, t_cub *cub)
 		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
 		y++;
 	}
-//	printf("y is %d\n", y);
 }
-
-/*
-void	render_ray(int x, t_raycast r, t_cub *cub)
-{
-	int	y;
-
-	y = 0;
-	while (y < r.wall_start)
-	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.f_color);
-		y++;
-	}
-//	printf("y is %d\n", y);
-//	y = render_texture(x, y, tx.buffer, cub);
-//	printf("y is %d\n", y);
-	while (y <= r.wall_end)
-	{
-		mlx_put_pixel(cub->img, x, y, get_rgba(255, 255, 255, 255));
-		y++;
-	}
-
-	while (y < HEIGHT)
-	{
-		mlx_put_pixel(cub->img, x, y, cub->ass.c_color);
-		y++;
-	}
-//	printf("y is %d\n", y);
-}*/
 
 int	calc_wall_height(t_raycast *r, t_cub *cub)
 {
@@ -84,8 +55,6 @@ void	dda(t_raycast *r, t_map *map)
 			map->pos_y += r->step_y;
 			r->side = 1;
 		}
-	//	if (map->pos_y >= map->height || map->pos_y < 0 || map->pos_x < 0 || map->pos_x >= map->width)
-	//		hit = 1;
 		if (map->m[map->pos_y][map->pos_x] == '1')
 			hit = 1;
 	}

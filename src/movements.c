@@ -21,7 +21,7 @@ void	move_player(t_cub *c, double dir_x, double dir_y)
 	double	mv_spd;
 	double	new_x;
 	double	new_y;
-	
+
 	mv_spd = c->mlx->delta_time * SPEED;
 	new_x = c->player->pos_x + dir_x * mv_spd;
 	new_y = c->player->pos_y - dir_y * mv_spd;

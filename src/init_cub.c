@@ -10,25 +10,25 @@ void	set_plane(t_cub *cub)
 	if (cub->map->m[y][x] == 'N')
 	{
 		cub->player->plane_x = -0.66;
-		cub->player->plane_y = 0; 
+		cub->player->plane_y = 0;
 	}
 	else if (cub->map->m[y][x] == 'S')
 	{
 		cub->player->plane_x = 0.66;
-		cub->player->plane_y = 0; 
+		cub->player->plane_y = 0;
 	}
 	else if (cub->map->m[y][x] == 'W')
 	{
 		cub->player->plane_x = 0;
-		cub->player->plane_y = -0.66; 
+		cub->player->plane_y = -0.66;
 	}
 	else if (cub->map->m[y][x] == 'E')
 	{
 		cub->player->plane_x = 0;
-		cub->player->plane_y = 0.66; 
+		cub->player->plane_y = 0.66;
 	}
 }
- 
+
 // sets player starting direction
 void	set_direction(t_cub *cub)
 {
@@ -40,22 +40,22 @@ void	set_direction(t_cub *cub)
 	if (cub->map->m[y][x] == 'N')
 	{
 		cub->player->dir_x = 0;
-		cub->player->dir_y = -1; 
+		cub->player->dir_y = -1;
 	}
 	else if (cub->map->m[y][x] == 'S')
 	{
 		cub->player->dir_x = 0;
-		cub->player->dir_y = 1; 
+		cub->player->dir_y = 1;
 	}
 	else if (cub->map->m[y][x] == 'W')
 	{
 		cub->player->dir_x = -1;
-		cub->player->dir_y = 0; 
+		cub->player->dir_y = 0;
 	}
 	else if (cub->map->m[y][x] == 'E')
 	{
 		cub->player->dir_x = 1;
-		cub->player->dir_y = 0; 
+		cub->player->dir_y = 0;
 	}
 }
 
@@ -66,7 +66,7 @@ t_map	*set_map(int *start, t_map_info info)
 
 	map = malloc (sizeof(t_map) * 1);
 	if (!map)
-		return(NULL);
+		return (NULL);
 	map->width = info.map_len;
 	map->height = info.map_lines;
 	map->m = info.map;

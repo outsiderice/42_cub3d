@@ -44,8 +44,6 @@ void	update_player_dir(t_cub *c, int key)
 	{
 		rotate_left(c, c->player->dir_x, c->player->dir_y);
 	}
-	printf("After Rotation: dir_x=%f, dir_y=%f, plane_x=%f, plane_y=%f\n",
-           c->player->dir_x, c->player->dir_y, c->player->plane_x, c->player->plane_y);
 }
 
 void	update_player_pos(t_cub *cub, int key)
@@ -63,19 +61,12 @@ void	update_player_pos(t_cub *cub, int key)
 		strafe(cub, cub->player->dir_y, -cub->player->dir_x);
 	else if (key == 'D')
 		strafe(cub, -cub->player->dir_y, cub->player->dir_x);
-/*
-	if (round(cub->player->pos_y) != map_x && round(cub->player->pos_y) != map_y)
-	{
-		cub->map->m[map_y][map_x] = '0';
-		cub->map->m[(int)cub->player->pos_y][(int)cub->player->pos_x] = 'P';
-	}
-*/
 }
 
-void ft_hook(void *param)
+void	ft_hook(void *param)
 {
-	t_cub *c;
-	
+	t_cub	*c;
+
 	c = param;
 	if (mlx_is_key_down(c->mlx, MLX_KEY_ESCAPE))
 		close_cub(c, 0);
@@ -92,4 +83,4 @@ void ft_hook(void *param)
 	if (mlx_is_key_down(c->mlx, MLX_KEY_D))
 		update_player_pos(c, 'D');
 	raycast(c);
-}	
+}
