@@ -60,7 +60,7 @@ void	set_direction(t_cub *cub)
 }
 
 //map setting
-t_map	*set_map()
+t_map	*set_map(int *start)
 {
 	t_map	*map;
 
@@ -92,7 +92,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	if (!cub->mlx)
 		close_cub(cub, 1);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	cub->map = set_map();
+	cub->map = set_map(start);
 	if (!cub->map)
 		close_cub(cub, 1);
 	cub->ass = set_assets(info);
