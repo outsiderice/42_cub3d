@@ -14,11 +14,21 @@ int	get_rgba(int r, int g, int b, int a)
 
 void	close_cub(t_cub *cub, int err)
 {
+	int	i;
+	int	height;
+
+	i = 0;
+	height = cub->map->height;
 	mlx_terminate(cub->mlx);
 	printf("bye\n");
 	free(cub->player);
-	for (int i = 0; i < 5; i++)
+//	for (int i = 0; i < 5; i++)
+//		free(cub->map->m[i]);
+	while (i < height)
+	{
 		free(cub->map->m[i]);
+		i++;
+	}
 	free(cub->map->m);
 	free(cub->map);
 	free(cub);
