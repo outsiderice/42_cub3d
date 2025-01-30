@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	close_cub(t_cub *cub)
+void	close_cub(t_cub *cub, int err)
 {
 	mlx_terminate(cub->mlx);
 	printf("bye\n");
@@ -14,7 +14,9 @@ void	close_cub(t_cub *cub)
 	free(cub->map->m);
 	free(cub->map);
 	free(cub);
-	exit(EXIT_SUCCESS);
+	if (!err)
+		exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 void	rotate_right(t_cub *c, double x, double y)

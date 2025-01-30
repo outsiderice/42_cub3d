@@ -59,6 +59,22 @@ void	set_direction(t_cub *cub)
 	}
 }
 
+//map setting
+t_map	*set_map()
+{
+	t_map	*map;
+
+	map = malloc (sizeof(t_map) * 1);
+	if (!map)
+		return(NULL);
+	map->width = info.map_len;
+	map->height = info.map_lines;
+	map->m = info.map;
+	map->pos_x = start[1];
+	map->pos_y = start[0];
+	return (map);
+}
+
 //initializes cub struct
 void	init_cub(t_cub *cub, t_map_info info, int *start)
 {
@@ -66,7 +82,7 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 
 	aux = malloc (sizeof(t_player) * 1);
 	if (!aux)
-		exit(EXIT_FAILURE);
+		close_cub(cub, 1);
 	aux->pos_x = start[1];
 	aux->pos_y = start[0];
 	aux->dir_x = 0;
@@ -74,19 +90,11 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	cub->player = aux;
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", false);
 	if (!cub->mlx)
-		ft_error();
+		close_cub(cub, 1);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	//change map assignation later
-	t_map	*map;
-	map = malloc (sizeof(t_map) * 1);
-	if (!map)
-		exit(EXIT_FAILURE);
-	map->width = info.map_len;
-	map->height = info.map_lines;
-	map->m = info.map;
-	map->pos_x = start[1];
-	map->pos_y = start[0];
-	cub->map = map;
+	cub->map = set_map();
+	if (!cub->map)
+		close_cub(cub, 1);
 	cub->ass = set_assets(info);
 	set_direction(cub);
 	set_plane(cub);
