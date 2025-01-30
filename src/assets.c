@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   assets.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 11:21:11 by amagnell          #+#    #+#             */
+/*   Updated: 2025/01/30 11:22:32 by amagnell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "game.h"
 
 int	check_assets(t_ass ass)
@@ -15,16 +27,15 @@ int	check_assets(t_ass ass)
 }
 
 //loads png and sets textures and colors to asset struct
-//texture to image?? told might be leak otherwise, come back later if needed.
-t_ass	set_assets(t_map_info info)
+t_ass	set_assets(t_map_info i)
 {
 	t_ass			ass;
 
-	ass.e = mlx_load_png(info.east);
-	ass.w = mlx_load_png(info.west);
-	ass.n = mlx_load_png(info.north);
-	ass.s = mlx_load_png(info.south);
-	ass.c_color = get_rgba(info.ceiling[0], info.ceiling[1], info.ceiling[2], 255);
-	ass.f_color = get_rgba(info.floor[0], info.floor[1], info.floor[2], 255);
+	ass.e = mlx_load_png(i.east);
+	ass.w = mlx_load_png(i.west);
+	ass.n = mlx_load_png(i.north);
+	ass.s = mlx_load_png(i.south);
+	ass.c_color = get_rgba(i.ceiling[0], i.ceiling[1], i.ceiling[2], 255);
+	ass.f_color = get_rgba(i.floor[0], i.floor[1], i.floor[2], 255);
 	return (ass);
 }
