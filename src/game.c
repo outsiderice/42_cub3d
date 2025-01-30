@@ -7,9 +7,9 @@
 #include "input.h"
 
 // 'Encodes' four individual bytes into an int. Aka sets color to one int
-int get_rgba(int r, int g, int b, int a)
+int	get_rgba(int r, int g, int b, int a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void	close_cub(t_cub *cub, int err)
@@ -28,7 +28,7 @@ void	close_cub(t_cub *cub, int err)
 }
 
 // finds player starting position x and y
-int find_start(t_map_info info, int *x)
+int	find_start(t_map_info info, int *x)
 {
 	int	i;
 	int	j;
@@ -42,7 +42,7 @@ int find_start(t_map_info info, int *x)
 			if (valid_char((char)info.map[i][j]) == 2)
 			{
 				*x = j;
-				return(i);
+				return (i);
 			}
 			j++;
 		}
@@ -60,9 +60,7 @@ void	cub3d(t_map_info info)
 	if (!cub)
 		exit(EXIT_FAILURE); // and free shit
 	start[0] = find_start(info, &start[1]);
-	printf("start[0] is %d start[1] is %d\n", start[0], start[1]);
 	init_cub(cub, info, start);
-	printf("initialized cub\n");	
 	raycast(cub);
 	if (!cub->img || (mlx_image_to_window(cub->mlx, cub->img, 0, 0) < 0))
 		close_cub(cub, 1);
