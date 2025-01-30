@@ -3,13 +3,13 @@
 int	check_assets(t_ass ass)
 {
 	if (ass.e->height != 64 || ass.e->width != 64)
-                return (printf("East incorrect size\n"), -1);
+		return (printf("East incorrect size\n"), -1);
 	if (ass.w->height != 64 || ass.w->width != 64)
-                return (printf("West incorrect size\n"), -1);
+		return (printf("West incorrect size\n"), -1);
 	if (ass.n->height != 64 || ass.n->width != 64)
-                return (printf("North incorrect size\n"), -1);
+		return (printf("North incorrect size\n"), -1);
 	if (ass.s->height != 64 || ass.s->width != 64)
-                return (printf("South incorrect size\n"), -1);
+		return (printf("South incorrect size\n"), -1);
 	printf("All correct sizes\n");
 	return (0);
 }

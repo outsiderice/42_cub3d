@@ -6,7 +6,7 @@
 /*   By: rpocater <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:19:44 by rpocater          #+#    #+#             */
-/*   Updated: 2024/12/12 13:17:22 by rpocater         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:32:12 by rpocater         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,35 @@ void	free_map_info(t_map_info *map_info)
 	free(map_info->east);
 }
 
-void	print_map_info(t_map_info map_info, int map_len, int map_lines)
+/*void	print_map_info(t_map_info map, int map_len, int map_lines)
 {
 	int	i;
 	int	x;
 
 	i = 0;
 	x = 0;
-	printf("North: %s\n", map_info.north);
-	printf("South: %s\n", map_info.south);
-	printf("East: %s\n", map_info.east);
-	printf("West: %s\n", map_info.west);
-	printf("Floor RGB: %d, %d, %d\n", map_info.floor[0], map_info.floor[1], map_info.floor[2]);
-	printf("Ceiling RGB: %d, %d, %d\n", map_info.ceiling[0], map_info.ceiling[1], map_info.ceiling[2]);
+	printf("North: %s\n", map.north);
+	printf("South: %s\n", map.south);
+	printf("East: %s\n", map.east);
+	printf("West: %s\n", map.west);
+	printf("Floor RGB: %d, %d, %d\n", map.floor[0], map.floor[1], map.floor[2]);
 	while (i < map_lines)
 	{
 		x = 0;
 		while (x < map_len)
 		{
-			if (ft_isspace(map_info.map[i][x]) == 0)
+			if (ft_isspace(map.map[i][x]) == 0)
 				printf("[ ]");
 			else
-				printf("%c", (char)map_info.map[i][x]);
+				printf("%c", (char)map.map[i][x]);
 			x++;
 		}
 		printf("\n");
 		i++;
 	}
-	printf("Map length: %d\n", map_info.map_len);
-	printf("Map Lines: %d\n", map_info.map_lines);
-}
+	printf("Map length: %d\n", map.map_len);
+	printf("Map Lines: %d\n", map.map_lines);
+}*/
 
 int	ft_isspace(int c)
 {
