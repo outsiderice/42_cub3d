@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 11:41:37 by amagnell          #+#    #+#             */
+/*   Updated: 2025/01/30 11:42:54 by amagnell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GAME_H
 # define GAME_H
 
-#include <math.h>
+# include <math.h>
 
 # include "player.h"
 # include "cub3d.h"
@@ -20,7 +32,7 @@ typedef struct s_map
 	int			pos_y;
 	int			width;
 	int			height;
-} t_map;
+}	t_map;
 
 typedef struct s_ass
 {
@@ -39,13 +51,13 @@ typedef struct s_cub
 	t_ass		ass;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
-} t_cub;
+}	t_cub;
 
 void	render(t_cub *cub);
 void	cub3d(t_map_info info);
 int		get_rgba(int r, int g, int b, int a);
 t_ass	set_assets(t_map_info info);
-int		check_assets(t_ass);
+int		check_assets(t_ass ass);
 void	init_cub(t_cub *cub, t_map_info info, int *start);
 void	close_cub(t_cub *cub, int err);
 
