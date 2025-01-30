@@ -26,10 +26,13 @@ void	close_cub(t_cub *cub, int err)
 	}
 	free(cub->map->m);
 	free(cub->map);
-	mlx_delete_texture(cub->ass.n);
-	mlx_delete_texture(cub->ass.e);
-	mlx_delete_texture(cub->ass.w);
-	mlx_delete_texture(cub->ass.s);
+	if (err != 2)
+	{	
+		mlx_delete_texture(cub->ass.n);
+		mlx_delete_texture(cub->ass.e);
+		mlx_delete_texture(cub->ass.w);
+		mlx_delete_texture(cub->ass.s);
+	}
 	free(cub);
 	if (!err)
 		exit(EXIT_SUCCESS);

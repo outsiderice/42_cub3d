@@ -96,6 +96,8 @@ void	init_cub(t_cub *cub, t_map_info info, int *start)
 	if (!cub->map)
 		close_cub(cub, 1);
 	cub->ass = set_assets(info);
+	if (check_assets(cub->ass) != 0)
+		close_cub(cub, 2);
 	set_direction(cub);
 	set_plane(cub);
 }
