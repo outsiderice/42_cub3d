@@ -6,7 +6,7 @@
 /*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:20:58 by amagnell          #+#    #+#             */
-/*   Updated: 2025/01/30 11:21:00 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:20:22 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	set_plane(t_cub *cub)
 	y = cub->map->pos_y;
 	if (cub->map->m[y][x] == 'N')
 	{
-		cub->player->plane_x = -0.66;
+		cub->player->plane_x = 0.66;
 		cub->player->plane_y = 0;
 	}
 	else if (cub->map->m[y][x] == 'S')
 	{
-		cub->player->plane_x = 0.66;
+		cub->player->plane_x = -0.66;
 		cub->player->plane_y = 0;
 	}
 	else if (cub->map->m[y][x] == 'W')

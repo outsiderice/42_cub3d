@@ -22,7 +22,7 @@ libmlx:
 libft:
 	@make -C $(LIBFT)
 
-$(OBJDIR)/%.o: %.c | $(OBJDIR)
+$(OBJDIR)/%.o: %.c Makefile| $(OBJDIR)
 	@$(CC) $(CFLAGS) -MMD -MP -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
 $(OBJDIR):

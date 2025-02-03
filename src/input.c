@@ -6,7 +6,7 @@
 /*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:19:41 by amagnell          #+#    #+#             */
-/*   Updated: 2025/01/30 11:19:49 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:31:17 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	update_player_dir(t_cub *c, int key)
 	{
 		rotate_right(c, c->player->dir_x, c->player->dir_y);
 	}
-	else
+	else if (key == 'L')
 	{
 		rotate_left(c, c->player->dir_x, c->player->dir_y);
 	}
