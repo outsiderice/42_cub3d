@@ -6,7 +6,7 @@
 /*   By: amagnell <amagnell@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:20:31 by amagnell          #+#    #+#             */
-/*   Updated: 2025/01/30 11:37:40 by amagnell         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:44:46 by amagnell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	texture_coordinate(t_raycast r, t_tx t, double wall_x)
 	int	tex_x;
 
 	tex_x = (int)(wall_x * t.info->width);
-	if (r.side == 0 && r.raydir_x > 0)
+	if (r.side == 0 && r.raydir_x < 0)
 		tex_x = t.info->width - tex_x - 1;
-	if (r.side == 1 && r.raydir_y < 0)
+	if (r.side == 1 && r.raydir_y > 0)
 		tex_x = t.info->width - tex_x - 1;
 	return (tex_x);
 }
